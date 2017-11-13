@@ -1,8 +1,7 @@
-#include <iostream>
-#include "StopWatch.h"
+#include "Game.h"
+
 int main() {
-    StopWatch* stopWatch = StopWatch::getStopWatch();
-    std::cout <<  "-------" << std::endl << stopWatch->getElapsedTime() << std::endl;
-    std::cout << "Hello, World!" << std::endl;
+    Game game;
+    game.loop();
     return 0;
 }
