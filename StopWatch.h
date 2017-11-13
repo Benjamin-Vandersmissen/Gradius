@@ -7,11 +7,18 @@
 #include <ctime>
 
 class StopWatch {
+private:
     clock_t m_clock;
-public:
+
     StopWatch();
 
-    clock_t getElapsedTime();
+    static StopWatch* m_stopwatch;
+public:
+    void reset();
+
+    clock_t getElapsedTime() const;
+
+    static StopWatch * getStopWatch();
 };
 
 
