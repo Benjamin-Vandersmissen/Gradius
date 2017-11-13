@@ -12,7 +12,7 @@ Game::Game() {
     m_updatedelay = 1000000/60;
     sf::Texture* texture = new sf::Texture;
     texture->loadFromFile("../NES - Gradius - Gradius.png", {0,100,32,16});
-    m_entities = {new entities::PlayerShip({20,20}, texture, 2)};
+    entities::Entity::entityList = {new entities::PlayerShip({20,20}, texture, 2)};
 }
 
 void Game::loop() {
@@ -29,7 +29,8 @@ void Game::loop() {
             }
         }
         m_window->clear();
-        for(entities::Entity* entity : m_entities){
+        for(int i = 0; i < entities::Entity::entityList.size(); i++){
+            entities::Entity* entity = entities::Entity::entityList[i];
             entity->update();
         }
         m_window->draw(*this);
@@ -43,7 +44,8 @@ int Game::handleEvent(sf::Event &event) {
             m_window->close();
             return -1;
         default:
-            for(entities::Entity* entity : m_entities){
+            for(int i = 0; i < entities::Entity::entityList.size(); i++){
+                entities::Entity* entity = entities::Entity::entityList[i];
                 entity->handleEvent(event);
             }
     }
@@ -51,7 +53,7 @@ int Game::handleEvent(sf::Event &event) {
 }
 
 void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-    for(entities::Entity* entity : m_entities){
+    for(entities::Entity* entity : entities::Entity::entityList){
         target.draw(*entity, states);
     }
 }

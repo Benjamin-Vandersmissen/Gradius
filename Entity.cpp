@@ -4,6 +4,8 @@
 
 #include "Entity.h"
 
+std::vector<entities::Entity*> entities::Entity::entityList = {};
+
 void entities::Entity::update() {
     m_position = {m_position.first + m_direction.first, m_position.second + m_direction.second};
     m_sprite->setPosition(m_position.first, m_position.second);

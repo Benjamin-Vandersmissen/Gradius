@@ -2,6 +2,7 @@
 // Created by benji on 13.11.17.
 //
 
+#include <iostream>
 #include "PlayerShip.h"
 
 void entities::PlayerShip::handleEvent(sf::Event &event) {
@@ -16,8 +17,7 @@ void entities::PlayerShip::handleEvent(sf::Event &event) {
 void entities::PlayerShip::handleKeyboard(sf::Event &event) {
     switch(event.key.code){
         case sf::Keyboard::Space:
-            //fire
-            int fire;
+            fire();
             break;
 
         default:
@@ -37,7 +37,20 @@ void entities::PlayerShip::update() {
 //    m_direction = {(m_direction.first + desiredDirection.first)/2, (m_direction.second + desiredDirection.second)/2};
     m_direction = desiredDirection;
     Entity::update();
+    if(m_current_cooldown > 0)
+        m_current_cooldown--;
 }
 
 entities::PlayerShip::PlayerShip(const std::pair<float, float> &position, sf::Texture *texture, float speed) : Entity(
-        position, texture, speed) {}
+        position, texture, speed) {
+    bulletTexture = new sf::Texture();
+    bulletTexture->loadFromFile("../NES - Gradius - Gradius.png", {51,154,8,4});
+}
+
+void entities::PlayerShip::fire() {
+    if (m_current_cooldown == 0) {
+        entityList.push_back(
+                new PlayerBullet({this->m_position.first + 4 + m_direction.first, this->m_position.second + 8 + m_direction.second}, bulletTexture, 8));
+        m_current_cooldown = m_cooldown;
+    }
+}

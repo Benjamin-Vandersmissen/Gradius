@@ -6,9 +6,16 @@
 #define GRADIUS_PLAYERSHIP_H
 
 #include "Entity.h"
+#include "PlayerBullet.h"
 
 namespace entities {
     class PlayerShip : public Entity{
+    protected:
+        sf::Texture* bulletTexture;
+
+        unsigned int m_cooldown = 10;
+
+        unsigned int m_current_cooldown = 0;
     public:
         PlayerShip(const std::pair<float, float> &position, sf::Texture *texture, float speed);
 
@@ -18,6 +25,8 @@ namespace entities {
         void handleKeyboard(sf::Event &event);
 
         virtual void update();
+
+        void fire();
     };
 }
 

@@ -8,6 +8,7 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics.hpp>
 
+
 namespace entities {
     class Entity : public sf::Drawable{
     protected:
@@ -16,6 +17,8 @@ namespace entities {
         std::pair<float, float> m_direction;
         float m_speed;
     public:
+        static std::vector<entities::Entity*> entityList;
+
         Entity(const std::pair<float, float> &position, sf::Texture *texture, float speed);
 
         virtual void handleEvent(sf::Event& event){};

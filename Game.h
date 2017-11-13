@@ -17,7 +17,6 @@ private:
     sf::RenderWindow* m_window = nullptr;
     unsigned long m_updatedelay; //the time between two ticks (in millionths of a second)
     Transformation* transformation = nullptr;
-    std::vector<entities::Entity*> m_entities;
 public:
     /**
      * \brief creates a Game with default arguments
