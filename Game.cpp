@@ -7,15 +7,20 @@
 #include "PlayerShip.h"
 #include "EnemyShip.h"
 
-Game::Game() {
+Game::Game(unsigned int width, unsigned int height) {
     m_stopWatch = StopWatch::getStopWatch();
-    m_window = new sf::RenderWindow(sf::VideoMode(200,200), "Gradius");
+    m_window = new sf::RenderWindow(sf::VideoMode(width, height), "Gradius");
+    Transformation::initTransformation(width, height);
     m_updatedelay = 1000000/100;
     sf::Texture* texture = new sf::Texture;
     texture->loadFromFile("../NES - Gradius - Gradius.png", {0,100,32,16});
     sf::Texture* texture2 = new sf::Texture;
     texture2->loadFromFile("../NES - Gradius - Gradius.png", {487,10,13,13});
-    entities::Entity::entityList = {new entities::PlayerShip({20,20}, texture, 2), new entities::EnemyShip({200,20}, texture2, 2)};
+    entities::Entity::entityList = {new entities::PlayerShip({-3,0}, texture, 0.10), new entities::EnemyShip({5,0}, texture2, 0.10)};
+}
+
+Game::Game() : Game(400, 300) {
+
 }
 
 void Game::loop() {

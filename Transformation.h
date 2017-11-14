@@ -7,6 +7,7 @@
 
 
 #include <utility>
+#include "SFML/System/Vector2.hpp"
 
 class Transformation {
 private:
@@ -17,11 +18,20 @@ private:
 public:
     static void initTransformation(unsigned int windowWidth = 1920, unsigned int windowHeight = 1080);
 
-    void resize(unsigned int windowWidth, unsigned int windowHeight);
+    static void resize(unsigned int windowWidth, unsigned int windowHeight);
 
-    std::pair<double,double> transform(double pixelX, double pixelY);
+    /**
+     * Window Coordinates => Game Coordinates
+     * */
+    static std::pair<float,float> transform(unsigned int pixelX, unsigned int pixelY);
 
     static Transformation* getTransformation();
+
+    /**
+     * Game Coordinates => Window Coordinates
+     */
+
+    static sf::Vector2f invTransform(std::pair<float,float>& position);
 };
 
 

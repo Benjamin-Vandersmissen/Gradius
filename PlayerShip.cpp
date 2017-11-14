@@ -51,7 +51,7 @@ entities::PlayerShip::PlayerShip(const std::pair<float, float> &position, sf::Te
 void entities::PlayerShip::fire() {
     if (m_current_cooldown == 0) {
         entityList.insert(entityList.begin(),
-                new PlayerBullet({this->m_position.first + 4 + m_direction.first, this->m_position.second + 8 + m_direction.second}, bulletTexture, 8));
+                new PlayerBullet({this->m_position.first, this->m_position.second}, bulletTexture, 0.15));
         m_current_cooldown = m_cooldown;
     }
 }

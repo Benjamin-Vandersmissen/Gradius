@@ -24,6 +24,10 @@ public:
     Game();
 
     /**
+     * \brief creates a Game with given window size
+     * */
+    Game(unsigned int width, unsigned int height);
+    /**
      * \brief Will execute the gameloop
      * */
     void loop();
