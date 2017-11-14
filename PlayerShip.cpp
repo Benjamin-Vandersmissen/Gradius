@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "PlayerShip.h"
+#include "EnemyShip.h"
 
 void entities::PlayerShip::handleEvent(sf::Event &event) {
     switch(event.type) {
@@ -49,8 +50,16 @@ entities::PlayerShip::PlayerShip(const std::pair<float, float> &position, sf::Te
 
 void entities::PlayerShip::fire() {
     if (m_current_cooldown == 0) {
-        entityList.push_back(
+        entityList.insert(entityList.begin(),
                 new PlayerBullet({this->m_position.first + 4 + m_direction.first, this->m_position.second + 8 + m_direction.second}, bulletTexture, 8));
         m_current_cooldown = m_cooldown;
+    }
+}
+
+void entities::PlayerShip::onCollision(Entity *entity) {
+    EnemyShip* enemyShip = dynamic_cast<EnemyShip*>(entity);
+    if(enemyShip){
+        this->m_lives--;
+        enemyShip->destroy();
     }
 }

@@ -16,6 +16,8 @@ namespace entities {
         unsigned int m_cooldown = 10;
 
         unsigned int m_current_cooldown = 0;
+
+        unsigned int m_lives = 3;
     public:
         PlayerShip(const std::pair<float, float> &position, sf::Texture *texture, float speed);
 
@@ -27,6 +29,8 @@ namespace entities {
         virtual void update();
 
         void fire();
+
+        virtual void onCollision(Entity *entity);
     };
 }
 

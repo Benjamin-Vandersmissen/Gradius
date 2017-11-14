@@ -5,14 +5,17 @@
 #include <iostream>
 #include "Game.h"
 #include "PlayerShip.h"
+#include "EnemyShip.h"
 
 Game::Game() {
     m_stopWatch = StopWatch::getStopWatch();
     m_window = new sf::RenderWindow(sf::VideoMode(200,200), "Gradius");
-    m_updatedelay = 1000000/60;
+    m_updatedelay = 1000000/100;
     sf::Texture* texture = new sf::Texture;
     texture->loadFromFile("../NES - Gradius - Gradius.png", {0,100,32,16});
-    entities::Entity::entityList = {new entities::PlayerShip({20,20}, texture, 2)};
+    sf::Texture* texture2 = new sf::Texture;
+    texture2->loadFromFile("../NES - Gradius - Gradius.png", {487,10,13,13});
+    entities::Entity::entityList = {new entities::PlayerShip({20,20}, texture, 2), new entities::EnemyShip({200,20}, texture2, 2)};
 }
 
 void Game::loop() {

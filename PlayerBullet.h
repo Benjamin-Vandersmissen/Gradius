@@ -11,6 +11,8 @@ namespace entities {
     class PlayerBullet : public Entity {
     public:
         PlayerBullet(const std::pair<float, float> &position, sf::Texture *texture, float speed);
+
+        void onCollision(Entity* entity);
     };
 }
 
