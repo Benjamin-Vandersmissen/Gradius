@@ -5,10 +5,11 @@
 #ifndef GRADIUS_ENTITYCONTROLLER_H
 #define GRADIUS_ENTITYCONTROLLER_H
 
+namespace controllers {
+    class EntityController {
 
-class EntityController {
-
-};
+    };
+}
 
 
 #endif //GRADIUS_ENTITYCONTROLLER_H

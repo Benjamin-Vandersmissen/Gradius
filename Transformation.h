@@ -31,7 +31,7 @@ public:
      * Game Coordinates => Window Coordinates
      */
 
-    static sf::Vector2f invTransform(std::pair<float,float>& position);
+    static sf::Vector2f invTransform(const std::pair<float,float>& position);
 };
 
 

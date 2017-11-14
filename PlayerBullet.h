@@ -6,6 +6,7 @@
 #define GRADIUS_PLAYERBULLET_H
 
 #include "Entity.h"
+#include "EntityView.h"
 
 namespace entities {
     class PlayerBullet : public Entity {
@@ -13,6 +14,15 @@ namespace entities {
         PlayerBullet(const std::pair<float, float> &position, sf::Texture *texture, float speed);
 
         void onCollision(Entity* entity);
+    };
+}
+
+namespace views{
+    class PlayerBullet : public EntityView{
+    private:
+        sf::Texture* m_texture;
+    public:
+        PlayerBullet(entities::Entity *associatedEntity);
     };
 }
 

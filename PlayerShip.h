@@ -7,6 +7,8 @@
 
 #include "Entity.h"
 #include "PlayerBullet.h"
+#include "EntityView.h"
+
 
 namespace entities {
     class PlayerShip : public Entity{
@@ -31,6 +33,22 @@ namespace entities {
         void fire();
 
         virtual void onCollision(Entity *entity);
+
+        unsigned int getLives() const;
+    };
+}
+namespace views{
+    class PlayerShip : public EntityView{
+    private:
+        sf::Text m_lives;
+        sf::Font* m_font;
+        sf::Texture* m_texture;
+    public:
+        PlayerShip(entities::Entity *associatedEntity);
+
+        void update();
+
+        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     };
 }
 

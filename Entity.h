@@ -19,6 +19,7 @@ namespace entities {
         std::pair<float, float> m_position;
         std::pair<float, float> m_direction;
         float m_speed;
+        bool m_deleted = false;
     public:
         /**
          * Check if two entities collide
@@ -33,7 +34,7 @@ namespace entities {
 
         virtual void update();
 
-        void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
         /**
          * Check if there is a collision
@@ -48,7 +49,15 @@ namespace entities {
         /**
          * removes the entity from entityList and calls the destructor
          * */
+        void markDeleted();
+
         void destroy();
+
+        std::pair<double, double> getPosition();
+
+        std::pair<double, double> getDirection();
+
+        bool deleted();
     };
 
     bool collides(Entity* entity1, Entity* entity2);

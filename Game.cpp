@@ -17,6 +17,7 @@ Game::Game(unsigned int width, unsigned int height) {
     sf::Texture* texture2 = new sf::Texture;
     texture2->loadFromFile("../NES - Gradius - Gradius.png", {487,10,13,13});
     entities::Entity::entityList = {new entities::PlayerShip({-3,0}, texture, 0.10), new entities::EnemyShip({5,0}, texture2, 0.10)};
+    views::EntityView::viewList = {new views::PlayerShip(entities::Entity::entityList[0]), new views::EnemyShip(entities::Entity::entityList[1])};
 }
 
 Game::Game() : Game(400, 300) {
@@ -41,6 +42,10 @@ void Game::loop() {
             entities::Entity* entity = entities::Entity::entityList[i];
             entity->update();
         }
+        for(int i = 0; i < views::EntityView::viewList.size(); i++){
+            views::EntityView* view = views::EntityView::viewList[i];
+            view->update();
+        }
         m_window->draw(*this);
         m_window->display();
     }
@@ -61,7 +66,7 @@ int Game::handleEvent(sf::Event &event) {
 }
 
 void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-    for(entities::Entity* entity : entities::Entity::entityList){
-        target.draw(*entity, states);
+    for(views::EntityView* view : views::EntityView::viewList){
+        target.draw(*view, states);
     }
 }

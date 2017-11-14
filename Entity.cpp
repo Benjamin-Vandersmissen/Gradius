@@ -35,6 +35,22 @@ bool ::entities::collides(entities::Entity *entity1, entities::Entity *entity2) 
     return entity1->m_sprite->getGlobalBounds().intersects(entity2->m_sprite->getGlobalBounds());
 }
 
+void entities::Entity::markDeleted() {
+    m_deleted = true;
+}
+
+std::pair<double, double> entities::Entity::getPosition() {
+    return m_position;
+}
+
+std::pair<double, double> entities::Entity::getDirection() {
+    return m_direction;
+}
+
+bool entities::Entity::deleted() {
+    return m_deleted;
+}
+
 void entities::Entity::destroy() {
     entityList.erase(std::find(entityList.begin(), entityList.end(), this));
     delete this;

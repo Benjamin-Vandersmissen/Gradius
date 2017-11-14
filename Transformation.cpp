@@ -35,7 +35,7 @@ Transformation *Transformation::getTransformation() {
     return m_transformation;
 }
 
-sf::Vector2f Transformation::invTransform(std::pair<float, float> &position) {
+sf::Vector2f Transformation::invTransform(const std::pair<float, float> &position) {
     float x = (position.first+4)/8*m_windowWidth;
     float y = (position.second+3)/6*m_windowHeight;
     return sf::Vector2f(x,y);

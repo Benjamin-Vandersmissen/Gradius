@@ -6,6 +6,7 @@
 #define GRADIUS_ENEMYSHIP_H
 
 #include "ScrollingEntity.h"
+#include "EntityView.h"
 
 namespace entities {
     class EnemyShip : public  ScrollingEntity{
@@ -14,5 +15,12 @@ namespace entities {
     };
 }
 
-
+namespace views {
+    class EnemyShip : public EntityView{
+    private:
+        sf::Texture* m_texture;
+    public:
+        EnemyShip(entities::Entity *associatedEntity);
+    };
+}
 #endif //GRADIUS_ENEMYSHIP_H

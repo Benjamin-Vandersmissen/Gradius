@@ -60,6 +60,39 @@ void entities::PlayerShip::onCollision(Entity *entity) {
     EnemyShip* enemyShip = dynamic_cast<EnemyShip*>(entity);
     if(enemyShip){
         this->m_lives--;
-        enemyShip->destroy();
+        enemyShip->markDeleted();
     }
+}
+
+unsigned int entities::PlayerShip::getLives() const{
+    return m_lives;
+}
+
+views::PlayerShip::PlayerShip(entities::Entity *associatedEntity) : EntityView(associatedEntity){
+    m_font = new sf::Font();
+    m_font->loadFromFile("../fonts/ARCADECLASSIC.TTF");
+
+    m_lives = sf::Text();
+    m_lives.setFont(*m_font);
+    m_lives.setScale(0.25,0.25);
+    m_lives.setColor(sf::Color::Cyan);
+    m_lives.setPosition(Transformation::invTransform({-3.75,-2.75}));
+
+    m_texture = new sf::Texture();
+    m_texture->loadFromFile("../NES - Gradius - Gradius.png", {0,100,32,16});
+    m_sprite = sf::Sprite();
+    m_sprite.setTexture(*m_texture);
+}
+
+void views::PlayerShip::update() {
+    EntityView::update();
+    entities::PlayerShip* ship = dynamic_cast<entities::PlayerShip*>(m_associatedEntity);
+    if(ship){
+        m_lives.setString("lives " + std::to_string(ship->getLives()));
+    }
+}
+
+void views::PlayerShip::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+    EntityView::draw(target, states);
+    target.draw(m_lives, states);
 }
