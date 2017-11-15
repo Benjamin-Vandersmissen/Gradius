@@ -6,6 +6,7 @@
 #include "Game.h"
 #include "PlayerShip.h"
 #include "EnemyShip.h"
+#include "BorderObstacle.h"
 
 Game::Game(unsigned int width, unsigned int height) {
     m_stopWatch = StopWatch::getStopWatch();
@@ -17,8 +18,8 @@ Game::Game(unsigned int width, unsigned int height) {
     texture->loadFromFile("../NES - Gradius - Gradius.png", {0,100,32,16});
     sf::Texture* texture2 = new sf::Texture;
     texture2->loadFromFile("../NES - Gradius - Gradius.png", {487,10,13,13});
-    entities::Entity::entityList = {new entities::PlayerShip({-3,0}, {0,0,1.28,0.64}, 0.10), new entities::EnemyShip({5,0}, {0,0,0.52,0.52}, 0.10)};
-    views::EntityView::viewList = {new views::PlayerShip(entities::Entity::entityList[0]), new views::EnemyShip(entities::Entity::entityList[1])};
+    entities::Entity::entityList = {new entities::PlayerShip({-3,0}, {0,0,1.28,0.64}, 0.10), new entities::EnemyShip({5,0}, {0,0,0.52,0.52}, 0.10), new entities::BorderObstacle({4.25,-3}, {0,0,2.56,0.52}, 0.10)};
+    views::EntityView::viewList = {new views::PlayerShip(entities::Entity::entityList[0]), new views::EnemyShip(entities::Entity::entityList[1]), new views::BorderObstacle(entities::Entity::entityList[2])};
 }
 
 Game::Game() : Game(400, 300) {

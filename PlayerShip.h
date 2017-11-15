@@ -20,6 +20,8 @@ namespace entities {
         unsigned int m_current_cooldown = 0;
 
         unsigned int m_lives = 3;
+
+        unsigned int m_immunity = 0;
     public:
         PlayerShip(const std::pair<float, float> &position, const sf::FloatRect &hitbox, float speed);
 
@@ -35,6 +37,11 @@ namespace entities {
         virtual void onCollision(Entity *entity);
 
         unsigned int getLives() const;
+
+        void doDamage(unsigned int damage);
+
+        bool immune();
+
     };
 }
 namespace views{
@@ -42,7 +49,6 @@ namespace views{
     private:
         sf::Text m_lives;
         sf::Font* m_font;
-        sf::Texture* m_texture;
     public:
         PlayerShip(entities::Entity *associatedEntity);
 

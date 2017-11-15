@@ -13,6 +13,8 @@ namespace views {
     protected:
         sf::Sprite m_sprite;
 
+        sf::Texture* m_texture;
+
         entities::Entity* m_associatedEntity;
     public:
         EntityView(entities::Entity *associatedEntity);

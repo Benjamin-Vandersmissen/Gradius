@@ -5,6 +5,7 @@
 #include <iostream>
 #include "PlayerShip.h"
 #include "EnemyShip.h"
+#include "BorderObstacle.h"
 
 void entities::PlayerShip::handleEvent(sf::Event &event) {
     switch(event.type) {
@@ -40,11 +41,13 @@ void entities::PlayerShip::update() {
     Entity::update();
     if(m_current_cooldown > 0)
         m_current_cooldown--;
+    if(m_immunity > 0)
+        m_immunity--;
 }
 
 void entities::PlayerShip::fire() {
     if (m_current_cooldown == 0) {
-        PlayerBullet* bullet = new PlayerBullet({this->m_position.first, this->m_position.second}, {0, 0, 0.32,0.16}, 0.15);
+        PlayerBullet* bullet = new PlayerBullet({this->m_position.first+this->m_hitbox.width/2, this->m_position.second+this->m_hitbox.height/2}, {0, 0, 0.32,0.16}, 0.15);
         entityList.push_back(bullet);
         using views::EntityView;
         EntityView::viewList.insert(EntityView::viewList.begin(), new views::PlayerBullet(bullet));
@@ -55,9 +58,21 @@ void entities::PlayerShip::fire() {
 void entities::PlayerShip::onCollision(Entity *entity) {
     EnemyShip* enemyShip = dynamic_cast<EnemyShip*>(entity);
     if(enemyShip){
-        this->m_lives--;
+        this->doDamage(1);
         enemyShip->markDeleted();
     }
+    BorderObstacle* borderObstacle = dynamic_cast<BorderObstacle*>(entity);
+    if(borderObstacle){
+        this->doDamage(2);
+    }
+    else{ //borderObstacle is a subclass of Obstacle, this will ensure the collision will only be counted once
+        Obstacle* obstacle = dynamic_cast<Obstacle*>(entity);
+        if(obstacle) {
+            this->doDamage(1);
+            obstacle->markDeleted();
+        }
+    }
+
 }
 
 unsigned int entities::PlayerShip::getLives() const{
@@ -68,6 +83,23 @@ entities::PlayerShip::PlayerShip(const std::pair<float, float> &position, const 
         position, hitbox, speed) {
     bulletTexture = new sf::Texture();
     bulletTexture->loadFromFile("../NES - Gradius - Gradius.png", {51,154,8,4});
+}
+
+void entities::PlayerShip::doDamage(unsigned int damage) {
+    if(m_immunity > 0){
+        return;
+    }
+    if(damage > m_lives){
+        //DED
+    }
+    else{
+        m_lives -= damage;
+        m_immunity = 100;
+    }
+}
+
+bool entities::PlayerShip::immune() {
+    return m_immunity > 0;
 }
 
 views::PlayerShip::PlayerShip(entities::Entity *associatedEntity) : EntityView(associatedEntity){
@@ -87,10 +119,16 @@ views::PlayerShip::PlayerShip(entities::Entity *associatedEntity) : EntityView(a
 }
 
 void views::PlayerShip::update() {
-    EntityView::update();
     entities::PlayerShip* ship = dynamic_cast<entities::PlayerShip*>(m_associatedEntity);
     if(ship){
         m_lives.setString("lives " + std::to_string(ship->getLives()));
+        if(ship->immune()){
+            m_sprite.setColor({192,192,192,128});
+        }
+        else{
+            m_sprite.setColor({255,255,255});
+        }
+        EntityView::update();
     }
 }
 

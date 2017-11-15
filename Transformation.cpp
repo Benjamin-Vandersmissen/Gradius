@@ -26,8 +26,8 @@ void Transformation::resize(unsigned int windowWidth, unsigned int windowHeight)
 }
 
 std::pair<float, float> Transformation::transform(unsigned int pixelX, unsigned int pixelY) {
-    float x =  -4 + 8* (static_cast<float>(pixelX)/m_windowWidth);
-    float y =  -3 + 6*(static_cast<float>(pixelY)/m_windowHeight);
+    float x =  m_left + m_width* (static_cast<float>(pixelX)/m_windowWidth);
+    float y =  m_top + m_height*(static_cast<float>(pixelY)/m_windowHeight);
     return std::pair<float, float>(x,y);
 }
 
@@ -36,8 +36,24 @@ Transformation *Transformation::getTransformation() {
 }
 
 sf::Vector2f Transformation::invTransform(const std::pair<float, float> &position) {
-    float x = (position.first+4)/8*m_windowWidth;
-    float y = (position.second+3)/6*m_windowHeight;
+    float x = (position.first-m_left)/m_width*m_windowWidth;
+    float y = (position.second-m_top)/m_height*m_windowHeight;
     return sf::Vector2f(x,y);
+}
+
+float Transformation::left() {
+    return m_left;
+}
+
+float Transformation::top() {
+    return m_top;
+}
+
+float Transformation::width() {
+    return m_width;
+}
+
+float Transformation::height() {
+    return m_height;
 }
 

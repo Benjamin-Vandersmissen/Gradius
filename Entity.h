@@ -28,7 +28,6 @@ namespace entities {
 
         static std::vector<entities::Entity*> entityList;
 
-
         Entity(const std::pair<float, float> &position, const sf::FloatRect &hitbox, float speed);
 
         virtual void handleEvent(sf::Event& event){};
