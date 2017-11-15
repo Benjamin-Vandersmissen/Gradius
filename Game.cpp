@@ -9,14 +9,15 @@
 
 Game::Game(unsigned int width, unsigned int height) {
     m_stopWatch = StopWatch::getStopWatch();
-    m_window = new sf::RenderWindow(sf::VideoMode(width, height), "Gradius");
-    Transformation::initTransformation(width, height);
+    m_window = new sf::RenderWindow(sf::VideoMode(200, 150), "Gradius"); //the default size is 200x150, this will make it that everything is auto-scaled
+    m_window->setSize({width,height});
+    Transformation::initTransformation(200, 150);
     m_updatedelay = 1000000/100;
     sf::Texture* texture = new sf::Texture;
     texture->loadFromFile("../NES - Gradius - Gradius.png", {0,100,32,16});
     sf::Texture* texture2 = new sf::Texture;
     texture2->loadFromFile("../NES - Gradius - Gradius.png", {487,10,13,13});
-    entities::Entity::entityList = {new entities::PlayerShip({-3,0}, texture, 0.10), new entities::EnemyShip({5,0}, texture2, 0.10)};
+    entities::Entity::entityList = {new entities::PlayerShip({-3,0}, {0,0,1.28,0.64}, 0.10), new entities::EnemyShip({5,0}, {0,0,0.52,0.52}, 0.10)};
     views::EntityView::viewList = {new views::PlayerShip(entities::Entity::entityList[0]), new views::EnemyShip(entities::Entity::entityList[1])};
 }
 

@@ -10,7 +10,7 @@
 namespace entities {
     class ScrollingEntity : public Entity{
     public:
-        ScrollingEntity(const std::pair<float, float> &position, sf::Texture *texture, float speed);
+        ScrollingEntity(const std::pair<float, float> &position, const sf::FloatRect &hitbox, float speed);
     };
 
 }

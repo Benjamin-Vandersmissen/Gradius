@@ -13,13 +13,13 @@
 
 
 namespace entities {
-    class Entity : public sf::Drawable{
+    class Entity{
     protected:
-        sf::Sprite* m_sprite;
         std::pair<float, float> m_position;
         std::pair<float, float> m_direction;
         float m_speed;
         bool m_deleted = false;
+        sf::FloatRect m_hitbox;
     public:
         /**
          * Check if two entities collide
@@ -28,13 +28,12 @@ namespace entities {
 
         static std::vector<entities::Entity*> entityList;
 
-        Entity(const std::pair<float, float> &position, sf::Texture *texture, float speed);
+
+        Entity(const std::pair<float, float> &position, const sf::FloatRect &hitbox, float speed);
 
         virtual void handleEvent(sf::Event& event){};
 
         virtual void update();
-
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
         /**
          * Check if there is a collision

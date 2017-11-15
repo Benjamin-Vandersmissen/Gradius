@@ -21,7 +21,7 @@ namespace entities {
 
         unsigned int m_lives = 3;
     public:
-        PlayerShip(const std::pair<float, float> &position, sf::Texture *texture, float speed);
+        PlayerShip(const std::pair<float, float> &position, const sf::FloatRect &hitbox, float speed);
 
         virtual void handleEvent(sf::Event& event);
 

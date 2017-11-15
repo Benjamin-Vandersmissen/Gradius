@@ -4,8 +4,8 @@
 
 #include "ScrollingEntity.h"
 
-entities::ScrollingEntity::ScrollingEntity(const std::pair<float, float> &position, sf::Texture *texture, float speed)
-        : Entity(position, texture, speed) {
-    m_direction = std::pair<double,double>(-speed, 0);
+entities::ScrollingEntity::ScrollingEntity(const std::pair<float, float> &position, const sf::FloatRect &hitbox,
+                                           float speed)
+        : Entity(position, hitbox, speed) {
+    m_direction = {-speed, 0};
 }
-

@@ -42,16 +42,12 @@ void entities::PlayerShip::update() {
         m_current_cooldown--;
 }
 
-entities::PlayerShip::PlayerShip(const std::pair<float, float> &position, sf::Texture *texture, float speed) : Entity(
-        position, texture, speed) {
-    bulletTexture = new sf::Texture();
-    bulletTexture->loadFromFile("../NES - Gradius - Gradius.png", {51,154,8,4});
-}
-
 void entities::PlayerShip::fire() {
     if (m_current_cooldown == 0) {
-        entityList.insert(entityList.begin(),
-                new PlayerBullet({this->m_position.first, this->m_position.second}, bulletTexture, 0.15));
+        PlayerBullet* bullet = new PlayerBullet({this->m_position.first, this->m_position.second}, {0, 0, 0.32,0.16}, 0.15);
+        entityList.push_back(bullet);
+        using views::EntityView;
+        EntityView::viewList.insert(EntityView::viewList.begin(), new views::PlayerBullet(bullet));
         m_current_cooldown = m_cooldown;
     }
 }
@@ -66,6 +62,12 @@ void entities::PlayerShip::onCollision(Entity *entity) {
 
 unsigned int entities::PlayerShip::getLives() const{
     return m_lives;
+}
+
+entities::PlayerShip::PlayerShip(const std::pair<float, float> &position, const sf::FloatRect &hitbox, float speed) : Entity(
+        position, hitbox, speed) {
+    bulletTexture = new sf::Texture();
+    bulletTexture->loadFromFile("../NES - Gradius - Gradius.png", {51,154,8,4});
 }
 
 views::PlayerShip::PlayerShip(entities::Entity *associatedEntity) : EntityView(associatedEntity){

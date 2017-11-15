@@ -11,7 +11,7 @@
 namespace entities {
     class EnemyShip : public  ScrollingEntity{
     public:
-        EnemyShip(const std::pair<float, float> &position, sf::Texture *texture, float speed);
+        EnemyShip(const std::pair<float, float> &position, const sf::FloatRect &hitbox, float speed);
     };
 }
 

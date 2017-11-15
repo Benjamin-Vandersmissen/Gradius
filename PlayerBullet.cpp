@@ -5,10 +5,9 @@
 #include "PlayerBullet.h"
 #include "EnemyShip.h"
 
-entities::PlayerBullet::PlayerBullet(const std::pair<float, float> &position, sf::Texture *texture, float speed)
-        : Entity(position, texture, speed) {
-    m_direction = {speed, 0};
-    views::EntityView::viewList.insert(views::EntityView::viewList.begin(), new views::PlayerBullet(this));
+entities::PlayerBullet::PlayerBullet(const std::pair<float, float> &position, const sf::FloatRect &hitbox, float speed)
+        : Entity(position, hitbox, speed) {
+    m_direction = {speed,0};
 }
 
 

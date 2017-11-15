@@ -8,18 +8,13 @@ std::vector<entities::Entity*> entities::Entity::entityList = {};
 
 void entities::Entity::update() {
     m_position = {m_position.first + m_direction.first, m_position.second + m_direction.second};
-    m_sprite->setPosition(Transformation::invTransform(m_position));
     onCollision(checkCollision());
 }
 
-entities::Entity::Entity(const std::pair<float, float> &position, sf::Texture *texture, float speed) : m_position(position), m_sprite(new sf::Sprite), m_speed(speed){
-    m_sprite->setTexture(*texture);
-    m_sprite->setPosition(Transformation::invTransform(m_position));
+entities::Entity::Entity(const std::pair<float, float> &position, const sf::FloatRect &hitbox, float speed): m_position(position), m_hitbox(hitbox), m_speed(speed) {
+
 }
 
-void entities::Entity::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-    target.draw(*m_sprite, states);
-}
 
 entities::Entity *entities::Entity::checkCollision() {
     for(Entity* entity : entityList){
@@ -32,7 +27,9 @@ entities::Entity *entities::Entity::checkCollision() {
 }
 
 bool ::entities::collides(entities::Entity *entity1, entities::Entity *entity2) {
-    return entity1->m_sprite->getGlobalBounds().intersects(entity2->m_sprite->getGlobalBounds());
+    sf::FloatRect globalHitbox1 = {entity1->m_hitbox.left+entity1->m_position.first, entity1->m_hitbox.top+entity1->m_position.second, entity1->m_hitbox.width, entity1->m_hitbox.height};
+    sf::FloatRect globalHitbox2 = {entity2->m_hitbox.left+entity2->m_position.first, entity2->m_hitbox.top+entity2->m_position.second, entity2->m_hitbox.width, entity2->m_hitbox.height};
+    return globalHitbox1.intersects(globalHitbox2);
 }
 
 void entities::Entity::markDeleted() {
