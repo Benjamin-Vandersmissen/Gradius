@@ -28,6 +28,8 @@ namespace views {
         static std::vector<views::EntityView*> viewList;
 
         void destroy();
+
+        void loadSprite();
     };
 }
 

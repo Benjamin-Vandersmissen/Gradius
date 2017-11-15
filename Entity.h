@@ -51,9 +51,9 @@ namespace entities {
 
         void destroy();
 
-        std::pair<double, double> getPosition();
+        std::pair<float, float> getPosition();
 
-        std::pair<double, double> getDirection();
+        std::pair<float, float> getDirection();
 
         bool deleted();
     };

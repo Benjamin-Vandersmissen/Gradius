@@ -37,6 +37,15 @@ void entities::PlayerShip::update() {
     std::pair<double, double> desiredDirection = {m_speed*(keyRight-keyLeft), m_speed*(keyDown-keyUp)};
 
 //    m_direction = {(m_direction.first + desiredDirection.first)/2, (m_direction.second + desiredDirection.second)/2};
+    if(m_position.first + desiredDirection.first + m_hitbox.left + m_hitbox.width > Transformation::left()+Transformation::width())
+        desiredDirection.first = 0;
+    if(m_position.first + desiredDirection.first + m_hitbox.left < Transformation::left())
+        desiredDirection.first = 0;
+    if(m_position.second + desiredDirection.second + m_hitbox.top < Transformation::top())
+        desiredDirection.second = 0;
+    if(m_position.second + desiredDirection.second + m_hitbox.top + m_hitbox.height > Transformation::top() + Transformation::height()){
+        desiredDirection.second = 0;
+    }
     m_direction = desiredDirection;
     Entity::update();
     if(m_current_cooldown > 0)
@@ -47,10 +56,14 @@ void entities::PlayerShip::update() {
 
 void entities::PlayerShip::fire() {
     if (m_current_cooldown == 0) {
-        PlayerBullet* bullet = new PlayerBullet({this->m_position.first+this->m_hitbox.width/2, this->m_position.second+this->m_hitbox.height/2}, {0, 0, 0.32,0.16}, 0.15);
-        entityList.push_back(bullet);
-        using views::EntityView;
-        EntityView::viewList.insert(EntityView::viewList.begin(), new views::PlayerBullet(bullet));
+        sf::Texture* texture = new sf::Texture;
+        texture->loadFromFile("../NES - Gradius - Gradius.png", {51,154,8,4});
+
+        resources::PlayerBullet resource(texture, 0.15, {0, 0, 0.32,0.16});
+        resource.create({this->m_position.first+this->m_hitbox.width/2, this->m_position.second+this->m_hitbox.height/2});
+//        entityList.push_back(bullet);
+//        using views::EntityView;
+//        EntityView::viewList.insert(EntityView::viewList.begin(), new views::PlayerBullet(bullet));
         m_current_cooldown = m_cooldown;
     }
 }

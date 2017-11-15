@@ -36,11 +36,11 @@ void entities::Entity::markDeleted() {
     m_deleted = true;
 }
 
-std::pair<double, double> entities::Entity::getPosition() {
+std::pair<float, float> entities::Entity::getPosition() {
     return m_position;
 }
 
-std::pair<double, double> entities::Entity::getDirection() {
+std::pair<float, float> entities::Entity::getDirection() {
     return m_direction;
 }
 

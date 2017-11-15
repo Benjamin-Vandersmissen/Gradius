@@ -6,9 +6,15 @@
 #define GRADIUS_ENTITYRESOURCE_H
 
 
-class EntityResource {
+#include "Entity.h"
+#include "EntityView.h"
 
-};
+namespace resources {
+    class EntityResource {
+    public:
+        virtual entities::Entity *create(const std::pair<float, float> &position) = 0;
+    };
+}
 
 
 #endif //GRADIUS_ENTITYRESOURCE_H

@@ -27,3 +27,8 @@ void views::EntityView::destroy() {
 views::EntityView::~EntityView() {
     m_associatedEntity->destroy();
 }
+
+void views::EntityView::loadSprite() {
+    m_sprite = sf::Sprite();
+    m_sprite.setTexture(*m_texture);
+}

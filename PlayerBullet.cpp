@@ -21,8 +21,18 @@ void entities::PlayerBullet::onCollision(entities::Entity *entity) {
 }
 
 views::PlayerBullet::PlayerBullet(entities::Entity *associatedEntity) : EntityView(associatedEntity) {
-    m_texture = new sf::Texture;
-    m_texture->loadFromFile("../NES - Gradius - Gradius.png", {51,154,8,4});
+}
 
-    m_sprite.setTexture(*m_texture);
+resources::PlayerBullet::PlayerBullet(sf::Texture *m_texture, float m_speed, const sf::FloatRect &m_hitbox)
+        : m_texture(m_texture), m_speed(m_speed), m_hitbox(m_hitbox) {}
+
+entities::PlayerBullet *resources::PlayerBullet::create(const std::pair<float, float> &position) {
+    entities::PlayerBullet* entity = new entities::PlayerBullet(position, m_hitbox, m_speed);
+
+    views::PlayerBullet* view = new views::PlayerBullet(entity);
+    view->m_texture = m_texture;
+    view->loadSprite();
+    views::EntityView::viewList.push_back(view);
+    entities::Entity::entityList.push_back(entity);
+    return entity;
 }
