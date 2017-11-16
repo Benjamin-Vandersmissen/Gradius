@@ -2,13 +2,47 @@
 // Created by benji on 13.11.17.
 //
 
-#include <iostream>
 #include "Game.h"
 #include "PlayerShip.h"
 #include "EnemyShip.h"
 #include "BorderObstacle.h"
 
+resources::EntityResource *::resources::loadFromJson(std::string filename) {
+    std::string path = filename.substr(0, filename.rfind("/")+1);
+    json j;
+    std::ifstream stream(filename);
+    stream >> j;
+    std::string type = j["Type"];
+    if(type == "PlayerBullet"){
+        PlayerBullet* bullet = new PlayerBullet;
+        bullet->loadFromJson(j, path);
+        return bullet;
+    }
+    else if (type == "PlayerShip"){
+        PlayerShip* ship = new PlayerShip;
+        ship->loadFromJson(j, path);
+        return ship;
+    }
+    else if (type == "EnemyShip"){
+        EnemyShip* ship = new EnemyShip;
+        ship->loadFromJson(j, path);
+        return ship;
+    }
+    else if (type == "BorderObstacle"){
+        BorderObstacle* obstacle = new BorderObstacle;
+        obstacle->loadFromJson(j, path);
+        return obstacle;
+    }
+    else if (type == "Obstacle"){
+        Obstacle* obstacle = new Obstacle;
+        obstacle->loadFromJson(j, path);
+        return obstacle;
+    }
+    return nullptr;
+}
+
 Game::Game(unsigned int width, unsigned int height) {
+    resources::loadFromJson("../resources/PlayerBullet.json");
     m_stopWatch = StopWatch::getStopWatch();
     m_window = new sf::RenderWindow(sf::VideoMode(200, 150), "Gradius"); //the default size is 200x150, this will make it that everything is auto-scaled
     m_window->setSize({width,height});
@@ -41,13 +75,15 @@ void Game::loop() {
         }
         m_window->clear();
         for(int i = 0; i < entities::Entity::entityList.size(); i++){
-            entities::Entity* entity = entities::Entity::entityList[i];
+            entities::Entity* entity = entities::Entity::entityList.at(i);
             entity->update();
         }
         for(int i = 0; i < views::EntityView::viewList.size(); i++){
-            views::EntityView* view = views::EntityView::viewList[i];
+            views::EntityView* view = views::EntityView::viewList.at(i);
             view->update();
         }
+        views::deleteMarkedViews();
+        entities::deleteMarkedEntities();
         m_window->draw(*this);
         m_window->display();
     }

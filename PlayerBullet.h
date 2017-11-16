@@ -20,16 +20,13 @@ namespace entities {
 
 namespace resources{
     class PlayerBullet : public EntityResource{
-    private:
-        sf::Texture* m_texture;
-
-        float m_speed;
-
-        sf::FloatRect m_hitbox;
     public:
-        PlayerBullet(sf::Texture *m_texture, float m_speed, const sf::FloatRect &m_hitbox);
+        PlayerBullet();
+
+        PlayerBullet(sf::Texture *texture, const sf::FloatRect &hitbox, float speed);
 
         entities::PlayerBullet *create(const std::pair<float, float> &position);
+
     };
 }
 

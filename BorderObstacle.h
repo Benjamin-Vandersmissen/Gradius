@@ -15,9 +15,20 @@ namespace entities {
     };
 }
 
+namespace resources{
+    class BorderObstacle : public EntityResource{
+    public:
+        BorderObstacle();
+
+        entities::BorderObstacle* create(const std::pair<float,float>& position);
+    };
+}
+
 namespace views {
     class BorderObstacle : public EntityView{
     public:
+        friend class resources::BorderObstacle;
+
         BorderObstacle(entities::Entity *associatedEntity);
     };
 }

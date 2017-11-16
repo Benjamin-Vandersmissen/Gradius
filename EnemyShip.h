@@ -7,6 +7,7 @@
 
 #include "ScrollingEntity.h"
 #include "EntityView.h"
+#include "EntityResource.h"
 
 namespace entities {
     class EnemyShip : public  ScrollingEntity{
@@ -15,11 +16,22 @@ namespace entities {
     };
 }
 
+namespace resources{
+    class EnemyShip : public EntityResource{
+    public:
+        EnemyShip();
+
+        entities::EnemyShip* create(const std::pair<float, float>& position);
+    };
+}
+
 namespace views {
     class EnemyShip : public EntityView{
     private:
         sf::Texture* m_texture;
     public:
+        friend class resources::EnemyShip;
+
         EnemyShip(entities::Entity *associatedEntity);
     };
 }

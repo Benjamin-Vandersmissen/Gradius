@@ -5,11 +5,19 @@
 #ifndef GRADIUS_GAME_H
 #define GRADIUS_GAME_H
 
+#include <iostream>
+#include <fstream>
+
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
 #include "StopWatch.h"
 #include "Entity.h"
 #include "Transformation.h"
+#include "EntityResource.h"
+
+namespace resources{
+    EntityResource* loadFromJson(std::string filename);
+}
 
 class Game : public sf::Drawable{
 private:

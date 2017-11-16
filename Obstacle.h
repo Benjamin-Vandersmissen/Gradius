@@ -8,6 +8,7 @@
 
 #include "ScrollingEntity.h"
 #include "EntityView.h"
+#include "EntityResource.h"
 
 namespace entities {
     class Obstacle : public ScrollingEntity{
@@ -16,9 +17,20 @@ namespace entities {
     };
 }
 
+namespace resources {
+    class Obstacle : public EntityResource{
+    public :
+        Obstacle();
+
+        entities::Obstacle* create(const std::pair<float, float>& position);
+    };
+}
+
 namespace views {
     class Obstacle : public EntityView{
     public:
+        friend class resources::Obstacle;
+
         Obstacle(entities::Entity *associatedEntity);
     };
 }

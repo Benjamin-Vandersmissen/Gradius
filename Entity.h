@@ -26,6 +26,8 @@ namespace entities {
          * */
         friend bool collides(Entity* entity1, Entity* entity2);
 
+        friend void deleteMarkedEntities();
+
         static std::vector<entities::Entity*> entityList;
 
         Entity(const std::pair<float, float> &position, const sf::FloatRect &hitbox, float speed);
@@ -49,8 +51,6 @@ namespace entities {
          * */
         void markDeleted();
 
-        void destroy();
-
         std::pair<float, float> getPosition();
 
         std::pair<float, float> getDirection();
@@ -59,6 +59,8 @@ namespace entities {
     };
 
     bool collides(Entity* entity1, Entity* entity2);
+
+    void deleteMarkedEntities();
 }
 
 

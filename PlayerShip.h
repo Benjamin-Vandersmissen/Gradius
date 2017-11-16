@@ -44,12 +44,29 @@ namespace entities {
 
     };
 }
+
+namespace resources {
+    class PlayerShip: public EntityResource{
+    private:
+        sf::Font* m_font;
+    public:
+        PlayerShip();
+
+        entities::PlayerShip* create(const std::pair<float, float>& position);
+
+        void loadFromJson(json j, std::string path);
+
+    };
+}
+
 namespace views{
     class PlayerShip : public EntityView{
     private:
         sf::Text m_lives;
         sf::Font* m_font;
     public:
+        friend class resources::PlayerShip;
+
         PlayerShip(entities::Entity *associatedEntity);
 
         void update();

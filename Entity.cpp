@@ -26,7 +26,7 @@ entities::Entity *entities::Entity::checkCollision() {
     return nullptr;
 }
 
-bool ::entities::collides(entities::Entity *entity1, entities::Entity *entity2) {
+bool entities::collides(entities::Entity *entity1, entities::Entity *entity2) {
     sf::FloatRect globalHitbox1 = {entity1->m_hitbox.left+entity1->m_position.first, entity1->m_hitbox.top+entity1->m_position.second, entity1->m_hitbox.width, entity1->m_hitbox.height};
     sf::FloatRect globalHitbox2 = {entity2->m_hitbox.left+entity2->m_position.first, entity2->m_hitbox.top+entity2->m_position.second, entity2->m_hitbox.width, entity2->m_hitbox.height};
     return globalHitbox1.intersects(globalHitbox2);
@@ -48,7 +48,11 @@ bool entities::Entity::deleted() {
     return m_deleted;
 }
 
-void entities::Entity::destroy() {
-    entityList.erase(std::find(entityList.begin(), entityList.end(), this));
-    delete this;
+void entities::deleteMarkedEntities() {
+    for(auto it = Entity::entityList.begin(); it < Entity::entityList.end(); it++){
+        if((*it)->deleted()){
+            delete *it;
+            it = Entity::entityList.erase(it);
+        }
+    }
 }

@@ -23,9 +23,6 @@ void entities::PlayerBullet::onCollision(entities::Entity *entity) {
 views::PlayerBullet::PlayerBullet(entities::Entity *associatedEntity) : EntityView(associatedEntity) {
 }
 
-resources::PlayerBullet::PlayerBullet(sf::Texture *m_texture, float m_speed, const sf::FloatRect &m_hitbox)
-        : m_texture(m_texture), m_speed(m_speed), m_hitbox(m_hitbox) {}
-
 entities::PlayerBullet *resources::PlayerBullet::create(const std::pair<float, float> &position) {
     entities::PlayerBullet* entity = new entities::PlayerBullet(position, m_hitbox, m_speed);
 
@@ -36,3 +33,8 @@ entities::PlayerBullet *resources::PlayerBullet::create(const std::pair<float, f
     entities::Entity::entityList.push_back(entity);
     return entity;
 }
+
+resources::PlayerBullet::PlayerBullet() {}
+
+resources::PlayerBullet::PlayerBullet(sf::Texture *texture, const sf::FloatRect &hitbox, float speed) : EntityResource(
+        texture, hitbox, speed) {}

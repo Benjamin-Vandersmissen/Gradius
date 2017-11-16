@@ -14,21 +14,29 @@ views::EntityView::EntityView(entities::Entity *associatedEntity) : m_associated
 
 void views::EntityView::update() {
     if(m_associatedEntity->deleted()){
-        destroy();
+        markDeleted();
     }
     m_sprite.setPosition(Transformation::invTransform(m_associatedEntity->getPosition()));
-}
-
-void views::EntityView::destroy() {
-    viewList.erase(std::find(viewList.begin(), viewList.end(), this));
-    delete this;
-}
-
-views::EntityView::~EntityView() {
-    m_associatedEntity->destroy();
 }
 
 void views::EntityView::loadSprite() {
     m_sprite = sf::Sprite();
     m_sprite.setTexture(*m_texture);
+}
+
+void views::EntityView::markDeleted() {
+    m_deleted = true;
+}
+
+bool views::EntityView::deleted() {
+    return m_deleted;
+}
+
+void views::deleteMarkedViews() {
+    for(auto it = EntityView::viewList.begin(); it < EntityView::viewList.end(); ++it){
+        if((*it)->deleted()){
+            delete *it;
+            it = EntityView::viewList.erase(it);
+        }
+    }
 }

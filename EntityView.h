@@ -16,10 +16,10 @@ namespace views {
         sf::Texture* m_texture;
 
         entities::Entity* m_associatedEntity;
+
+        bool m_deleted = false;
     public:
         EntityView(entities::Entity *associatedEntity);
-
-        ~EntityView();
 
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
@@ -27,10 +27,16 @@ namespace views {
 
         static std::vector<views::EntityView*> viewList;
 
-        void destroy();
+        void markDeleted();
+
+        bool deleted();
+
+        friend void deleteMarkedViews();
 
         void loadSprite();
     };
+
+    void deleteMarkedViews();
 }
 
 
