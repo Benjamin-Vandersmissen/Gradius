@@ -44,6 +44,10 @@ public:
     static float width();
 
     static float height();
+
+    static unsigned int screenWidth();
+
+    static unsigned int screenHeight();
 };
 
 

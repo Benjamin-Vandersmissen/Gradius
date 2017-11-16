@@ -27,8 +27,6 @@ namespace resources{
 
 namespace views {
     class EnemyShip : public EntityView{
-    private:
-        sf::Texture* m_texture;
     public:
         friend class resources::EnemyShip;
 

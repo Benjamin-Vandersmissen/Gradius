@@ -1,0 +1,5 @@
+{
+    "Type": "EnemyShip",
+    "TexturePath": "./textures/EnemyShip.png",
+    "Speed": 0.10
+}

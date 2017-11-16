@@ -19,6 +19,8 @@ namespace resources{
     EntityResource* loadFromJson(std::string filename);
 }
 
+void loadLevel(std::string filename);
+
 class Game : public sf::Drawable{
 private:
     StopWatch* m_stopWatch = nullptr;

@@ -1,0 +1,6 @@
+{
+    "Type": "PlayerShip",
+    "TexturePath": "./textures/PlayerShip.png",
+    "FontPath": "./fonts/ARCADECLASSIC.TTF",
+    "Speed": 0.10
+}

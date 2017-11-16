@@ -42,7 +42,6 @@ resources::EntityResource *::resources::loadFromJson(std::string filename) {
 }
 
 Game::Game(unsigned int width, unsigned int height) {
-    resources::loadFromJson("../resources/PlayerBullet.json");
     m_stopWatch = StopWatch::getStopWatch();
     m_window = new sf::RenderWindow(sf::VideoMode(200, 150), "Gradius"); //the default size is 200x150, this will make it that everything is auto-scaled
     m_window->setSize({width,height});
@@ -54,6 +53,7 @@ Game::Game(unsigned int width, unsigned int height) {
     texture2->loadFromFile("../NES - Gradius - Gradius.png", {487,10,13,13});
     entities::Entity::entityList = {new entities::PlayerShip({-3,0}, {0,0,1.28,0.64}, 0.10), new entities::EnemyShip({5,0}, {0,0,0.52,0.52}, 0.10), new entities::BorderObstacle({4.25,-3}, {0,0,2.56,0.52}, 0.10)};
     views::EntityView::viewList = {new views::PlayerShip(entities::Entity::entityList[0]), new views::EnemyShip(entities::Entity::entityList[1]), new views::BorderObstacle(entities::Entity::entityList[2])};
+    loadLevel("../levels/level.json");
 }
 
 Game::Game() : Game(400, 300) {
@@ -106,5 +106,43 @@ int Game::handleEvent(sf::Event &event) {
 void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     for(views::EntityView* view : views::EntityView::viewList){
         target.draw(*view, states);
+    }
+}
+
+void loadLevel(std::string filename) {
+    json j;
+    std::ifstream stream(filename);
+    stream >> j;
+
+    std::map<std::string, resources::EntityResource*> resourceMap;
+
+    for(entities::Entity* entity: entities::Entity::entityList) {
+        entity->markDeleted();
+    }
+    entities::deleteMarkedEntities();
+
+    for(views::EntityView* view : views::EntityView::viewList){
+        view->markDeleted();
+    }
+    views::deleteMarkedViews();
+    std::string resourcePath = j["ResourcePath"];
+    if(resourcePath.back() != '/')
+        resourcePath += '/';
+
+    std::vector<json> entities = j["Entities"];
+    for(json& j1 : entities){
+        std::string type = j1["Type"];
+        std::pair<float, float> position = j1["Position"];
+
+        if(resourceMap.find(type) == resourceMap.end()){ //resource not loaded in yet
+            resources::EntityResource* resource = resources::loadFromJson(resourcePath+type+".json");
+            if(resource == nullptr)
+                std::cout << "A";
+            else {
+                resourceMap[type] = resource;
+            }
+        }
+
+        resourceMap[type]->create(position);
     }
 }

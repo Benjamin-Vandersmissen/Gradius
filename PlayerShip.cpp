@@ -162,9 +162,9 @@ entities::PlayerShip *resources::PlayerShip::create(const std::pair<float, float
 
 void resources::PlayerShip::loadFromJson(json j, std::string path) {
     EntityResource::loadFromJson(j, path);
-    std::string fontPath = j["fontPath"];
+    std::string fontPath = j["FontPath"];
     this->m_font = new sf::Font;
-    this->m_font->loadFromFile(fontPath);
+    this->m_font->loadFromFile(path+fontPath);
 }
 
 resources::PlayerShip::PlayerShip() {}
