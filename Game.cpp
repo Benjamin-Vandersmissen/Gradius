@@ -51,7 +51,7 @@ Game::Game(unsigned int width, unsigned int height) {
     texture->loadFromFile("../NES - Gradius - Gradius.png", {0,100,32,16});
     sf::Texture* texture2 = new sf::Texture;
     texture2->loadFromFile("../NES - Gradius - Gradius.png", {487,10,13,13});
-    entities::Entity::entityList = {new entities::PlayerShip({-3,0}, {0,0,1.28,0.64}, 0.10), new entities::EnemyShip({5,0}, {0,0,0.52,0.52}, 0.10), new entities::BorderObstacle({4.25,-3}, {0,0,2.56,0.52}, 0.10)};
+    entities::Entity::entityList = {new entities::PlayerShip({-3, 0}, {0, 0, 1.28, 0.64}, 0.10, std::__cxx11::string()), new entities::EnemyShip({5, 0}, {0, 0, 0.52, 0.52}, 0.10), new entities::BorderObstacle({4.25, -3}, {0, 0, 2.56, 0.52}, 0.10)};
     views::EntityView::viewList = {new views::PlayerShip(entities::Entity::entityList[0]), new views::EnemyShip(entities::Entity::entityList[1]), new views::BorderObstacle(entities::Entity::entityList[2])};
     loadLevel("../levels/level.json");
 }
@@ -114,8 +114,6 @@ void loadLevel(std::string filename) {
     std::ifstream stream(filename);
     stream >> j;
 
-    std::map<std::string, resources::EntityResource*> resourceMap;
-
     for(entities::Entity* entity: entities::Entity::entityList) {
         entity->markDeleted();
     }
@@ -130,14 +128,32 @@ void loadLevel(std::string filename) {
         resourcePath += '/';
 
     std::vector<json> entities = j["Entities"];
+
+    using resources::resourceMap;
+    resourceMap.clear();
+
+    std::vector<std::string> resourcesToLoad = j["Resources"];
+    for(std::string& type : resourcesToLoad){
+        if(resourceMap.find(type) == resourceMap.end()){
+            resources::EntityResource* resource = resources::loadFromJson(resourcePath+type+".json");
+            if(resource == nullptr){
+
+            }
+            else{
+                resourceMap[type] = resource;
+            }
+        }
+    }
+
     for(json& j1 : entities){
         std::string type = j1["Type"];
         std::pair<float, float> position = j1["Position"];
 
         if(resourceMap.find(type) == resourceMap.end()){ //resource not loaded in yet
             resources::EntityResource* resource = resources::loadFromJson(resourcePath+type+".json");
-            if(resource == nullptr)
-                std::cout << "A";
+            if(resource == nullptr){
+
+            }
             else {
                 resourceMap[type] = resource;
             }

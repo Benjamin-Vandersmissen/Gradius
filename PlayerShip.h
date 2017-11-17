@@ -13,8 +13,6 @@
 namespace entities {
     class PlayerShip : public Entity{
     protected:
-        sf::Texture* bulletTexture;
-
         unsigned int m_cooldown = 10;
 
         unsigned int m_current_cooldown = 0;
@@ -22,8 +20,10 @@ namespace entities {
         unsigned int m_lives = 3;
 
         unsigned int m_immunity = 0;
+
+        std::string m_bullet = "";
     public:
-        PlayerShip(const std::pair<float, float> &position, const sf::FloatRect &hitbox, float speed);
+        PlayerShip(const std::pair<float, float> &position, const sf::FloatRect &hitbox, float speed, std::string bullet);
 
         virtual void handleEvent(sf::Event& event);
 
@@ -49,6 +49,8 @@ namespace resources {
     class PlayerShip: public EntityResource{
     private:
         sf::Font* m_font;
+
+        std::string m_bullet;
     public:
         PlayerShip();
 

@@ -33,6 +33,8 @@ namespace resources {
 
         virtual entities::Entity *create(const std::pair<float, float> &position) = 0;
     };
+
+    extern std::map<std::string, EntityResource*> resourceMap;
 }
 
 

@@ -56,14 +56,7 @@ void entities::PlayerShip::update() {
 
 void entities::PlayerShip::fire() {
     if (m_current_cooldown == 0) {
-        sf::Texture* texture = new sf::Texture;
-        texture->loadFromFile("../NES - Gradius - Gradius.png", {51,154,8,4});
-
-        resources::PlayerBullet resource(texture,  {0, 0, 0.32,0.16}, 0.15);
-        resource.create({this->m_position.first+this->m_hitbox.width/2, this->m_position.second+this->m_hitbox.height/2});
-//        entityList.push_back(bullet);
-//        using views::EntityView;
-//        EntityView::viewList.insert(EntityView::viewList.begin(), new views::PlayerBullet(bullet));
+        resources::resourceMap[m_bullet]->create({this->m_position.first+this->m_hitbox.width/2, this->m_position.second+this->m_hitbox.height/2});
         m_current_cooldown = m_cooldown;
     }
 }
@@ -92,10 +85,10 @@ unsigned int entities::PlayerShip::getLives() const{
     return m_lives;
 }
 
-entities::PlayerShip::PlayerShip(const std::pair<float, float> &position, const sf::FloatRect &hitbox, float speed) : Entity(
+entities::PlayerShip::PlayerShip(const std::pair<float, float> &position, const sf::FloatRect &hitbox, float speed, std::string bullet)
+        : Entity(
         position, hitbox, speed) {
-    bulletTexture = new sf::Texture();
-    bulletTexture->loadFromFile("../NES - Gradius - Gradius.png", {51,154,8,4});
+    m_bullet = bullet;
 }
 
 void entities::PlayerShip::doDamage(unsigned int damage) {
@@ -151,10 +144,11 @@ void views::PlayerShip::draw(sf::RenderTarget &target, sf::RenderStates states) 
 }
 
 entities::PlayerShip *resources::PlayerShip::create(const std::pair<float, float> &position) {
-    entities::PlayerShip* entity = new entities::PlayerShip(position, m_hitbox, m_speed);
+    entities::PlayerShip* entity = new entities::PlayerShip(position, m_hitbox, m_speed, m_bullet);
     views::PlayerShip* view = new views::PlayerShip(entity);
     view->m_texture = m_texture;
     view->loadSprite();
+    view->m_font = m_font;
     views::EntityView::viewList.push_back(view);
     entities::Entity::entityList.push_back(entity);
     return entity;
@@ -165,6 +159,8 @@ void resources::PlayerShip::loadFromJson(json j, std::string path) {
     std::string fontPath = j["FontPath"];
     this->m_font = new sf::Font;
     this->m_font->loadFromFile(path+fontPath);
+
+    this->m_bullet = j["BulletType"];
 }
 
 resources::PlayerShip::PlayerShip() {}

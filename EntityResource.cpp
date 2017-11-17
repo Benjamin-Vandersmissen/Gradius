@@ -4,6 +4,8 @@
 
 #include "EntityResource.h"
 
+std::map<std::string, resources::EntityResource*> resources::resourceMap = {};
+
 resources::EntityResource::EntityResource() {}
 
 void resources::EntityResource::loadFromJson(json j, std::string path) {
