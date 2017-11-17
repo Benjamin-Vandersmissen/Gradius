@@ -58,6 +58,8 @@ namespace resources {
 
         void loadFromJson(json j, std::string path);
 
+        void loadFromIni(std::string path, std::string filename);
+
     };
 }
 

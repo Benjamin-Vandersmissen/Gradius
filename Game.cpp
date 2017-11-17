@@ -7,35 +7,35 @@
 #include "EnemyShip.h"
 #include "BorderObstacle.h"
 
-resources::EntityResource *::resources::loadFromJson(std::string filename) {
-    std::string path = filename.substr(0, filename.rfind("/")+1);
-    json j;
-    std::ifstream stream(filename);
-    stream >> j;
-    std::string type = j["Type"];
+resources::EntityResource *::resources::loadFromIni(std::string fullPath) {
+    std::string path = fullPath.substr(0, fullPath.rfind("/")+1);
+    std::string filename = fullPath.substr(path.size(), fullPath.size()-path.size());
+    std::ifstream stream(fullPath);
+    ini::Configuration configuration(stream);
+    std::string type = configuration["General"]["Type"].as_string_or_die();
     if(type == "PlayerBullet"){
         PlayerBullet* bullet = new PlayerBullet;
-        bullet->loadFromJson(j, path);
+        bullet->loadFromIni(path,filename);
         return bullet;
     }
     else if (type == "PlayerShip"){
         PlayerShip* ship = new PlayerShip;
-        ship->loadFromJson(j, path);
+        ship->loadFromIni(path, filename);
         return ship;
     }
     else if (type == "EnemyShip"){
         EnemyShip* ship = new EnemyShip;
-        ship->loadFromJson(j, path);
+        ship->loadFromIni(path, filename);
         return ship;
     }
     else if (type == "BorderObstacle"){
         BorderObstacle* obstacle = new BorderObstacle;
-        obstacle->loadFromJson(j, path);
+        obstacle->loadFromIni(path, filename);
         return obstacle;
     }
     else if (type == "Obstacle"){
         Obstacle* obstacle = new Obstacle;
-        obstacle->loadFromJson(j, path);
+        obstacle->loadFromIni(path, filename);
         return obstacle;
     }
     return nullptr;
@@ -129,7 +129,7 @@ void loadLevel(std::string filename) {
     std::vector<std::string> resourcesToLoad = j["Resources"];
     for(std::string& type : resourcesToLoad){
         if(resourceMap.find(type) == resourceMap.end()){
-            resources::EntityResource* resource = resources::loadFromJson(resourcePath+type+".json");
+            resources::EntityResource* resource = resources::loadFromIni(resourcePath + type + ".ini");
             if(resource == nullptr){
 
             }
@@ -144,7 +144,7 @@ void loadLevel(std::string filename) {
         std::pair<float, float> position = j1["Position"];
 
         if(resourceMap.find(type) == resourceMap.end()){ //resource not loaded in yet
-            resources::EntityResource* resource = resources::loadFromJson(resourcePath+type+".json");
+            resources::EntityResource* resource = resources::loadFromIni(resourcePath + type + ".ini");
             if(resource == nullptr){
 
             }

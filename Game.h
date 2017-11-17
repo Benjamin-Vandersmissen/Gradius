@@ -16,7 +16,7 @@
 #include "EntityResource.h"
 
 namespace resources{
-    EntityResource* loadFromJson(std::string filename);
+    EntityResource* loadFromIni(std::string fullPath);
 }
 
 void loadLevel(std::string filename);

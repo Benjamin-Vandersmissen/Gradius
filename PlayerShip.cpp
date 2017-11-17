@@ -164,3 +164,14 @@ void resources::PlayerShip::loadFromJson(json j, std::string path) {
 }
 
 resources::PlayerShip::PlayerShip() {}
+
+void resources::PlayerShip::loadFromIni(std::string path, std::string filename) {
+    EntityResource::loadFromIni(path, filename);
+    std::ifstream stream(path+filename);
+    ini::Configuration configuration(stream);
+    std::string fontPath = configuration["PlayerShip"]["FontPath"].as_string_or_die();
+    this->m_font = new sf::Font;
+    this->m_font->loadFromFile(path+fontPath);
+
+    this->m_bullet = configuration["PlayerShip"]["BulletType"].as_string_or_default("PlayerBullet");
+}

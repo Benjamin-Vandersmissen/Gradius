@@ -10,6 +10,8 @@
 #include "EntityView.h"
 
 #include "json.hpp"
+#include "ini_configuration.hh"
+#include <fstream>
 using json = nlohmann::json;
 
 namespace resources {
@@ -30,6 +32,8 @@ namespace resources {
         EntityResource(sf::Texture* texture, const sf::FloatRect& hitbox, float speed);
 
         virtual void loadFromJson(json j, std::string path);
+
+        virtual void loadFromIni(std::string path, std::string filename);
 
         virtual entities::Entity *create(const std::pair<float, float> &position) = 0;
     };
