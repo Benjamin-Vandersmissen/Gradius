@@ -25,8 +25,6 @@ namespace views {
 
         virtual void update();
 
-        static std::vector<views::EntityView*> viewList;
-
         void markDeleted();
 
         bool deleted();
@@ -35,6 +33,7 @@ namespace views {
 
         void loadSprite();
     };
+    extern std::vector<views::EntityView*> viewList;
 
     void deleteMarkedViews();
 }

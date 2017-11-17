@@ -4,7 +4,7 @@
 
 #include "EntityView.h"
 
-std::vector<views::EntityView*> views::EntityView::viewList = {};
+std::vector<views::EntityView*> views::viewList = {};
 
 void views::EntityView::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(m_sprite, states);
@@ -33,10 +33,10 @@ bool views::EntityView::deleted() {
 }
 
 void views::deleteMarkedViews() {
-    for(auto it = EntityView::viewList.begin(); it < EntityView::viewList.end(); ++it){
+    for(auto it = viewList.begin(); it < viewList.end(); ++it){
         if((*it)->deleted()){
             delete *it;
-            it = EntityView::viewList.erase(it);
+            it = viewList.erase(it);
         }
     }
 }

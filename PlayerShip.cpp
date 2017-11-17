@@ -149,8 +149,8 @@ entities::PlayerShip *resources::PlayerShip::create(const std::pair<float, float
     view->m_texture = m_texture;
     view->loadSprite();
     view->m_font = m_font;
-    views::EntityView::viewList.push_back(view);
-    entities::Entity::entityList.push_back(entity);
+    views::viewList.push_back(view);
+    entities::entityList.push_back(entity);
     return entity;
 }
 

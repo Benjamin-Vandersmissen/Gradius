@@ -4,7 +4,7 @@
 
 #include "Entity.h"
 
-std::vector<entities::Entity*> entities::Entity::entityList = {};
+std::vector<entities::Entity*> entities::entityList = {};
 
 void entities::Entity::update() {
     m_position = {m_position.first + m_direction.first, m_position.second + m_direction.second};
@@ -49,10 +49,10 @@ bool entities::Entity::deleted() {
 }
 
 void entities::deleteMarkedEntities() {
-    for(auto it = Entity::entityList.begin(); it < Entity::entityList.end(); it++){
+    for(auto it = entityList.begin(); it < entityList.end(); it++){
         if((*it)->deleted()){
             delete *it;
-            it = Entity::entityList.erase(it);
+            it = entityList.erase(it);
         }
     }
 }

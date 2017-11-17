@@ -20,7 +20,7 @@ entities::BorderObstacle *resources::BorderObstacle::create(const std::pair<floa
     views::BorderObstacle* view = new views::BorderObstacle(entity);
     view->m_texture = m_texture;
     view->loadSprite();
-    views::EntityView::viewList.push_back(view);
-    entities::Entity::entityList.push_back(entity);
+    views::viewList.push_back(view);
+    entities::entityList.push_back(entity);
     return entity;
 }

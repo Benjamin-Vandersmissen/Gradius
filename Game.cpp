@@ -47,12 +47,6 @@ Game::Game(unsigned int width, unsigned int height) {
     m_window->setSize({width,height});
     Transformation::initTransformation(200, 150);
     m_updatedelay = 1000000/100;
-    sf::Texture* texture = new sf::Texture;
-    texture->loadFromFile("../NES - Gradius - Gradius.png", {0,100,32,16});
-    sf::Texture* texture2 = new sf::Texture;
-    texture2->loadFromFile("../NES - Gradius - Gradius.png", {487,10,13,13});
-    entities::Entity::entityList = {new entities::PlayerShip({-3, 0}, {0, 0, 1.28, 0.64}, 0.10, std::__cxx11::string()), new entities::EnemyShip({5, 0}, {0, 0, 0.52, 0.52}, 0.10), new entities::BorderObstacle({4.25, -3}, {0, 0, 2.56, 0.52}, 0.10)};
-    views::EntityView::viewList = {new views::PlayerShip(entities::Entity::entityList[0]), new views::EnemyShip(entities::Entity::entityList[1]), new views::BorderObstacle(entities::Entity::entityList[2])};
     loadLevel("../levels/level.json");
 }
 
@@ -74,12 +68,12 @@ void Game::loop() {
             }
         }
         m_window->clear();
-        for(int i = 0; i < entities::Entity::entityList.size(); i++){
-            entities::Entity* entity = entities::Entity::entityList.at(i);
+        for(int i = 0; i < entities::entityList.size(); i++){
+            entities::Entity* entity = entities::entityList.at(i);
             entity->update();
         }
-        for(int i = 0; i < views::EntityView::viewList.size(); i++){
-            views::EntityView* view = views::EntityView::viewList.at(i);
+        for(int i = 0; i < views::viewList.size(); i++){
+            views::EntityView* view = views::viewList.at(i);
             view->update();
         }
         views::deleteMarkedViews();
@@ -95,8 +89,8 @@ int Game::handleEvent(sf::Event &event) {
             m_window->close();
             return -1;
         default:
-            for(int i = 0; i < entities::Entity::entityList.size(); i++){
-                entities::Entity* entity = entities::Entity::entityList[i];
+            for(int i = 0; i < entities::entityList.size(); i++){
+                entities::Entity* entity = entities::entityList[i];
                 entity->handleEvent(event);
             }
     }
@@ -104,7 +98,7 @@ int Game::handleEvent(sf::Event &event) {
 }
 
 void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-    for(views::EntityView* view : views::EntityView::viewList){
+    for(views::EntityView* view : views::viewList){
         target.draw(*view, states);
     }
 }
@@ -114,12 +108,12 @@ void loadLevel(std::string filename) {
     std::ifstream stream(filename);
     stream >> j;
 
-    for(entities::Entity* entity: entities::Entity::entityList) {
+    for(entities::Entity* entity: entities::entityList) {
         entity->markDeleted();
     }
     entities::deleteMarkedEntities();
 
-    for(views::EntityView* view : views::EntityView::viewList){
+    for(views::EntityView* view : views::viewList){
         view->markDeleted();
     }
     views::deleteMarkedViews();

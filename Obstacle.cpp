@@ -16,7 +16,7 @@ entities::Obstacle *resources::Obstacle::create(const std::pair<float, float> &p
     views::Obstacle* view = new views::Obstacle(entity);
     view->m_texture = m_texture;
     view->loadSprite();
-    views::EntityView::viewList.push_back(view);
-    entities::Entity::entityList.push_back(entity);
+    views::viewList.push_back(view);
+    entities::entityList.push_back(entity);
     return entity;
 }

@@ -28,8 +28,6 @@ namespace entities {
 
         friend void deleteMarkedEntities();
 
-        static std::vector<entities::Entity*> entityList;
-
         Entity(const std::pair<float, float> &position, const sf::FloatRect &hitbox, float speed);
 
         virtual void handleEvent(sf::Event& event){};
@@ -61,6 +59,9 @@ namespace entities {
     bool collides(Entity* entity1, Entity* entity2);
 
     void deleteMarkedEntities();
+
+    extern std::vector<entities::Entity*> entityList;
+
 }
 
 

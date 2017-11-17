@@ -29,8 +29,8 @@ entities::PlayerBullet *resources::PlayerBullet::create(const std::pair<float, f
     views::PlayerBullet* view = new views::PlayerBullet(entity);
     view->m_texture = m_texture;
     view->loadSprite();
-    views::EntityView::viewList.push_back(view);
-    entities::Entity::entityList.push_back(entity);
+    views::viewList.push_back(view);
+    entities::entityList.push_back(entity);
     return entity;
 }
 
