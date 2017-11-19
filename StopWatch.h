@@ -14,10 +14,19 @@ private:
 
     static StopWatch* m_stopwatch;
 public:
+    /**
+     * \brief set the clock to the current time
+     * */
     void reset();
 
+    /**
+     * \brief get the difference between the current time and the time of initialization of the clock
+     * */
     clock_t getElapsedTime() const;
 
+    /**
+     * \brief creates the stopwatch if it wasn't created yet and returns it
+     * */
     static StopWatch * getStopWatch();
 };
 

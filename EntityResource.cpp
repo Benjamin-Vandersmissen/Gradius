@@ -15,8 +15,8 @@ void resources::EntityResource::loadFromJson(json j, std::string path) {
 
     m_speed = j["Speed"];
     std::pair<float,float> dimensions;
-    dimensions.first = Transformation::width()*m_texture->getSize().x/Transformation::screenWidth();
-    dimensions.second = Transformation::height()*m_texture->getSize().y/Transformation::screenHeight();
+    dimensions.first = Transformation::width()*m_texture->getSize().x/ Transformation::windowWidth();
+    dimensions.second = Transformation::height()*m_texture->getSize().y/ Transformation::windowHeight();
     m_hitbox = {0,0,dimensions.first, dimensions.second};
 }
 
@@ -34,7 +34,7 @@ void resources::EntityResource::loadFromIni(std::string path, std::string filena
     m_speed = static_cast<float>(configuration["General"]["Speed"].as_double_or_die());
 
     std::pair<float,float> dimensions;
-    dimensions.first = Transformation::width()*m_texture->getSize().x/Transformation::screenWidth();
-    dimensions.second = Transformation::height()*m_texture->getSize().y/Transformation::screenHeight();
+    dimensions.first = Transformation::width()*m_texture->getSize().x/ Transformation::windowWidth();
+    dimensions.second = Transformation::height()*m_texture->getSize().y/ Transformation::windowHeight();
     m_hitbox = {0,0,dimensions.first, dimensions.second};
 }

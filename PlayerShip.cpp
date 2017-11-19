@@ -36,7 +36,6 @@ void entities::PlayerShip::update() {
 
     std::pair<double, double> desiredDirection = {m_speed*(keyRight-keyLeft), m_speed*(keyDown-keyUp)};
 
-//    m_direction = {(m_direction.first + desiredDirection.first)/2, (m_direction.second + desiredDirection.second)/2};
     if(m_position.first + desiredDirection.first + m_hitbox.left + m_hitbox.width > Transformation::left()+Transformation::width())
         desiredDirection.first = 0;
     if(m_position.first + desiredDirection.first + m_hitbox.left < Transformation::left())
@@ -48,6 +47,8 @@ void entities::PlayerShip::update() {
     }
     m_direction = desiredDirection;
     Entity::update();
+
+    //update the current cooldown and immunity durations
     if(m_current_cooldown > 0)
         m_current_cooldown--;
     if(m_immunity > 0)
@@ -56,6 +57,7 @@ void entities::PlayerShip::update() {
 
 void entities::PlayerShip::fire() {
     if (m_current_cooldown == 0) {
+        //create a new entity of the bullet type at the middle of the PlayerShip
         resources::resourceMap[m_bullet]->create({this->m_position.first+this->m_hitbox.width/2, this->m_position.second+this->m_hitbox.height/2});
         m_current_cooldown = m_cooldown;
     }
@@ -63,17 +65,17 @@ void entities::PlayerShip::fire() {
 
 void entities::PlayerShip::onCollision(Entity *entity) {
     EnemyShip* enemyShip = dynamic_cast<EnemyShip*>(entity);
-    if(enemyShip){
+    if(enemyShip){ //collision with EnemyShip
         this->doDamage(1);
         enemyShip->markDeleted();
     }
     BorderObstacle* borderObstacle = dynamic_cast<BorderObstacle*>(entity);
-    if(borderObstacle){
+    if(borderObstacle){ //collision with BorderObstacle
         this->doDamage(2);
     }
     else{ //borderObstacle is a subclass of Obstacle, this will ensure the collision will only be counted once
         Obstacle* obstacle = dynamic_cast<Obstacle*>(entity);
-        if(obstacle) {
+        if(obstacle) { //collision with normal Obstacle
             this->doDamage(1);
             obstacle->markDeleted();
         }
@@ -109,19 +111,8 @@ bool entities::PlayerShip::immune() {
 }
 
 views::PlayerShip::PlayerShip(entities::Entity *associatedEntity) : EntityView(associatedEntity){
-    m_font = new sf::Font();
-    m_font->loadFromFile("../fonts/ARCADECLASSIC.TTF");
 
     m_lives = sf::Text();
-    m_lives.setFont(*m_font);
-    m_lives.setScale(0.25,0.25);
-    m_lives.setColor(sf::Color::Cyan);
-    m_lives.setPosition(Transformation::invTransform({-3.75,-2.75}));
-
-    m_texture = new sf::Texture();
-    m_texture->loadFromFile("../NES - Gradius - Gradius.png", {0,100,32,16});
-    m_sprite = sf::Sprite();
-    m_sprite.setTexture(*m_texture);
 }
 
 void views::PlayerShip::update() {
@@ -149,6 +140,10 @@ entities::PlayerShip *resources::PlayerShip::create(const std::pair<float, float
     view->m_texture = m_texture;
     view->loadSprite();
     view->m_font = m_font;
+    view->m_lives.setFont(*m_font);
+    view->m_lives.setScale(0.25,0.25);
+    view->m_lives.setColor(sf::Color::Cyan);
+    view->m_lives.setPosition(Transformation::invTransform({-3.75,-2.75}));
     views::viewList.push_back(view);
     entities::entityList.push_back(entity);
     return entity;

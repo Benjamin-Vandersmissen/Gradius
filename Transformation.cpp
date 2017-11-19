@@ -57,11 +57,11 @@ float Transformation::height() {
     return m_height;
 }
 
-unsigned int Transformation::screenWidth() {
+unsigned int Transformation::windowWidth() {
     return m_windowWidth;
 }
 
-unsigned int Transformation::screenHeight() {
+unsigned int Transformation::windowHeight() {
     return m_windowHeight;
 }
 
