@@ -20,11 +20,11 @@ void entities::PlayerBullet::onCollision(entities::Entity *entity) {
 
 }
 
-views::PlayerBullet::PlayerBullet(entities::Entity *associatedEntity) : EntityView(associatedEntity) {
+views::PlayerBullet::PlayerBullet(std::shared_ptr<entities::Entity> associatedEntity) : EntityView(associatedEntity) {
 }
 
-entities::PlayerBullet *resources::PlayerBullet::create(const std::pair<float, float> &position) {
-    entities::PlayerBullet* entity = new entities::PlayerBullet(position, m_hitbox, m_speed);
+std::shared_ptr<entities::Entity> resources::PlayerBullet::create(const std::pair<float, float> &position) {
+    std::shared_ptr<entities::PlayerBullet> entity = std::make_shared<entities::PlayerBullet>(position, m_hitbox, m_speed);
 
     views::PlayerBullet* view = new views::PlayerBullet(entity);
     view->m_animation = m_animation;

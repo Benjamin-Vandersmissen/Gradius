@@ -10,6 +10,7 @@
 
 #include "Transformation.h"
 #include <iostream>
+#include <memory>
 
 
 namespace entities {
@@ -60,7 +61,7 @@ namespace entities {
 
     void deleteMarkedEntities();
 
-    extern std::vector<entities::Entity*> entityList;
+    extern std::vector<std::shared_ptr<entities::Entity>> entityList;
 
 }
 

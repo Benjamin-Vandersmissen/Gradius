@@ -8,14 +8,14 @@
 entities::EnemyShip::EnemyShip(const std::pair<float, float> &position, const sf::FloatRect &hitbox, float speed)
         : ScrollingEntity(position, hitbox, speed) {}
 
-views::EnemyShip::EnemyShip(entities::Entity *associatedEntity) : EntityView(associatedEntity) {
+views::EnemyShip::EnemyShip(std::shared_ptr<entities::Entity> associatedEntity) : EntityView(associatedEntity) {
 
 }
 
 resources::EnemyShip::EnemyShip() {}
 
-entities::EnemyShip *resources::EnemyShip::create(const std::pair<float, float> &position) {
-    entities::EnemyShip* entity = new entities::EnemyShip(position, m_hitbox, m_speed);
+std::shared_ptr<entities::Entity> resources::EnemyShip::create(const std::pair<float, float> &position) {
+    std::shared_ptr<entities::EnemyShip> entity = std::make_shared<entities::EnemyShip>(position, m_hitbox, m_speed);
 
     views::EnemyShip* view = new views::EnemyShip(entity);
     view->m_animation = m_animation;

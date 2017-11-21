@@ -22,7 +22,7 @@ namespace resources {
     public :
         Obstacle();
 
-        entities::Obstacle* create(const std::pair<float, float>& position);
+        std::shared_ptr<entities::Entity> create(const std::pair<float, float>& position);
     };
 }
 
@@ -31,7 +31,7 @@ namespace views {
     public:
         friend class resources::Obstacle;
 
-        Obstacle(entities::Entity *associatedEntity);
+        Obstacle(std::shared_ptr<entities::Entity> associatedEntity);
     };
 }
 

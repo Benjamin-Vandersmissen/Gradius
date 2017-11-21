@@ -6,11 +6,12 @@
 #define GRADIUS_ANIMATION_H
 
 #include "SFML/Graphics.hpp"
+#include <memory>
 
 class Animation : public sf::Transformable, public sf::Drawable{
 private:
     std::vector<sf::Sprite> m_sprites;
-    sf::Texture* m_texture;
+    std::shared_ptr<sf::Texture> m_texture;
     std::size_t m_index = 0;
     int m_delay;
     int m_current_delay;
@@ -18,7 +19,7 @@ public:
     Animation();
 
     Animation(int m_delay);
-
+    
     Animation(const std::vector<sf::Sprite> &m_sprites, int m_delay);
 
     void addSprite(const sf::Sprite& sprite);

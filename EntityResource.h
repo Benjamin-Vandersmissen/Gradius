@@ -40,7 +40,7 @@ namespace resources {
 
         virtual void loadFromIni(std::string path, std::string filename);
 
-        virtual entities::Entity *create(const std::pair<float, float> &position) = 0;
+        virtual std::shared_ptr<entities::Entity> create(const std::pair<float, float> &position) = 0;
     };
 
     extern std::map<std::string, EntityResource*> resourceMap;

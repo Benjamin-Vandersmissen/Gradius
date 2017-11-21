@@ -21,7 +21,7 @@ namespace resources{
     public:
         EnemyShip();
 
-        entities::EnemyShip* create(const std::pair<float, float>& position);
+        std::shared_ptr<entities::Entity> create(const std::pair<float, float>& position);
     };
 }
 
@@ -30,7 +30,7 @@ namespace views {
     public:
         friend class resources::EnemyShip;
 
-        EnemyShip(entities::Entity *associatedEntity);
+        EnemyShip(std::shared_ptr<entities::Entity> associatedEntity);
     };
 }
 #endif //GRADIUS_ENEMYSHIP_H

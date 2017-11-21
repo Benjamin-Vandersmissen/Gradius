@@ -10,7 +10,7 @@ void views::EntityView::draw(sf::RenderTarget &target, sf::RenderStates states) 
     target.draw(m_animation, states);
 }
 
-views::EntityView::EntityView(entities::Entity *associatedEntity) : m_associatedEntity(associatedEntity) {
+views::EntityView::EntityView(std::shared_ptr<entities::Entity> associatedEntity) : m_associatedEntity(associatedEntity) {
 }
 
 void views::EntityView::update() {

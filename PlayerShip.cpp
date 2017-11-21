@@ -110,13 +110,13 @@ bool entities::PlayerShip::immune() {
     return m_immunity > 0;
 }
 
-views::PlayerShip::PlayerShip(entities::Entity *associatedEntity) : EntityView(associatedEntity){
+views::PlayerShip::PlayerShip(std::shared_ptr<entities::Entity> associatedEntity) : EntityView(associatedEntity){
 
     m_lives = sf::Text();
 }
 
 void views::PlayerShip::update() {
-    entities::PlayerShip* ship = dynamic_cast<entities::PlayerShip*>(m_associatedEntity);
+    std::shared_ptr<entities::PlayerShip> ship = std::dynamic_pointer_cast<entities::PlayerShip>(m_associatedEntity);
     if(ship){
         m_lives.setString("lives " + std::to_string(ship->getLives()));
         if(ship->immune()){
@@ -134,8 +134,8 @@ void views::PlayerShip::draw(sf::RenderTarget &target, sf::RenderStates states) 
     target.draw(m_lives, states);
 }
 
-entities::PlayerShip *resources::PlayerShip::create(const std::pair<float, float> &position) {
-    entities::PlayerShip* entity = new entities::PlayerShip(position, m_hitbox, m_speed, m_bullet);
+std::shared_ptr<entities::Entity> resources::PlayerShip::create(const std::pair<float, float> &position) {
+    std::shared_ptr<entities::PlayerShip> entity = std::make_shared<entities::PlayerShip>(position, m_hitbox, m_speed, m_bullet);
     views::PlayerShip* view = new views::PlayerShip(entity);
     view->m_animation = m_animation;
     view->m_font = m_font;

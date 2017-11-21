@@ -4,7 +4,7 @@
 
 #include "Entity.h"
 
-std::vector<entities::Entity*> entities::entityList = {};
+std::vector<std::shared_ptr<entities::Entity>> entities::entityList = {};
 
 void entities::Entity::update() {
     m_position = {m_position.first + m_direction.first, m_position.second + m_direction.second};
@@ -17,12 +17,12 @@ entities::Entity::Entity(const std::pair<float, float> &position, const sf::Floa
 
 
 entities::Entity *entities::Entity::checkCollision() {
-    for(Entity* entity : entityList){
-        if(entity == this)
-            continue;
-        if(collides(entity, this))
-            return entity;
-    }
+//    for(std::shared_ptr<Entity> entity : entityList){
+//        if(entity == this)
+//            continue;
+//        if(collides(entity, this))
+//            return entity;
+//    }
     return nullptr;
 }
 
@@ -51,7 +51,6 @@ bool entities::Entity::deleted() {
 void entities::deleteMarkedEntities() {
     for(auto it = entityList.begin(); it < entityList.end(); it++){
         if((*it)->deleted()){
-            delete *it;
             it = entityList.erase(it);
         }
     }

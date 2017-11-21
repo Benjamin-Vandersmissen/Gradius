@@ -25,7 +25,7 @@ namespace resources{
 
         PlayerBullet(Animation animation, const sf::FloatRect &hitbox, float speed);
 
-        entities::PlayerBullet *create(const std::pair<float, float> &position);
+        std::shared_ptr<entities::Entity> create(const std::pair<float, float> &position);
 
     };
 }
@@ -35,7 +35,7 @@ namespace views{
     public:
         friend class resources::PlayerBullet;
 
-        PlayerBullet(entities::Entity *associatedEntity);
+        PlayerBullet(std::shared_ptr<entities::Entity> associatedEntity);
     };
 }
 

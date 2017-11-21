@@ -15,11 +15,11 @@ namespace views {
 
         Animation m_animation;
 
-        entities::Entity* m_associatedEntity;
+        std::shared_ptr<entities::Entity> m_associatedEntity;
 
         bool m_deleted = false;
     public:
-        EntityView(entities::Entity *associatedEntity);
+        EntityView(std::shared_ptr<entities::Entity> associatedEntity);
 
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 

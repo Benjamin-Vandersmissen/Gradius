@@ -69,7 +69,7 @@ void Game::loop() {
         }
         m_window->clear();
         for(int i = 0; i < entities::entityList.size(); i++){
-            entities::Entity* entity = entities::entityList.at(i);
+            std::shared_ptr<entities::Entity> entity = entities::entityList.at(i);
             entity->update();
         }
         for(int i = 0; i < views::viewList.size(); i++){
@@ -90,7 +90,7 @@ int Game::handleEvent(sf::Event &event) {
             return -1;
         default:
             for(int i = 0; i < entities::entityList.size(); i++){
-                entities::Entity* entity = entities::entityList[i];
+                std::shared_ptr<entities::Entity> entity = entities::entityList[i];
                 entity->handleEvent(event);
             }
     }
@@ -108,7 +108,7 @@ void loadLevel(std::string filename) {
     std::ifstream stream(filename);
     stream >> j;
 
-    for(entities::Entity* entity: entities::entityList) {
+    for(std::shared_ptr<entities::Entity> entity: entities::entityList) {
         entity->markDeleted();
     }
     entities::deleteMarkedEntities();

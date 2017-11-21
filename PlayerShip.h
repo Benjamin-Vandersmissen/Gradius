@@ -70,7 +70,7 @@ namespace resources {
     public:
         PlayerShip();
 
-        entities::PlayerShip* create(const std::pair<float, float>& position);
+        std::shared_ptr<entities::Entity> create(const std::pair<float, float>& position);
 
         void loadFromJson(json j, std::string path);
 
@@ -87,7 +87,7 @@ namespace views{
     public:
         friend class resources::PlayerShip;
 
-        PlayerShip(entities::Entity *associatedEntity);
+        PlayerShip(std::shared_ptr<entities::Entity> associatedEntity);
 
         void update();
 

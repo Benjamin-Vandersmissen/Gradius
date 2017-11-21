@@ -28,7 +28,7 @@ void Animation::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 }
 
 void Animation::createFromStrip(std::string filename, unsigned int amount) {
-    m_texture = new sf::Texture;
+    m_texture = std::make_shared<sf::Texture>();
     m_texture->loadFromFile(filename);
     unsigned int width = m_texture->getSize().x/amount;
     for(unsigned int i = 0; i < m_texture->getSize().x; i += width){
