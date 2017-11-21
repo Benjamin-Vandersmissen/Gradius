@@ -35,5 +35,5 @@ entities::PlayerBullet *resources::PlayerBullet::create(const std::pair<float, f
 
 resources::PlayerBullet::PlayerBullet() {}
 
-resources::PlayerBullet::PlayerBullet(Animation *animation, const sf::FloatRect &hitbox, float speed) : EntityResource(
+resources::PlayerBullet::PlayerBullet(Animation animation, const sf::FloatRect &hitbox, float speed) : EntityResource(
         animation, hitbox, speed) {}

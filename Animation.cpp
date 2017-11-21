@@ -45,3 +45,5 @@ void Animation::setColor(const sf::Color &color) {
 sf::Vector2u Animation::getSize() {
     return {m_texture->getSize().x/m_sprites.size(), m_texture->getSize().y};
 }
+
+Animation::Animation() {}

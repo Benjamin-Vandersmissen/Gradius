@@ -120,10 +120,10 @@ void views::PlayerShip::update() {
     if(ship){
         m_lives.setString("lives " + std::to_string(ship->getLives()));
         if(ship->immune()){
-            m_animation->setColor({192,192,192,128});
+            m_animation.setColor({192,192,192,128});
         }
         else{
-            m_animation->setColor({255,255,255});
+            m_animation.setColor({255,255,255});
         }
         EntityView::update();
     }

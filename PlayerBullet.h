@@ -23,7 +23,7 @@ namespace resources{
     public:
         PlayerBullet();
 
-        PlayerBullet(Animation *animation, const sf::FloatRect &hitbox, float speed);
+        PlayerBullet(Animation animation, const sf::FloatRect &hitbox, float speed);
 
         entities::PlayerBullet *create(const std::pair<float, float> &position);
 

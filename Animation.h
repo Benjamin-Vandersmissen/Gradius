@@ -15,6 +15,8 @@ private:
     int m_delay;
     int m_current_delay;
 public:
+    Animation();
+
     Animation(int m_delay);
 
     Animation(const std::vector<sf::Sprite> &m_sprites, int m_delay);

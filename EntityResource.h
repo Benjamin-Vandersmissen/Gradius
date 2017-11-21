@@ -27,14 +27,14 @@ namespace resources {
 
         int m_nrFrames = 1;
 
-        Animation* m_animation;
+        Animation m_animation;
 
         int m_delay = -1;
 
     public:
         EntityResource();
 
-        EntityResource(Animation *animation, const sf::FloatRect &hitbox, float speed);
+        EntityResource(Animation animation, const sf::FloatRect &hitbox, float speed);
 
         virtual void loadFromJson(json j, std::string path);
 

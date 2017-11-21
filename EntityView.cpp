@@ -7,18 +7,18 @@
 std::vector<views::EntityView*> views::viewList = {};
 
 void views::EntityView::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-    target.draw(*m_animation, states);
+    target.draw(m_animation, states);
 }
 
 views::EntityView::EntityView(entities::Entity *associatedEntity) : m_associatedEntity(associatedEntity) {
 }
 
 void views::EntityView::update() {
-    m_animation->update();
+    m_animation.update();
     if(m_associatedEntity->deleted()){
         markDeleted();
     }
-    m_animation->setPosition(Transformation::invTransform(m_associatedEntity->getPosition()));
+    m_animation.setPosition(Transformation::invTransform(m_associatedEntity->getPosition()));
 }
 
 void views::EntityView::markDeleted() {

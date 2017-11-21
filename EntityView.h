@@ -13,7 +13,7 @@ namespace views {
     class EntityView : public sf::Drawable{
     protected:
 
-        Animation* m_animation;
+        Animation m_animation;
 
         entities::Entity* m_associatedEntity;
 
