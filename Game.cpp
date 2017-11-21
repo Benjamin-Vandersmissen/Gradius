@@ -8,7 +8,7 @@
 #include "BorderObstacle.h"
 
 resources::EntityResource *::resources::loadFromIni(std::string fullPath) {
-    std::string path = fullPath.substr(0, fullPath.rfind("/")+1);
+    std::string path = fullPath.substr(0, fullPath.rfind('/')+1);
     std::string filename = fullPath.substr(path.size(), fullPath.size()-path.size());
     std::ifstream stream(fullPath);
     ini::Configuration configuration(stream);
@@ -61,18 +61,18 @@ void Game::loop() {
         else if(m_stopWatch->getElapsedTime() >= m_updatedelay) {
             m_stopWatch->reset();
         }
-        sf::Event event;
+        sf::Event event = sf::Event();
         while(m_window->pollEvent(event)){
             if(handleEvent(event) == -1){ //returnvalue == -1 => window is closed
                 return;
             }
         }
         m_window->clear();
-        for(int i = 0; i < entities::entityList.size(); i++){
+        for(size_t i = 0; i < entities::entityList.size(); i++){
             std::shared_ptr<entities::Entity> entity = entities::entityList.at(i);
             entity->update();
         }
-        for(int i = 0; i < views::viewList.size(); i++){
+        for(size_t i = 0; i < views::viewList.size(); i++){
             views::EntityView* view = views::viewList.at(i);
             view->update();
         }
@@ -108,7 +108,7 @@ void loadLevel(std::string filename) {
     std::ifstream stream(filename);
     stream >> j;
 
-    for(std::shared_ptr<entities::Entity> entity: entities::entityList) {
+    for(const std::shared_ptr<entities::Entity>& entity: entities::entityList) {
         entity->markDeleted();
     }
     entities::deleteMarkedEntities();

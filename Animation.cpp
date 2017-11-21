@@ -32,7 +32,7 @@ void Animation::createFromStrip(std::string filename, unsigned int amount) {
     m_texture->loadFromFile(filename);
     unsigned int width = m_texture->getSize().x/amount;
     for(unsigned int i = 0; i < m_texture->getSize().x; i += width){
-        m_sprites.push_back(sf::Sprite(*m_texture, sf::IntRect(i,0,width,m_texture->getSize().y)));
+        m_sprites.emplace_back(*m_texture, sf::IntRect(i,0,width,m_texture->getSize().y));
     }
 }
 
@@ -46,4 +46,4 @@ sf::Vector2u Animation::getSize() {
     return {m_texture->getSize().x/m_sprites.size(), m_texture->getSize().y};
 }
 
-Animation::Animation() {}
+Animation::Animation() = default;

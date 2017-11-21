@@ -18,7 +18,7 @@ private:
 public:
     Animation();
 
-    Animation(int m_delay);
+    explicit Animation(int m_delay);
     
     Animation(const std::vector<sf::Sprite> &m_sprites, int m_delay);
 
@@ -26,7 +26,7 @@ public:
 
     void update();
 
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     void createFromStrip(std::string filename, unsigned int amount);
 

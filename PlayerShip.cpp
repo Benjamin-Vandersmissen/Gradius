@@ -148,7 +148,7 @@ std::shared_ptr<entities::Entity> resources::PlayerShip::create(const std::pair<
     return entity;
 }
 
-void resources::PlayerShip::loadFromJson(json j, std::string path) {
+void resources::PlayerShip::loadFromJson(const json &j, const std::string &path) {
     EntityResource::loadFromJson(j, path);
     std::string fontPath = j["FontPath"];
     this->m_font = new sf::Font;
@@ -157,9 +157,9 @@ void resources::PlayerShip::loadFromJson(json j, std::string path) {
     this->m_bullet = j["BulletType"];
 }
 
-resources::PlayerShip::PlayerShip() {}
+resources::PlayerShip::PlayerShip() = default;
 
-void resources::PlayerShip::loadFromIni(std::string path, std::string filename) {
+void resources::PlayerShip::loadFromIni(const std::string &path, const std::string &filename) {
     EntityResource::loadFromIni(path, filename);
     std::ifstream stream(path+filename);
     ini::Configuration configuration(stream);

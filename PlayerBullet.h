@@ -14,7 +14,7 @@ namespace entities {
     public:
         PlayerBullet(const std::pair<float, float> &position, const sf::FloatRect &hitbox, float speed);
 
-        void onCollision(Entity* entity);
+        void onCollision(Entity* entity) override;
     };
 }
 
@@ -25,7 +25,7 @@ namespace resources{
 
         PlayerBullet(Animation animation, const sf::FloatRect &hitbox, float speed);
 
-        std::shared_ptr<entities::Entity> create(const std::pair<float, float> &position);
+        std::shared_ptr<entities::Entity> create(const std::pair<float, float> &position) override;
 
     };
 }
@@ -35,7 +35,7 @@ namespace views{
     public:
         friend class resources::PlayerBullet;
 
-        PlayerBullet(std::shared_ptr<entities::Entity> associatedEntity);
+        explicit PlayerBullet(std::shared_ptr<entities::Entity> associatedEntity);
     };
 }
 

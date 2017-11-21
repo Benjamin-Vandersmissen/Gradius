@@ -50,7 +50,7 @@ public:
     /**
      * \brief draws the game to the window
      * */
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
 
 

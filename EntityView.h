@@ -19,7 +19,7 @@ namespace views {
 
         bool m_deleted = false;
     public:
-        EntityView(std::shared_ptr<entities::Entity> associatedEntity);
+        explicit EntityView(std::shared_ptr<entities::Entity> associatedEntity);
 
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 

@@ -6,9 +6,9 @@
 
 std::map<std::string, resources::EntityResource*> resources::resourceMap = {};
 
-resources::EntityResource::EntityResource() {}
+resources::EntityResource::EntityResource() = default;
 
-void resources::EntityResource::loadFromJson(json j, std::string path) {
+void resources::EntityResource::loadFromJson(const json &j, const std::string &path) {
 //    std::string texturePath = j["TexturePath"];
 //    this->m_texture = new sf::Texture;
 //    if(!m_texture->loadFromFile(path+texturePath)) throw "A";
@@ -24,7 +24,7 @@ resources::EntityResource::EntityResource(Animation animation, const sf::FloatRe
 
 }
 
-void resources::EntityResource::loadFromIni(std::string path, std::string filename) {
+void resources::EntityResource::loadFromIni(const std::string &path, const std::string &filename) {
     std::ifstream stream(path+filename);
     ini::Configuration configuration(stream);
     std::string texturePath = configuration["General"]["TexturePath"].as_string_or_die();

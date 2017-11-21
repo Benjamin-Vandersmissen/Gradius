@@ -36,9 +36,9 @@ namespace resources {
 
         EntityResource(Animation animation, const sf::FloatRect &hitbox, float speed);
 
-        virtual void loadFromJson(json j, std::string path);
+        virtual void loadFromJson(const json &j, const std::string &path);
 
-        virtual void loadFromIni(std::string path, std::string filename);
+        virtual void loadFromIni(const std::string &path, const std::string &filename);
 
         virtual std::shared_ptr<entities::Entity> create(const std::pair<float, float> &position) = 0;
     };

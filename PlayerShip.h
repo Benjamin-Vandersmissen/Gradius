@@ -70,11 +70,11 @@ namespace resources {
     public:
         PlayerShip();
 
-        std::shared_ptr<entities::Entity> create(const std::pair<float, float>& position);
+        std::shared_ptr<entities::Entity> create(const std::pair<float, float>& position) override;
 
-        void loadFromJson(json j, std::string path);
+        void loadFromJson(const json &j, const std::string &path) override;
 
-        void loadFromIni(std::string path, std::string filename);
+        void loadFromIni(const std::string &path, const std::string &filename) override;
 
     };
 }
@@ -87,9 +87,9 @@ namespace views{
     public:
         friend class resources::PlayerShip;
 
-        PlayerShip(std::shared_ptr<entities::Entity> associatedEntity);
+        explicit PlayerShip(std::shared_ptr<entities::Entity> associatedEntity);
 
-        void update();
+        void update() override;
 
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     };

@@ -33,7 +33,7 @@ std::shared_ptr<entities::Entity> resources::PlayerBullet::create(const std::pai
     return entity;
 }
 
-resources::PlayerBullet::PlayerBullet() {}
+resources::PlayerBullet::PlayerBullet() = default;
 
 resources::PlayerBullet::PlayerBullet(Animation animation, const sf::FloatRect &hitbox, float speed) : EntityResource(
         animation, hitbox, speed) {}

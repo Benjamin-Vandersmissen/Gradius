@@ -9,7 +9,7 @@ entities::Obstacle::Obstacle(const std::pair<float, float> &position, const sf::
 
 views::Obstacle::Obstacle(std::shared_ptr<entities::Entity> associatedEntity) : EntityView(associatedEntity) {}
 
-resources::Obstacle::Obstacle() {}
+resources::Obstacle::Obstacle() = default;
 
 std::shared_ptr<entities::Entity> resources::Obstacle::create(const std::pair<float, float> &position) {
     std::shared_ptr<entities::Obstacle> entity = std::make_shared<entities::Obstacle>(position, m_hitbox, m_speed);

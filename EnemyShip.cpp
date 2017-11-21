@@ -12,7 +12,7 @@ views::EnemyShip::EnemyShip(std::shared_ptr<entities::Entity> associatedEntity) 
 
 }
 
-resources::EnemyShip::EnemyShip() {}
+resources::EnemyShip::EnemyShip() = default;
 
 std::shared_ptr<entities::Entity> resources::EnemyShip::create(const std::pair<float, float> &position) {
     std::shared_ptr<entities::EnemyShip> entity = std::make_shared<entities::EnemyShip>(position, m_hitbox, m_speed);
