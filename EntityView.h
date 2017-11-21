@@ -7,13 +7,13 @@
 
 #include "SFML/Graphics.hpp"
 #include "Entity.h"
+#include "Animation.h"
 
 namespace views {
     class EntityView : public sf::Drawable{
     protected:
-        sf::Sprite m_sprite;
 
-        sf::Texture* m_texture;
+        Animation* m_animation;
 
         entities::Entity* m_associatedEntity;
 
@@ -30,8 +30,6 @@ namespace views {
         bool deleted();
 
         friend void deleteMarkedViews();
-
-        void loadSprite();
     };
     extern std::vector<views::EntityView*> viewList;
 

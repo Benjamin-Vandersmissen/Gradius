@@ -120,10 +120,10 @@ void views::PlayerShip::update() {
     if(ship){
         m_lives.setString("lives " + std::to_string(ship->getLives()));
         if(ship->immune()){
-            m_sprite.setColor({192,192,192,128});
+            m_animation->setColor({192,192,192,128});
         }
         else{
-            m_sprite.setColor({255,255,255});
+            m_animation->setColor({255,255,255});
         }
         EntityView::update();
     }
@@ -137,8 +137,7 @@ void views::PlayerShip::draw(sf::RenderTarget &target, sf::RenderStates states) 
 entities::PlayerShip *resources::PlayerShip::create(const std::pair<float, float> &position) {
     entities::PlayerShip* entity = new entities::PlayerShip(position, m_hitbox, m_speed, m_bullet);
     views::PlayerShip* view = new views::PlayerShip(entity);
-    view->m_texture = m_texture;
-    view->loadSprite();
+    view->m_animation = m_animation;
     view->m_font = m_font;
     view->m_lives.setFont(*m_font);
     view->m_lives.setScale(0.25,0.25);

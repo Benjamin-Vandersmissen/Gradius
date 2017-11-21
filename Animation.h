@@ -26,6 +26,10 @@ public:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
     void createFromStrip(std::string filename, unsigned int amount);
+
+    void setColor(const sf::Color& color);
+
+    sf::Vector2u getSize();
 };
 
 

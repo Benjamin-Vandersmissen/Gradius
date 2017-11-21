@@ -11,6 +11,7 @@
 
 #include "json.hpp"
 #include "ini_configuration.hh"
+#include "Animation.h"
 #include <fstream>
 using json = nlohmann::json;
 
@@ -20,16 +21,20 @@ namespace resources {
      * */
     class EntityResource {
     protected:
-        sf::Texture* m_texture;
-
         sf::FloatRect m_hitbox;
 
         float m_speed;
 
+        int m_nrFrames = 1;
+
+        Animation* m_animation;
+
+        int m_delay = -1;
+
     public:
         EntityResource();
 
-        EntityResource(sf::Texture* texture, const sf::FloatRect& hitbox, float speed);
+        EntityResource(Animation *animation, const sf::FloatRect &hitbox, float speed);
 
         virtual void loadFromJson(json j, std::string path);
 

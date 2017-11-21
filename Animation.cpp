@@ -35,3 +35,13 @@ void Animation::createFromStrip(std::string filename, unsigned int amount) {
         m_sprites.push_back(sf::Sprite(*m_texture, sf::IntRect(i,0,width,m_texture->getSize().y)));
     }
 }
+
+void Animation::setColor(const sf::Color &color) {
+    for(sf::Sprite& sprite : m_sprites){
+        sprite.setColor(color);
+    }
+}
+
+sf::Vector2u Animation::getSize() {
+    return {m_texture->getSize().x/m_sprites.size(), m_texture->getSize().y};
+}

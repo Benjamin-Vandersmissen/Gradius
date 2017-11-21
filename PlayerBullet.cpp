@@ -27,8 +27,7 @@ entities::PlayerBullet *resources::PlayerBullet::create(const std::pair<float, f
     entities::PlayerBullet* entity = new entities::PlayerBullet(position, m_hitbox, m_speed);
 
     views::PlayerBullet* view = new views::PlayerBullet(entity);
-    view->m_texture = m_texture;
-    view->loadSprite();
+    view->m_animation = m_animation;
     views::viewList.push_back(view);
     entities::entityList.push_back(entity);
     return entity;
@@ -36,5 +35,5 @@ entities::PlayerBullet *resources::PlayerBullet::create(const std::pair<float, f
 
 resources::PlayerBullet::PlayerBullet() {}
 
-resources::PlayerBullet::PlayerBullet(sf::Texture *texture, const sf::FloatRect &hitbox, float speed) : EntityResource(
-        texture, hitbox, speed) {}
+resources::PlayerBullet::PlayerBullet(Animation *animation, const sf::FloatRect &hitbox, float speed) : EntityResource(
+        animation, hitbox, speed) {}
