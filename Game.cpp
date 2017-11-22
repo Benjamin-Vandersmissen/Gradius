@@ -3,15 +3,18 @@
 //
 
 #include "Game.h"
-#include "PlayerShip.h"
+
 
 Game::Game() {
-    m_window = new sf::RenderWindow(sf::VideoMode(400,300), "Gradius ~ Test");
+    m_window = new sf::RenderWindow(sf::VideoMode(200,150), "Gradius ~ Test");
+    Transformation::initTransformation(200,150);
     models::Playership* model = new models::Playership;
     auto view = std::make_shared<views::PlayerShip>();
     auto controller = std::make_shared<controllers::Playership>();
     view->setModel(model);
     model->setController(controller);
+    view->animation->createFromStrip("../resources/textures/PlayerShip_strip.png", 2);
+    model->notify(); //synchronise the states
     m_models.push_back(model);
     m_controllers.push_back(controller);
     m_views.push_back(view);
@@ -19,11 +22,21 @@ Game::Game() {
 
 void Game::loop() {
     while(!m_closed){
+        if(m_stopwatch->getElapsedTime() > 1000000/60){
+            m_stopwatch->reset();
+        }
+        else{
+            continue;
+        }
         handleEvents();
         for(auto controller : m_controllers){
             controller->update();
         }
         m_window->clear();
+        for(auto view : m_views){
+            m_window->draw(*view);
+        }
+
         m_window->display();
     }
 }

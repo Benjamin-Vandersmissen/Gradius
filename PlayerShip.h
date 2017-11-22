@@ -6,18 +6,23 @@
 #define GRADIUS_PLAYERSHIP_H
 
 #include "Entity.h"
+#include "Animation.h"
 
 namespace views {
     class PlayerShip : public Entity{
     public:
+        Animation* animation = new Animation(100);
+
         void update();
+
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const override ;
     };
 }
 
 namespace models{
     class Playership : public Entity{
     private:
-        unsigned int m_speed = 5;
+        float m_speed = 0.15;
     public:
         void update();
     };

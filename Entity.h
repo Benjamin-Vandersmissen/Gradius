@@ -42,11 +42,13 @@ namespace views{
     class Entity : public sf::Drawable{
     protected:
         models::Entity* m_model;
-        
+
     public:
         void setModel(models::Entity *model);
 
         virtual void update() =0;
+
+        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const{};
     };
 }
 
