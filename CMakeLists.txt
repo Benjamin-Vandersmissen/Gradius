@@ -7,7 +7,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake-modules"
 
 find_package(SFML 2 COMPONENTS system window graphics)
 
-set(SOURCE_FILES StopWatch.cpp StopWatch.h Transformation.cpp Transformation.h json.hpp ini_configuration.cc ini_configuration.cc Animation.cpp Animation.h Model.cpp Model.h View.cpp View.h Controller.cpp Controller.h main.cpp Game.cpp Game.h)
+set(SOURCE_FILES StopWatch.cpp StopWatch.h Transformation.cpp Transformation.h json.hpp ini_configuration.cc ini_configuration.cc Animation.cpp Animation.h Model.cpp Model.h View.cpp View.h Controller.cpp Controller.h main.cpp Game.cpp Game.h Entity.cpp Entity.h)
 
 include_directories(${SFML_INCLUDE_DIRS})
 
