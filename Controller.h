@@ -21,11 +21,16 @@ namespace controllers {
     private:
         models::Model* m_model;
 
+        std::shared_ptr<views::View> m_view;
     public:
 
         void setModel(models::Model* model);
 
+        void setView(const std::shared_ptr<views::View>& view);
+
         void notify();
+
+        bool update();
     };
 
 }

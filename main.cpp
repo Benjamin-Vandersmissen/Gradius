@@ -1,11 +1,10 @@
 #include <iostream>
 #include "Model.h"
+#include "Game.h"
+
 int main(){
-    models::Model* model = new models::Model();
-    std::shared_ptr<controllers::Controller> controller = std::make_shared<controllers::Controller>();
-    std::shared_ptr<views::View> view = std::make_shared<views::View>();
-    controller->setModel(model);
-    view->setModel(model);
+    Game game;
+    game.loop();
     std::cout << "Test" << std::endl;
     return 0;
 }

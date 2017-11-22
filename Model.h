@@ -32,8 +32,10 @@ namespace models {
 
         void update();
 
+        //Never call this function directly, this function will be called when this model is assigned to a view
         void addView(std::shared_ptr<views::View> view);
 
+        //Never call this function directly, this function will be called when this model is assigned to a controller
         void setController(const std::shared_ptr<controllers::Controller>& controller);
     };
 
