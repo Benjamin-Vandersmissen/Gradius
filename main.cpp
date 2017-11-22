@@ -1,5 +1,4 @@
 #include <iostream>
-#include "Model.h"
 #include "Game.h"
 
 int main(){

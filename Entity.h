@@ -6,7 +6,8 @@
 #define GRADIUS_ENTITY_H
 
 #include <memory>
-#include "Model.h"
+#include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/Drawable.hpp>
 
 namespace views{
     class Entity;
@@ -18,7 +19,7 @@ namespace controllers{
 
 namespace models {
     class Entity {
-    private:
+    protected:
         std::shared_ptr<views::Entity> m_view;
 
         std::shared_ptr<controllers::Entity> m_controller;
@@ -32,14 +33,16 @@ namespace models {
         virtual void update() =0;
 
         void notify();
+
+        const std::pair<float, float> &position() const;
     };
 }
 
 namespace views{
-    class Entity {
-    private:
+    class Entity : public sf::Drawable{
+    protected:
         models::Entity* m_model;
-
+        
     public:
         void setModel(models::Entity *model);
 
@@ -49,7 +52,7 @@ namespace views{
 
 namespace controllers{
     class Entity{
-    private:
+    protected:
         models::Entity* m_model;
 
     public:
@@ -58,6 +61,8 @@ namespace controllers{
         virtual void update() =0;
 
         void notify();
+
+        virtual void handleEvent(const sf::Event& event){};
     };
 }
 

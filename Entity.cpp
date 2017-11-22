@@ -17,6 +17,10 @@ void models::Entity::notify() {
     m_view->update();
 }
 
+const std::pair<float, float> &models::Entity::position() const {
+    return m_position;
+}
+
 void controllers::Entity::addModel(models::Entity *model) {
     m_model = model;
 }
