@@ -8,6 +8,10 @@
 #include "Entity.h"
 #include "Animation.h"
 
+namespace resources{
+    class PlayerShip;
+}
+
 namespace views {
     class PlayerShip : public Entity{
     public:
@@ -18,10 +22,12 @@ namespace views {
 }
 
 namespace models{
-    class Playership : public Entity{
+    class PlayerShip : public Entity{
     private:
         float m_speed = 0.08;
     public:
+        friend class resources::PlayerShip;
+
         void update();
 
         void handleCollision(models::Entity*);
@@ -29,7 +35,7 @@ namespace models{
 }
 
 namespace controllers{
-    class Playership : public Entity{
+    class PlayerShip : public Entity{
     private:
         std::pair<float, float> m_currentDirection;
 
@@ -46,6 +52,18 @@ namespace controllers{
         void handleEvent(const sf::Event& event);
 
         bool fired();
+    };
+}
+
+namespace resources {
+    class PlayerShip : public Entity{
+    private:
+        double m_speed;
+
+    public:
+        void loadFromIni(ini::Configuration& configuration) override;
+
+        models::PlayerShip* create();
     };
 }
 

@@ -8,8 +8,11 @@
 #include <memory>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Drawable.hpp>
+#include <iostream>
+#include <fstream>
 #include "Animation.h"
 #include "Transformation.h"
+#include "ini_configuration.hh"
 
 namespace views{
     class Entity;
@@ -88,5 +91,16 @@ namespace controllers{
     extern std::vector<Entity*> list;
 }
 
+namespace resources{
+    class Entity{
+    protected:
+        Animation animation;
+    public:
+        virtual models::Entity* create() =0;
 
+        virtual void loadFromIni(ini::Configuration& configuration);
+    };
+
+    extern std::map<std::string, resources::Entity*> map;
+}
 #endif //GRADIUS_ENTITY_H

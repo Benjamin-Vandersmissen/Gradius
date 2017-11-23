@@ -64,3 +64,13 @@ void views::Entity::update() {
     m_animation.setPosition(Transformation::invTransform(m_model->position()));
 
 }
+
+void resources::Entity::loadFromIni(ini::Configuration &configuration) {
+    std::string texturePath = configuration["General"]["TexturePath"].as_string_or_die();
+    int delay = configuration["General"]["Delay"].as_int_or_default(-1);
+    unsigned int nrFrames = configuration["General"]["NrFrames"].as_int_or_default(1);
+    animation = Animation(delay);
+    animation.createFromStrip(texturePath, nrFrames);
+}
+
+std::map<std::string, resources::Entity*> resources::map = {};
