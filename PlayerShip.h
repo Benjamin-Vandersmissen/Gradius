@@ -20,9 +20,11 @@ namespace views {
 namespace models{
     class Playership : public Entity{
     private:
-        float m_speed = 0.15;
+        float m_speed = 0.08;
     public:
         void update();
+
+        void handleCollision(models::Entity*);
     };
 }
 

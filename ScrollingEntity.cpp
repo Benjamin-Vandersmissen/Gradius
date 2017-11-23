@@ -8,7 +8,7 @@ double models::ScrollingEntity::scrollingSpeed = 0.05;
 std::pair<float, float> controllers::ScrollingEntity::m_scrollDirection = {-1,0};
 
 void models::ScrollingEntity::update() {
-    auto controller = std::dynamic_pointer_cast<controllers::ScrollingEntity >(m_controller);
+    auto controller = dynamic_cast<controllers::ScrollingEntity* >(m_controller);
 
     if(controller){
         m_position.first += controller->currentDirection().first*scrollingSpeed;
