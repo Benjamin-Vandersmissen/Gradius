@@ -24,7 +24,7 @@ namespace views {
 namespace models{
     class PlayerShip : public Entity{
     private:
-        float m_speed = 0.08;
+        double m_speed = 0.08;
     public:
         friend class resources::PlayerShip;
 

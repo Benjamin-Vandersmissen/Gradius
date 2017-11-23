@@ -23,19 +23,11 @@ void models::PlayerBullet::update() {
 models::PlayerBullet *resources::PlayerBullet::create(const std::pair<float, float> &position) {
     auto model = new models::PlayerBullet;
     model->m_speed = m_speed;
+    model->hitbox(m_hitbox);
 
     auto view = new views::PlayerBullet;
     auto controller = new controllers::PlayerBullet;
-    model->setController(controller);
-    view->setModel(model);
-    setAnimationOfView(view);
-
-    model->position(position);
-    model->notify();
-    
-    models::list.push_back(model);
-    views::list.push_back(view);
-    controllers::list.push_back(controller);
+    finalizeCreation(view, model, controller, position);
     return model;
 }
 

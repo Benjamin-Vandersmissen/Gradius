@@ -45,6 +45,10 @@ sf::FloatRect models::Entity::globalHitbox() {
     return {m_hitbox.left+m_position.first, m_hitbox.top+m_position.second, m_hitbox.width, m_hitbox.height};
 }
 
+void models::Entity::hitbox(const sf::FloatRect hitbox) {
+    m_hitbox = hitbox;
+}
+
 
 void controllers::Entity::addModel(models::Entity *model) {
     m_model = model;
@@ -71,11 +75,26 @@ void resources::Entity::loadFromIni(std::string path, ini::Configuration &config
     unsigned int nrFrames = configuration["General"]["NrFrames"].as_int_or_default(1);
     m_animation = Animation(delay);
     m_animation.createFromStrip(path+texturePath, nrFrames);
-
+    std::pair<float, float> size = Transformation::transform(m_animation.getSize().x, m_animation.getSize().y);
+    m_hitbox = sf::FloatRect{0,0,size.first, size.second};
 }
 
 void resources::Entity::setAnimationOfView(views::Entity *view) {
     view->m_animation = m_animation;
+}
+
+void resources::Entity::finalizeCreation(views::Entity *view, models::Entity *model, controllers::Entity *controller,
+                                         std::pair<float, float> position) {
+    model->setController(controller);
+    view->setModel(model);
+    setAnimationOfView(view);
+
+    model->position(position);
+    model->notify();
+
+    models::list.push_back(model);
+    views::list.push_back(view);
+    controllers::list.push_back(controller);
 }
 
 std::map<std::string, resources::Entity*> resources::map = {};

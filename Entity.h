@@ -55,6 +55,8 @@ namespace models {
         virtual void handleCollision(models::Entity* entity){};
 
         sf::FloatRect globalHitbox();
+
+        void hitbox(const sf::FloatRect hitbox);
     };
     extern std::list<Entity*> list;
 }
@@ -102,12 +104,16 @@ namespace resources{
     class Entity{
     protected:
         Animation m_animation;
+        sf::FloatRect m_hitbox;
     public:
         virtual models::Entity *create(const std::pair<float, float> &position) =0;
 
         virtual void loadFromIni(std::string path, ini::Configuration &configuration);
 
         void setAnimationOfView(views::Entity* view);
+
+        void finalizeCreation(views::Entity *view, models::Entity *model, controllers::Entity *controller,
+                                      std::pair<float, float> position);
     };
 
     extern std::map<std::string, resources::Entity*> map;

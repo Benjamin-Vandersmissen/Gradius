@@ -93,19 +93,11 @@ void views::PlayerShip::draw(sf::RenderTarget &target, sf::RenderStates states) 
 models::PlayerShip *resources::PlayerShip::create(const std::pair<float, float> &position) {
     auto model = new models::PlayerShip;
     model->m_speed = m_speed;
+    model->hitbox(m_hitbox);
 
     auto view = new views::PlayerShip;
     auto controller = new controllers::PlayerShip;
-    model->setController(controller);
-    view->setModel(model);
-    setAnimationOfView(view);
-
-    model->position(position);
-    model->notify();
-
-    models::list.push_back(model);
-    views::list.push_back(view);
-    controllers::list.push_back(controller);
+    finalizeCreation(view, model, controller, position);
     return model;
 }
 
