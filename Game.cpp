@@ -42,6 +42,8 @@ void Game::loop() {
         else{
             continue;
         }
+        if(!m_window->hasFocus())
+            continue;
         handleEvents();
         for(auto controller : m_controllers){
             controller->update();

@@ -30,10 +30,20 @@ namespace controllers{
     class Playership : public Entity{
     private:
         std::pair<float, float> m_currentDirection;
+
+        unsigned int m_fireCooldown = 0;
+
+        unsigned int m_maxFireCooldown = 80;
+
+        bool m_fired = false;
     public:
         void update();
 
         const std::pair<float, float> &currentDirection() const;
+
+        void handleEvent(const sf::Event& event);
+
+        bool fired();
     };
 }
 
