@@ -50,9 +50,9 @@ namespace resources{
     private:
         double m_speed;
     public:
-        models::PlayerBullet* create();
+        models::PlayerBullet *create(const std::pair<float, float> &position);
 
-        void loadFromIni(ini::Configuration& configuration) override;
+        void loadFromIni(std::string path, ini::Configuration &configuration) override;
     };
 }
 

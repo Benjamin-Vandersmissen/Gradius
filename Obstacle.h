@@ -5,22 +5,22 @@
 #ifndef GRADIUS_OBSTACLE_H
 #define GRADIUS_OBSTACLE_H
 
-#include "Entity.h"
+#include "ScrollingEntity.h"
 
 namespace views {
-    class Obstacle : public Entity{
+    class Obstacle : public ScrollingEntity{
 
     };
 }
 
 namespace models {
-    class Obstacle : public Entity{
+    class Obstacle : public ScrollingEntity{
 
     };
 }
 
 namespace controllers {
-    class Obstacle : public Entity{
+    class Obstacle : public ScrollingEntity{
 
     };
 }

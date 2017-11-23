@@ -10,6 +10,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <iostream>
 #include <fstream>
+#include <list>
 #include "Animation.h"
 #include "Transformation.h"
 #include "ini_configuration.hh"
@@ -19,6 +20,10 @@ namespace views{
 }
 
 namespace controllers{
+    class Entity;
+}
+
+namespace resources{
     class Entity;
 }
 
@@ -51,7 +56,7 @@ namespace models {
 
         sf::FloatRect globalHitbox();
     };
-    extern std::vector<Entity*> list;
+    extern std::list<Entity*> list;
 }
 
 namespace views{
@@ -59,6 +64,8 @@ namespace views{
     protected:
         models::Entity* m_model;
     public:
+
+        friend class resources::Entity;
 
         Animation m_animation = Animation(0);
 
@@ -71,7 +78,7 @@ namespace views{
         };
     };
 
-    extern std::vector<Entity*> list;
+    extern std::list<Entity*> list;
 }
 
 namespace controllers{
@@ -88,17 +95,19 @@ namespace controllers{
 
         virtual void handleEvent(const sf::Event& event){};
     };
-    extern std::vector<Entity*> list;
+    extern std::list<Entity*> list;
 }
 
 namespace resources{
     class Entity{
     protected:
-        Animation animation;
+        Animation m_animation;
     public:
-        virtual models::Entity* create() =0;
+        virtual models::Entity *create(const std::pair<float, float> &position) =0;
 
-        virtual void loadFromIni(ini::Configuration& configuration);
+        virtual void loadFromIni(std::string path, ini::Configuration &configuration);
+
+        void setAnimationOfView(views::Entity* view);
     };
 
     extern std::map<std::string, resources::Entity*> map;

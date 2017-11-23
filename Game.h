@@ -15,6 +15,7 @@
 #include "Transformation.h"
 #include "json.hpp"
 #include "ini_configuration.hh"
+#include "EnemyShip.h"
 
 
 using json = nlohmann::json;

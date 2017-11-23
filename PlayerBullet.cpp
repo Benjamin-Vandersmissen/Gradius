@@ -20,7 +20,7 @@ void models::PlayerBullet::update() {
     }
 }
 
-models::PlayerBullet *resources::PlayerBullet::create() {
+models::PlayerBullet *resources::PlayerBullet::create(const std::pair<float, float> &position) {
     auto model = new models::PlayerBullet;
     model->m_speed = m_speed;
 
@@ -28,14 +28,18 @@ models::PlayerBullet *resources::PlayerBullet::create() {
     auto controller = new controllers::PlayerBullet;
     model->setController(controller);
     view->setModel(model);
+    setAnimationOfView(view);
 
+    model->position(position);
+    model->notify();
+    
     models::list.push_back(model);
     views::list.push_back(view);
     controllers::list.push_back(controller);
     return model;
 }
 
-void resources::PlayerBullet::loadFromIni(ini::Configuration &configuration) {
-    Entity::loadFromIni(configuration);
+void resources::PlayerBullet::loadFromIni(std::string path, ini::Configuration &configuration) {
+    Entity::loadFromIni(path, configuration);
     m_speed = configuration["General"]["Speed"].as_double_or_die();
 }

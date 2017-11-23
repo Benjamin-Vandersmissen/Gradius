@@ -30,7 +30,7 @@ namespace models{
 
         void update();
 
-        void handleCollision(models::Entity*);
+        void handleCollision(models::Entity* entity);
     };
 }
 
@@ -41,7 +41,7 @@ namespace controllers{
 
         unsigned int m_fireCooldown = 0;
 
-        unsigned int m_maxFireCooldown = 80;
+        unsigned int m_maxFireCooldown = 20;
 
         bool m_fired = false;
     public:
@@ -61,9 +61,9 @@ namespace resources {
         double m_speed;
 
     public:
-        void loadFromIni(ini::Configuration& configuration) override;
+        void loadFromIni(std::string path, ini::Configuration &configuration) override;
 
-        models::PlayerShip* create();
+        models::PlayerShip *create(const std::pair<float, float> &position);
     };
 }
 

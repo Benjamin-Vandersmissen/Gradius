@@ -3,8 +3,6 @@
 //
 
 #include "Game.h"
-#include "ScrollingEntity.h"
-#include "ini_configuration.hh"
 
 
 Game::Game() {
@@ -14,26 +12,26 @@ Game::Game() {
 
     loadLevel("../levels/level.json");
 
-    auto view = new views::PlayerShip();
-    auto controller = new controllers::PlayerShip();
-    view->setModel(model);
-    model->setController(controller);
-    view->m_animation.createFromStrip("../resources/textures/PlayerShip_strip.png", 2);
-    model->notify(); //synchronise the states
-    models::list.push_back(model);
-    controllers::list.push_back(controller);
-    views::list.push_back(view);
-
-    auto view2 = new views::ScrollingEntity();
-    auto controller2 = new controllers::ScrollingEntity();
-    models::ScrollingEntity* model2 = new models::ScrollingEntity;
-    view2->setModel(model2);
-    model2->setController(controller2);
-    view2->m_animation.createFromStrip("../resources/textures/EnemyShip_strip.png", 3);
-    model2->position(std::pair<float,float>{4,0});
-    models::list.push_back(model2);
-    controllers::list.push_back(controller2);
-    views::list.push_back(view2);
+//    auto view = new views::PlayerShip();
+//    auto controller = new controllers::PlayerShip();
+//    view->setModel(model);
+//    model->setController(controller);
+//    view->m_animation.createFromStrip("../resources/textures/PlayerShip_strip.png", 2);
+//    model->notify(); //synchronise the states
+//    models::list.push_back(model);
+//    controllers::list.push_back(controller);
+//    views::list.push_back(view);
+//
+//    auto view2 = new views::ScrollingEntity();
+//    auto controller2 = new controllers::ScrollingEntity();
+//    models::ScrollingEntity* model2 = new models::ScrollingEntity;
+//    view2->setModel(model2);
+//    model2->setController(controller2);
+//    view2->m_animation.createFromStrip("../resources/textures/EnemyShip_strip.png", 3);
+//    model2->position(std::pair<float,float>{4,0});
+//    models::list.push_back(model2);
+//    controllers::list.push_back(controller2);
+//    views::list.push_back(view2);
 
 }
 
@@ -108,9 +106,8 @@ void loadLevel(std::string fullPath) {
             resources::map[resource] = loadResource(path+resourcePath, resource);
         }
 
-        if(resources::map.find(resource) == resources::map.end()){
-            auto entity = resources::map[resource]->create();
-            entity->position(position);
+        if(resources::map[resource] != nullptr){
+            auto entity = resources::map[resource]->create(position);
         }
     }
 }
@@ -122,13 +119,21 @@ resources::Entity *loadResource(std::string path, std::string resourceName) {
     std::string type = config["General"]["Type"].as_string_or_die();
     if (type == "PlayerShip"){
         auto resource  = new resources::PlayerShip;
-        resource->loadFromIni(config);
+        resource->loadFromIni(path, config);
         return resource;
     }
     if(type == "PlayerBullet"){
-        double speed = config["General"]["Speed"].as_double_or_die();
         auto resource = new resources::PlayerBullet;
-        resource->loadFromIni(config);
+        resource->loadFromIni(path, config);
         return resource;
     }
+    if (type == "EnemyShip"){
+        auto resource = new resources::EnemyShip;
+        resource->loadFromIni(path, config);
+        return resource;
+    }
+//    if(type == "BorderObstacle"){
+//        auto resource = new resources::Obstacle
+//    }
+    return nullptr;
 }

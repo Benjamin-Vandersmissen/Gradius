@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include "PlayerShip.h"
-#include "Transformation.h"
 #include "PlayerBullet.h"
 
 void controllers::PlayerShip::update() {
@@ -73,10 +72,14 @@ void models::PlayerShip::update() {
             controllers::list.push_back(controller);
         }
     }
+    handleCollision(collision());
 }
 
-void models::PlayerShip::handleCollision(models::Entity *) {
+void models::PlayerShip::handleCollision(models::Entity *entity) {
     //collision handling with obstacles and enemy ships
+    if(entity){
+        std::cout << entity << std::endl;
+    }
 }
 
 void views::PlayerShip::update() {
@@ -87,7 +90,7 @@ void views::PlayerShip::draw(sf::RenderTarget &target, sf::RenderStates states) 
     target.draw(m_animation, states);
 }
 
-models::PlayerShip *resources::PlayerShip::create() {
+models::PlayerShip *resources::PlayerShip::create(const std::pair<float, float> &position) {
     auto model = new models::PlayerShip;
     model->m_speed = m_speed;
 
@@ -95,6 +98,10 @@ models::PlayerShip *resources::PlayerShip::create() {
     auto controller = new controllers::PlayerShip;
     model->setController(controller);
     view->setModel(model);
+    setAnimationOfView(view);
+
+    model->position(position);
+    model->notify();
 
     models::list.push_back(model);
     views::list.push_back(view);
@@ -102,8 +109,8 @@ models::PlayerShip *resources::PlayerShip::create() {
     return model;
 }
 
-void resources::PlayerShip::loadFromIni(ini::Configuration &configuration) {
-    Entity::loadFromIni(configuration);
+void resources::PlayerShip::loadFromIni(std::string path, ini::Configuration &configuration) {
+    Entity::loadFromIni(path, configuration);
     m_speed = configuration["General"]["Speed"].as_double_or_die();
 }
 
