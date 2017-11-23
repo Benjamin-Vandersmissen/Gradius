@@ -22,15 +22,17 @@ namespace controllers{
 namespace models {
     class Entity {
     protected:
-        std::shared_ptr<views::Entity> m_view;
+        views::Entity* m_view;
 
-        std::shared_ptr<controllers::Entity> m_controller;
+        controllers::Entity* m_controller;
 
         std::pair<float, float> m_position;
-    public:
-        void addView(std::shared_ptr<views::Entity> view);
 
-        void setController(std::shared_ptr<controllers::Entity> controller);
+        sf::FloatRect m_hitbox;
+    public:
+        void addView(views::Entity *view);
+
+        void setController(controllers::Entity *controller);
 
         virtual void update() =0;
 
@@ -39,7 +41,14 @@ namespace models {
         const std::pair<float, float> &position() const;
 
         void position(const std::pair<float, float> &position);
+
+        models::Entity* collision();
+
+        virtual void handleCollision(models::Entity* entity){};
+
+        sf::FloatRect globalHitbox();
     };
+    extern std::vector<Entity*> list;
 }
 
 namespace views{
@@ -58,6 +67,8 @@ namespace views{
             target.draw(m_animation, states);
         };
     };
+
+    extern std::vector<Entity*> list;
 }
 
 namespace controllers{
@@ -74,6 +85,7 @@ namespace controllers{
 
         virtual void handleEvent(const sf::Event& event){};
     };
+    extern std::vector<Entity*> list;
 }
 
 

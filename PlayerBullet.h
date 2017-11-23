@@ -9,6 +9,8 @@
 
 namespace views {
     class PlayerBullet : public Entity {
+    public:
+        PlayerBullet();
 
     };
 
@@ -17,17 +19,23 @@ namespace views {
 namespace models {
     class PlayerBullet : public Entity {
     private:
-        unsigned int m_speed;
+        double m_speed = 0.12;
+    public:
+        void update();
     };
 }
 
 namespace controllers {
     class PlayerBullet : public Entity {
     private:
-        std::pair<float, float> m_currentDirection;
+        std::pair<float, float> m_currentDirection = {1,0};
 
     public:
         const std::pair<float, float>& currentDirection() const;
+
+        void update(){
+            notify();
+        };
     };
 }
 

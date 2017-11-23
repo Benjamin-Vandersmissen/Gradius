@@ -5,6 +5,7 @@
 #include <iostream>
 #include "PlayerShip.h"
 #include "Transformation.h"
+#include "PlayerBullet.h"
 
 void controllers::Playership::update() {
     float dx = sf::Keyboard::isKeyPressed(sf::Keyboard::D) - sf::Keyboard::isKeyPressed(sf::Keyboard::A);
@@ -53,22 +54,32 @@ bool controllers::Playership::fired() {
 }
 
 void models::Playership::update() {
-    auto controller = std::dynamic_pointer_cast<controllers::Playership>(m_controller);
-    if(controller) {
-        if(controller->currentDirection() != std::pair<float, float>{0,0}) {
-            m_position.first += m_speed * controller->currentDirection().first;
-            m_position.second += m_speed * controller->currentDirection().second;
+    auto myController = dynamic_cast<controllers::Playership*>(m_controller);
+    if(myController) {
+        if(myController->currentDirection() != std::pair<float, float>{0,0}) {
+            m_position.first += m_speed * myController->currentDirection().first;
+            m_position.second += m_speed * myController->currentDirection().second;
             notify();
         }
-        if(controller->fired()){
-            std::cout << "Fired a bullet from ship " << this << std::endl;
-            //create a bullet
+        if(myController->fired()){
+            auto model = new models::PlayerBullet;
+            model->position(m_position);
+            auto view = new views::PlayerBullet;
+            auto controller = new controllers::PlayerBullet;
+            view->setModel(model);
+            model->setController(controller);
+            models::list.push_back(model);
+            views::list.push_back(view);
+            controllers::list.push_back(controller);
         }
     }
 }
 
+void models::Playership::handleCollision(models::Entity *) {
+    //collision handling with obstacles and enemy ships
+}
+
 void views::PlayerShip::update() {
-    std::cout << "Position is :" << m_model->position().first << ' ' << m_model->position().second << std::endl;
     Entity::update();
 }
 
