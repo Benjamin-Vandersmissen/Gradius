@@ -2,7 +2,6 @@
 // Created by uauser on 11/23/17.
 //
 
-#include <iostream>
 #include "PlayerBullet.h"
 
 const std::pair<float, float> &controllers::PlayerBullet::currentDirection() const {
@@ -19,4 +18,28 @@ void models::PlayerBullet::update() {
         m_position = {m_position.first + m_speed*myController->currentDirection().first, m_position.second + m_speed*myController->currentDirection().second};
         notify();
     }
+}
+
+models::PlayerBullet *resources::PlayerBullet::create(const std::pair<float, float> &position) {
+    auto model = new models::PlayerBullet;
+    model->m_speed = m_speed;
+
+    auto view = new views::PlayerBullet;
+    auto controller = new controllers::PlayerBullet;
+    model->setController(controller);
+    view->setModel(model);
+    setAnimationOfView(view);
+
+    model->position(position);
+    model->notify();
+    
+    models::list.push_back(model);
+    views::list.push_back(view);
+    controllers::list.push_back(controller);
+    return model;
+}
+
+void resources::PlayerBullet::loadFromIni(std::string path, ini::Configuration &configuration) {
+    Entity::loadFromIni(path, configuration);
+    m_speed = configuration["General"]["Speed"].as_double_or_die();
 }

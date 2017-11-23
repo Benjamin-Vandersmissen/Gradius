@@ -7,6 +7,10 @@
 
 #include "Entity.h"
 
+namespace resources{
+    class PlayerBullet;
+}
+
 namespace views {
     class PlayerBullet : public Entity {
     public:
@@ -21,6 +25,8 @@ namespace models {
     private:
         double m_speed = 0.12;
     public:
+        friend class resources::PlayerBullet;
+
         void update();
     };
 }
@@ -36,6 +42,17 @@ namespace controllers {
         void update(){
             notify();
         };
+    };
+}
+
+namespace resources{
+    class PlayerBullet : public Entity{
+    private:
+        double m_speed;
+    public:
+        models::PlayerBullet *create(const std::pair<float, float> &position);
+
+        void loadFromIni(std::string path, ini::Configuration &configuration) override;
     };
 }
 

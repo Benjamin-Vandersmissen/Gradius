@@ -4,11 +4,11 @@
 
 #include "Entity.h"
 
-std::vector<models::Entity*> models::list = {};
+std::list<models::Entity*> models::list = {};
 
-std::vector<views::Entity*> views::list = {};
+std::list<views::Entity*> views::list = {};
 
-std::vector<controllers::Entity*> controllers::list = {};
+std::list<controllers::Entity*> controllers::list = {};
 
 void models::Entity::addView(views::Entity *view) {
     m_view = view;
@@ -64,3 +64,18 @@ void views::Entity::update() {
     m_animation.setPosition(Transformation::invTransform(m_model->position()));
 
 }
+
+void resources::Entity::loadFromIni(std::string path, ini::Configuration &configuration) {
+    std::string texturePath = configuration["General"]["TexturePath"].as_string_or_die();
+    int delay = configuration["General"]["Delay"].as_int_or_default(-1);
+    unsigned int nrFrames = configuration["General"]["NrFrames"].as_int_or_default(1);
+    m_animation = Animation(delay);
+    m_animation.createFromStrip(path+texturePath, nrFrames);
+
+}
+
+void resources::Entity::setAnimationOfView(views::Entity *view) {
+    view->m_animation = m_animation;
+}
+
+std::map<std::string, resources::Entity*> resources::map = {};

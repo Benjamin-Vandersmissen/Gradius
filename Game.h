@@ -11,7 +11,14 @@
 #include "Entity.h"
 #include "StopWatch.h"
 #include "PlayerShip.h"
+#include "PlayerBullet.h"
 #include "Transformation.h"
+#include "json.hpp"
+#include "ini_configuration.hh"
+#include "EnemyShip.h"
+
+
+using json = nlohmann::json;
 
 class Game {
 private:
@@ -25,6 +32,10 @@ public:
 
     void handleEvents();
 };
+
+resources::Entity* loadResource(std::string path, std::string resourceName);
+
+void loadLevel(std::string fullPath);
 
 
 #endif //GRADIUS_GAME_H
