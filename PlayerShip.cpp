@@ -31,9 +31,9 @@ void models::Playership::update() {
 
 void views::PlayerShip::update() {
     std::cout << "Position is :" << m_model->position().first << ' ' << m_model->position().second << std::endl;
-    animation->setPosition(Transformation::invTransform(m_model->position()));
+    Entity::update();
 }
 
 void views::PlayerShip::draw(sf::RenderTarget &target, sf::RenderStates states) const{
-    target.draw(*animation, states);
+    target.draw(m_animation, states);
 }

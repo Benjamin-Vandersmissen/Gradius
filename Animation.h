@@ -33,6 +33,8 @@ public:
     void setColor(const sf::Color& color);
 
     sf::Vector2u getSize();
+
+    void setDelay(unsigned int delay);
 };
 
 

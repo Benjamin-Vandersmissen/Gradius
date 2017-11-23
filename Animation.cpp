@@ -23,8 +23,10 @@ void Animation::update() {
 }
 
 void Animation::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-    states.transform *= getTransform();
-    target.draw(m_sprites[m_index], states);
+    if (m_sprites.size() > 0) {
+        states.transform *= getTransform();
+        target.draw(m_sprites[m_index], states);
+    }
 }
 
 void Animation::createFromStrip(std::string filename, unsigned int amount) {
@@ -44,6 +46,11 @@ void Animation::setColor(const sf::Color &color) {
 
 sf::Vector2u Animation::getSize() {
     return {m_texture->getSize().x/m_sprites.size(), m_texture->getSize().y};
+}
+
+void Animation::setDelay(unsigned int delay) {
+    m_delay = delay;
+    m_current_delay = 0;
 }
 
 Animation::Animation() = default;

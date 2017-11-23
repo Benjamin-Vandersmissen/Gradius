@@ -8,6 +8,8 @@
 #include <memory>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Drawable.hpp>
+#include "Animation.h"
+#include "Transformation.h"
 
 namespace views{
     class Entity;
@@ -35,6 +37,8 @@ namespace models {
         void notify();
 
         const std::pair<float, float> &position() const;
+
+        void position(const std::pair<float, float> &position);
     };
 }
 
@@ -42,13 +46,17 @@ namespace views{
     class Entity : public sf::Drawable{
     protected:
         models::Entity* m_model;
-
     public:
+
+        Animation m_animation = Animation(0);
+
         void setModel(models::Entity *model);
 
-        virtual void update() =0;
+        virtual void update();
 
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const{};
+        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const{
+            target.draw(m_animation, states);
+        };
     };
 }
 

@@ -21,6 +21,11 @@ const std::pair<float, float> &models::Entity::position() const {
     return m_position;
 }
 
+void models::Entity::position(const std::pair<float, float> &position) {
+    m_position.first = position.first;
+    m_position.second = position.second;
+}
+
 void controllers::Entity::addModel(models::Entity *model) {
     m_model = model;
 }
@@ -32,4 +37,9 @@ void controllers::Entity::notify() {
 void views::Entity::setModel(models::Entity *model) {
     m_model = model;
     model->addView(std::shared_ptr<views::Entity>(this));
+}
+
+void views::Entity::update() {
+    m_animation.setPosition(Transformation::invTransform(m_model->position()));
+
 }

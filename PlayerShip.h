@@ -11,8 +11,6 @@
 namespace views {
     class PlayerShip : public Entity{
     public:
-        Animation* animation = new Animation(100);
-
         void update();
 
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override ;
