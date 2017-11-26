@@ -7,6 +7,10 @@
 
 #include "ScrollingEntity.h"
 
+namespace resource{
+    class Obstacle;
+}
+
 namespace views {
     class Obstacle : public ScrollingEntity{
 
@@ -15,7 +19,8 @@ namespace views {
 
 namespace models {
     class Obstacle : public ScrollingEntity{
-
+    public:
+        void handleCollision(models::Entity* entity) override;
     };
 }
 
@@ -25,5 +30,10 @@ namespace controllers {
     };
 }
 
+namespace resources {
+    class Obstacle : public Entity{
+
+    };
+}
 
 #endif //GRADIUS_OBSTACLE_H

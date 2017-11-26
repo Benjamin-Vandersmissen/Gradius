@@ -32,7 +32,7 @@ public:
 
     void setColor(const sf::Color& color);
 
-    sf::Vector2u getSize();
+    sf::Vector2u getSize() const;
 
     void setDelay(unsigned int delay);
 };

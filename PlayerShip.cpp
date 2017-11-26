@@ -72,13 +72,15 @@ void models::PlayerShip::update() {
             controllers::list.push_back(controller);
         }
     }
-    handleCollision(collision());
 }
 
-void models::PlayerShip::handleCollision(models::Entity *entity) {
-    //collision handling with obstacles and enemy ships
-    if(entity){
-        std::cout << entity << std::endl;
+
+void models::PlayerShip::dealDamage(unsigned int damage) {
+    if(damage < m_lives){
+        m_lives -= damage;
+    }
+    else{
+        m_lives = 0;
     }
 }
 
@@ -87,7 +89,7 @@ void views::PlayerShip::update() {
 }
 
 void views::PlayerShip::draw(sf::RenderTarget &target, sf::RenderStates states) const{
-    target.draw(m_animation, states);
+    Entity::draw(target, states);
 }
 
 models::PlayerShip *resources::PlayerShip::create(const std::pair<float, float> &position) {

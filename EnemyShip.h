@@ -22,6 +22,8 @@ namespace models {
     class EnemyShip : public ScrollingEntity{
     public:
         friend class resources::EnemyShip;
+
+        void handleCollision(models::Entity* entity) override;
     };
 }
 

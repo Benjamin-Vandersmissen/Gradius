@@ -6,6 +6,28 @@
 
 std::list<models::Entity*> models::list = {};
 
+void ::models::deleteMarkedEntities() {
+    bool deletedItems = false;
+    for(auto it = list.begin(); it != list.end(); ++it){
+        if((*it)->deleted()){
+            deletedItems = true;
+            it = list.erase(it);
+        }
+    }
+    if(!deletedItems)
+        return;
+    for(auto it = views::list.begin(); it != views::list.end(); ++it){
+        if((*it)->deleted()){
+            it = views::list.erase(it);
+        }
+    }
+    for(auto it = controllers::list.begin(); it != controllers::list.end(); ++it){
+        if((*it)->deleted()){
+            it = controllers::list.erase(it);
+        }
+    }
+}
+
 std::list<views::Entity*> views::list = {};
 
 std::list<controllers::Entity*> controllers::list = {};
@@ -49,6 +71,16 @@ void models::Entity::hitbox(const sf::FloatRect hitbox) {
     m_hitbox = hitbox;
 }
 
+bool models::Entity::deleted() const {
+    return m_deleted;
+}
+
+void models::Entity::markDeleted() {
+    m_deleted = true;
+    m_view->markDeleted();
+    m_controller->markDeleted();
+}
+
 
 void controllers::Entity::addModel(models::Entity *model) {
     m_model = model;
@@ -56,6 +88,10 @@ void controllers::Entity::addModel(models::Entity *model) {
 
 void controllers::Entity::notify() {
     m_model->update();
+}
+
+bool controllers::Entity::deleted() const {
+    return m_deleted;
 }
 
 void views::Entity::setModel(models::Entity *model) {
@@ -76,7 +112,11 @@ void resources::Entity::loadFromIni(std::string path, ini::Configuration &config
     m_animation = Animation(delay);
     m_animation.createFromStrip(path+texturePath, nrFrames);
     std::pair<float, float> size = Transformation::transform(m_animation.getSize().x, m_animation.getSize().y);
-    m_hitbox = sf::FloatRect{0,0,size.first, size.second};
+    m_hitbox = sf::FloatRect{0,0,size.first-Transformation::left(), size.second-Transformation::top()};
+}
+
+bool views::Entity::deleted() const {
+    return m_deleted;
 }
 
 void resources::Entity::setAnimationOfView(views::Entity *view) {

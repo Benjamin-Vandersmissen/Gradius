@@ -28,6 +28,8 @@ namespace models {
         friend class resources::PlayerBullet;
 
         void update();
+
+        void handleCollision(models::Entity* entity) override;
     };
 }
 

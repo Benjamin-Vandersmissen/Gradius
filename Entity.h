@@ -37,6 +37,8 @@ namespace models {
         std::pair<float, float> m_position;
 
         sf::FloatRect m_hitbox;
+
+        bool m_deleted = false;
     public:
         void addView(views::Entity *view);
 
@@ -57,14 +59,22 @@ namespace models {
         sf::FloatRect globalHitbox();
 
         void hitbox(const sf::FloatRect hitbox);
+
+        void markDeleted();
+
+        bool deleted() const;
     };
     extern std::list<Entity*> list;
+
+    void deleteMarkedEntities();
 }
 
 namespace views{
     class Entity : public sf::Drawable{
     protected:
         models::Entity* m_model;
+
+        bool m_deleted = false;
     public:
 
         friend class resources::Entity;
@@ -78,6 +88,10 @@ namespace views{
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const{
             target.draw(m_animation, states);
         };
+
+        void markDeleted(){m_deleted = true;}
+
+        bool deleted() const;
     };
 
     extern std::list<Entity*> list;
@@ -88,6 +102,8 @@ namespace controllers{
     protected:
         models::Entity* m_model;
 
+        bool m_deleted = false;
+
     public:
         void addModel(models::Entity* model);
 
@@ -96,6 +112,10 @@ namespace controllers{
         void notify();
 
         virtual void handleEvent(const sf::Event& event){};
+
+        void markDeleted(){m_deleted = true;}
+
+        bool deleted() const;
     };
     extern std::list<Entity*> list;
 }

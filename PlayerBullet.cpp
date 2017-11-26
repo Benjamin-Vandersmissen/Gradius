@@ -3,6 +3,7 @@
 //
 
 #include "PlayerBullet.h"
+#include "EnemyShip.h"
 
 const std::pair<float, float> &controllers::PlayerBullet::currentDirection() const {
     return m_currentDirection;
@@ -17,6 +18,17 @@ void models::PlayerBullet::update() {
     if(myController){
         m_position = {m_position.first + m_speed*myController->currentDirection().first, m_position.second + m_speed*myController->currentDirection().second};
         notify();
+    }
+    handleCollision(collision());
+}
+
+void models::PlayerBullet::handleCollision(models::Entity *entity) {
+    if(entity){
+        auto ship = dynamic_cast<models::EnemyShip*>(entity);
+        if(ship){
+            ship->markDeleted();
+            markDeleted();
+        }
     }
 }
 

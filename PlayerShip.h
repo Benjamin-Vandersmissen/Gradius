@@ -25,12 +25,16 @@ namespace models{
     class PlayerShip : public Entity{
     private:
         double m_speed = 0.08;
+
+        unsigned int m_maxLives = 3;
+
+        unsigned int m_lives = m_maxLives;
     public:
         friend class resources::PlayerShip;
 
         void update();
 
-        void handleCollision(models::Entity* entity);
+        void dealDamage(unsigned int damage);
     };
 }
 

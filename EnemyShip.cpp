@@ -3,6 +3,17 @@
 //
 
 #include "EnemyShip.h"
+#include "PlayerShip.h"
+
+void models::EnemyShip::handleCollision(models::Entity *entity) {
+    if(entity){
+        auto player = dynamic_cast<models::PlayerShip*>(entity);
+        if(player){
+            player->dealDamage(1);
+            markDeleted();
+        }
+    }
+}
 
 void resources::EnemyShip::loadFromIni(std::string path, ini::Configuration &configuration) {
     Entity::loadFromIni(path, configuration);

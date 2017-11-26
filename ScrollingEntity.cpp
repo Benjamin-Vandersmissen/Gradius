@@ -15,6 +15,7 @@ void models::ScrollingEntity::update() {
         m_position.second += controller->currentDirection().second*scrollingSpeed;
         notify();
     }
+    handleCollision(collision());
 }
 
 void controllers::ScrollingEntity::update() {
