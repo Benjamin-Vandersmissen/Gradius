@@ -29,6 +29,9 @@ namespace models{
         unsigned int m_maxLives = 3;
 
         unsigned int m_lives = m_maxLives;
+
+        std::string m_bulletType = "";
+
     public:
         friend class resources::PlayerShip;
 
@@ -64,6 +67,7 @@ namespace resources {
     private:
         double m_speed;
 
+        std::string m_bulletType;
     public:
         void loadFromIni(std::string path, ini::Configuration &configuration) override;
 

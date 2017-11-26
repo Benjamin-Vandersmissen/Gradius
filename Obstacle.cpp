@@ -14,3 +14,13 @@ void models::Obstacle::handleCollision(models::Entity *entity) {
         }
     }
 }
+
+models::Obstacle *resources::Obstacle::create(const std::pair<float, float> &position) {
+    auto model = new models::Obstacle;
+    model->hitbox(m_hitbox);
+
+    auto view = new views::Obstacle;
+    auto controller = new controllers::Obstacle;
+    finalizeCreation(view, model, controller, position);
+    return model;
+}

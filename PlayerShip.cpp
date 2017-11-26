@@ -61,15 +61,7 @@ void models::PlayerShip::update() {
             notify();
         }
         if(myController->fired()){
-            auto model = new models::PlayerBullet;
-            model->position(m_position);
-            auto view = new views::PlayerBullet;
-            auto controller = new controllers::PlayerBullet;
-            view->setModel(model);
-            model->setController(controller);
-            models::list.push_back(model);
-            views::list.push_back(view);
-            controllers::list.push_back(controller);
+            resources::map[m_bulletType]->create({m_position.first+m_hitbox.width/2, m_position.second+m_hitbox.height/2});
         }
     }
 }
@@ -95,6 +87,7 @@ void views::PlayerShip::draw(sf::RenderTarget &target, sf::RenderStates states) 
 models::PlayerShip *resources::PlayerShip::create(const std::pair<float, float> &position) {
     auto model = new models::PlayerShip;
     model->m_speed = m_speed;
+    model->m_bulletType = m_bulletType;
     model->hitbox(m_hitbox);
 
     auto view = new views::PlayerShip;
@@ -106,5 +99,6 @@ models::PlayerShip *resources::PlayerShip::create(const std::pair<float, float> 
 void resources::PlayerShip::loadFromIni(std::string path, ini::Configuration &configuration) {
     Entity::loadFromIni(path, configuration);
     m_speed = configuration["General"]["Speed"].as_double_or_die();
+    m_bulletType = configuration["PlayerShip"]["BulletType"].as_string_or_default("PlayerBullet");
 }
 

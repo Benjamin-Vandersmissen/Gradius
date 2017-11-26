@@ -7,7 +7,7 @@
 
 #include "ScrollingEntity.h"
 
-namespace resource{
+namespace resources{
     class Obstacle;
 }
 
@@ -20,7 +20,9 @@ namespace views {
 namespace models {
     class Obstacle : public ScrollingEntity{
     public:
-        void handleCollision(models::Entity* entity) override;
+        friend class resources::Obstacle;
+
+        virtual void handleCollision(models::Entity* entity) override;
     };
 }
 
@@ -32,7 +34,8 @@ namespace controllers {
 
 namespace resources {
     class Obstacle : public Entity{
-
+    public:
+        virtual models::Obstacle* create(const std::pair<float, float>& position) override;
     };
 }
 

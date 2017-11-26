@@ -3,6 +3,7 @@
 //
 
 #include "Game.h"
+#include "Obstacle.h"
 
 
 Game::Game() {
@@ -37,14 +38,6 @@ Game::Game() {
 
 void Game::loop() {
     while(m_window->isOpen()){
-        if(m_paused){
-            sf::Event event;
-            while(m_window->pollEvent(event)){
-                if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-                    m_paused = !m_paused;
-            }
-            continue;
-        }
         if(m_stopwatch->getElapsedTime() > 1000000/60){
             m_stopwatch->reset();
         }
@@ -54,6 +47,8 @@ void Game::loop() {
         if(!m_window->hasFocus())
             continue;
         handleEvents();
+        if(m_paused)
+            continue;
         for(auto controller : controllers::list){
             controller->update();
         }
@@ -69,14 +64,37 @@ void Game::loop() {
 void Game::handleEvents() {
     sf::Event event;
     while(m_window->pollEvent(event)){
-        if(event.type == sf::Event::Closed)
-            m_window->close();
-        else if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape){
-            m_paused = !m_paused;
-        }
-        else{
-            for (auto controller: controllers::list) {
-                controller->handleEvent(event);
+        switch(event.type){
+            case sf::Event::Closed: {
+                m_window->close();
+                break;
+            }
+            case sf::Event::Resized: {
+                m_window->clear();
+                for(auto view : views::list){
+                    m_window->draw(*view);
+                }
+                m_window->display();
+                break;
+            }
+            case sf::Event::KeyPressed: {
+                if(event.key.code == sf::Keyboard::Escape){
+                    m_paused = !m_paused;
+                }
+                if(!m_paused) {
+                    for (auto controller: controllers::list) {
+                        controller->handleEvent(event);
+                    }
+                }
+                break;
+            }
+            default: {
+                if(m_paused)
+                    break;
+                for (auto controller: controllers::list) {
+                    controller->handleEvent(event);
+                }
+                break;
             }
         }
     }
@@ -133,8 +151,10 @@ resources::Entity *loadResource(std::string path, std::string resourceName) {
         resource->loadFromIni(path, config);
         return resource;
     }
-//    if(type == "BorderObstacle"){
-//        auto resource = new resources::Obstacle
-//    }
+    if(type == "BorderObstacle"){
+        auto resource = new resources::Obstacle;
+        resource->loadFromIni(path, config);
+        return resource;
+    }
     return nullptr;
 }
