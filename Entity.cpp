@@ -119,6 +119,10 @@ bool views::Entity::deleted() const {
     return m_deleted;
 }
 
+void views::Entity::updateAnimation() {
+    m_animation.update();
+}
+
 void resources::Entity::setAnimationOfView(views::Entity *view) {
     view->m_animation = m_animation;
 }

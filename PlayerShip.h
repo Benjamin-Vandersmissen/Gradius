@@ -8,6 +8,8 @@
 #include "Entity.h"
 #include "Animation.h"
 
+void clamp(float &value, float lo, float hi);
+
 namespace resources{
     class PlayerShip;
 }

@@ -58,6 +58,8 @@ void models::PlayerShip::update() {
         if(myController->currentDirection() != std::pair<float, float>{0,0}) {
             m_position.first += m_speed * myController->currentDirection().first;
             m_position.second += m_speed * myController->currentDirection().second;
+            clamp(m_position.first,Transformation::left(), Transformation::left()+Transformation::width() - m_hitbox.width);
+            clamp(m_position.second,Transformation::top(), Transformation::top()+Transformation::height() - m_hitbox.height);
             notify();
         }
         if(myController->fired()){
@@ -100,8 +102,8 @@ void views::PlayerShip::initText() {
     m_text.setFont(*m_font);
     m_text.setColor(sf::Color::Cyan);
     m_text.setOrigin(0,0);
-    m_text.setPosition(Transformation::invTransform({-3.75,-2.75}));
-    m_text.setScale(0.3,0.3);
+    m_text.setPosition(Transformation::invTransform({-3.9,-2.9}));
+    m_text.setScale(0.25,0.25);
 }
 
 models::PlayerShip *resources::PlayerShip::create(const std::pair<float, float> &position) {
@@ -127,3 +129,10 @@ void resources::PlayerShip::loadFromIni(std::string path, ini::Configuration &co
     m_font->loadFromFile(fontPath);
 }
 
+void clamp(float &value, float lo, float hi) {
+    if(value < lo){
+        value = lo;
+    }
+    if(value > hi)
+        value = hi;
+}

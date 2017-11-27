@@ -55,6 +55,7 @@ void Game::loop() {
         models::deleteMarkedEntities();
         m_window->clear();
         for(auto view : views::list){
+            view->updateAnimation();
             m_window->draw(*view);
         }
         m_window->display();

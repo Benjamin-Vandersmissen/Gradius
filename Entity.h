@@ -89,6 +89,8 @@ namespace views{
             target.draw(m_animation, states);
         };
 
+        void updateAnimation();
+
         void markDeleted(){m_deleted = true;}
 
         bool deleted() const;
