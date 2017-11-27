@@ -11,13 +11,10 @@ void controllers::PlayerShip::update() {
     float dy = sf::Keyboard::isKeyPressed(sf::Keyboard::S) - sf::Keyboard::isKeyPressed(sf::Keyboard::W);
     m_currentDirection = {dx,dy};
 
-    if(m_currentDirection != std::pair<float,float>{0,0}){
-        notify();
-    }
-    if(m_fired){
-        notify();
-        m_fired = false;
-    }
+    notify();
+
+    m_fired = false;
+
     if(m_fireCooldown > 0){
         m_fireCooldown--;
     }
@@ -54,6 +51,8 @@ bool controllers::PlayerShip::fired() {
 
 void models::PlayerShip::update() {
     auto myController = dynamic_cast<controllers::PlayerShip*>(m_controller);
+    if(isImmune())
+        --m_immunity;
     if(myController) {
         if(myController->currentDirection() != std::pair<float, float>{0,0}) {
             m_position.first += m_speed * myController->currentDirection().first;
@@ -70,8 +69,11 @@ void models::PlayerShip::update() {
 
 
 void models::PlayerShip::dealDamage(unsigned int damage) {
+    if(isImmune())
+        return;
     if(damage < m_lives){
         m_lives -= damage;
+        m_immunity = m_maxImmunity;
         notify();
     }
     else{
@@ -83,11 +85,18 @@ unsigned int models::PlayerShip::lives() const {
     return m_lives;
 }
 
+bool models::PlayerShip::isImmune() const {
+    return m_immunity != 0;
+}
+
 void views::PlayerShip::update() {
     auto model = dynamic_cast<models::PlayerShip*>(m_model);
     if(model){
         m_text.setString("Lives "+ std::to_string(model->lives()));
-
+        if(model->isImmune())
+            m_animation.setColor(sf::Color{127,127,127});
+        else
+            m_animation.setColor(sf::Color{255,255,255});
     }
     Entity::update();
 }

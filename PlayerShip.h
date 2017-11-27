@@ -41,6 +41,9 @@ namespace models{
 
         std::string m_bulletType = "";
 
+        unsigned int m_maxImmunity = 60;
+
+        unsigned int m_immunity = 0;
     public:
         friend class resources::PlayerShip;
 
@@ -49,6 +52,9 @@ namespace models{
         void dealDamage(unsigned int damage);
 
         unsigned int lives() const;
+
+        bool isImmune() const;
+
     };
 }
 

@@ -13,6 +13,8 @@ void models::ScrollingEntity::update() {
     if(controller){
         m_position.first += controller->currentDirection().first*scrollingSpeed;
         m_position.second += controller->currentDirection().second*scrollingSpeed;
+        if(m_position.first+m_hitbox.width < Transformation::left())
+            markDeleted();
         notify();
     }
     handleCollision(collision());

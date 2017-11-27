@@ -136,9 +136,9 @@ void resources::Entity::finalizeCreation(views::Entity *view, models::Entity *mo
     model->position(position);
     model->notify();
 
-    models::list.push_back(model);
-    views::list.push_back(view);
-    controllers::list.push_back(controller);
+    models::list.insert(models::list.begin(),model);
+    views::list.insert(views::list.begin(), view);
+    controllers::list.insert(controllers::list.begin(),controller);
 }
 
 std::map<std::string, resources::Entity*> resources::map = {};
