@@ -18,6 +18,8 @@ namespace views {
         std::shared_ptr<sf::Font> m_font;
         sf::Text m_text;
     public:
+        void initText();
+
         friend class resources::PlayerShip;
 
         void update();
@@ -43,6 +45,8 @@ namespace models{
         void update();
 
         void dealDamage(unsigned int damage);
+
+        unsigned int lives() const;
     };
 }
 

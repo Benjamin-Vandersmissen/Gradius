@@ -70,18 +70,38 @@ void models::PlayerShip::update() {
 void models::PlayerShip::dealDamage(unsigned int damage) {
     if(damage < m_lives){
         m_lives -= damage;
+        notify();
     }
     else{
         m_lives = 0;
     }
 }
 
+unsigned int models::PlayerShip::lives() const {
+    return m_lives;
+}
+
 void views::PlayerShip::update() {
+    auto model = dynamic_cast<models::PlayerShip*>(m_model);
+    if(model){
+        m_text.setString("Lives "+ std::to_string(model->lives()));
+
+    }
     Entity::update();
 }
 
 void views::PlayerShip::draw(sf::RenderTarget &target, sf::RenderStates states) const{
     Entity::draw(target, states);
+    target.draw(m_text);
+}
+
+void views::PlayerShip::initText() {
+    m_text = sf::Text();
+    m_text.setFont(*m_font);
+    m_text.setColor(sf::Color::Cyan);
+    m_text.setOrigin(0,0);
+    m_text.setPosition(Transformation::invTransform({-3.75,-2.75}));
+    m_text.setScale(0.3,0.3);
 }
 
 models::PlayerShip *resources::PlayerShip::create(const std::pair<float, float> &position) {
@@ -92,6 +112,7 @@ models::PlayerShip *resources::PlayerShip::create(const std::pair<float, float> 
 
     auto view = new views::PlayerShip;
     view->m_font = m_font;
+    view->initText();
     auto controller = new controllers::PlayerShip;
     finalizeCreation(view, model, controller, position);
     return model;
@@ -101,7 +122,7 @@ void resources::PlayerShip::loadFromIni(std::string path, ini::Configuration &co
     Entity::loadFromIni(path, configuration);
     m_speed = configuration["General"]["Speed"].as_double_or_die();
     m_bulletType = configuration["PlayerShip"]["BulletType"].as_string_or_default("PlayerBullet");
-    std::string fontPath = configuration["PlayerShip"]["Font"].as_string_or_die();
+    std::string fontPath = path + configuration["PlayerShip"]["FontPath"].as_string_or_die();
     m_font = std::make_shared<sf::Font>();
     m_font->loadFromFile(fontPath);
 }
