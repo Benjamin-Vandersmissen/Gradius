@@ -91,6 +91,7 @@ models::PlayerShip *resources::PlayerShip::create(const std::pair<float, float> 
     model->hitbox(m_hitbox);
 
     auto view = new views::PlayerShip;
+    view->m_font = m_font;
     auto controller = new controllers::PlayerShip;
     finalizeCreation(view, model, controller, position);
     return model;
@@ -100,5 +101,8 @@ void resources::PlayerShip::loadFromIni(std::string path, ini::Configuration &co
     Entity::loadFromIni(path, configuration);
     m_speed = configuration["General"]["Speed"].as_double_or_die();
     m_bulletType = configuration["PlayerShip"]["BulletType"].as_string_or_default("PlayerBullet");
+    std::string fontPath = configuration["PlayerShip"]["Font"].as_string_or_die();
+    m_font = std::make_shared<sf::Font>();
+    m_font->loadFromFile(fontPath);
 }
 

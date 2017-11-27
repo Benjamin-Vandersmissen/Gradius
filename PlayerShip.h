@@ -14,7 +14,12 @@ namespace resources{
 
 namespace views {
     class PlayerShip : public Entity{
+    private:
+        std::shared_ptr<sf::Font> m_font;
+        sf::Text m_text;
     public:
+        friend class resources::PlayerShip;
+
         void update();
 
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override ;
@@ -68,6 +73,8 @@ namespace resources {
         double m_speed;
 
         std::string m_bulletType;
+
+        std::shared_ptr<sf::Font> m_font;
     public:
         void loadFromIni(std::string path, ini::Configuration &configuration) override;
 
