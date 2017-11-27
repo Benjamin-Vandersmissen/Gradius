@@ -7,15 +7,16 @@
 StopWatch* StopWatch::m_stopwatch = nullptr;
 
 StopWatch::StopWatch() {
-    m_clock = std::clock();
+    m_time = std::chrono::steady_clock::now();
+
 }
 
-clock_t StopWatch::getElapsedTime() const{
-    return clock()-m_clock;
+double StopWatch::getElapsedTime() const{
+    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now()- m_time).count();
 }
 
 void StopWatch::reset() {
-    m_clock = clock();
+    m_time = std::chrono::steady_clock::now();
 }
 
 StopWatch * StopWatch::getStopWatch(){

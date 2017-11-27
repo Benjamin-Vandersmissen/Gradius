@@ -4,11 +4,11 @@
 
 #ifndef GRADIUS_STOPWATCH_H
 #define GRADIUS_STOPWATCH_H
-#include <ctime>
+#include <chrono>
 
 class StopWatch {
 private:
-    clock_t m_clock;
+    std::chrono::steady_clock::time_point m_time;
 
     StopWatch();
 
@@ -22,7 +22,7 @@ public:
     /**
      * \brief get the difference between the current time and the time of initialization of the clock
      * */
-    clock_t getElapsedTime() const;
+    double getElapsedTime() const;
 
     /**
      * \brief creates the stopwatch if it wasn't created yet and returns it
