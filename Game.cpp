@@ -4,6 +4,7 @@
 
 #include "Game.h"
 #include "Obstacle.h"
+#include "BorderObstacle.h"
 
 
 Game::Game() {
@@ -137,23 +138,23 @@ resources::Entity *loadResource(std::string path, std::string resourceName) {
     std::ifstream stream(path+resourceName+".ini");
     stream >> config;
     std::string type = config["General"]["Type"].as_string_or_die();
+    resources::Entity* resource = nullptr;
     if (type == "PlayerShip"){
-        auto resource  = new resources::PlayerShip;
-        resource->loadFromIni(path, config);
-        return resource;
+        resource  = new resources::PlayerShip;
     }
     if(type == "PlayerBullet"){
-        auto resource = new resources::PlayerBullet;
-        resource->loadFromIni(path, config);
-        return resource;
+        resource = new resources::PlayerBullet;
     }
     if (type == "EnemyShip"){
-        auto resource = new resources::EnemyShip;
-        resource->loadFromIni(path, config);
-        return resource;
+        resource = new resources::EnemyShip;
     }
     if(type == "BorderObstacle"){
-        auto resource = new resources::Obstacle;
+        resource = new resources::BorderObstacle;
+    }
+    if(type == "Obstacle"){
+        resource = new resources::Obstacle;
+    }
+    if(resource){
         resource->loadFromIni(path, config);
         return resource;
     }
