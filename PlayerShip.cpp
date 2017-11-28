@@ -62,7 +62,12 @@ void models::PlayerShip::update() {
             notify();
         }
         if(myController->fired()){
-            resources::map[m_bulletType]->create({m_position.first+m_hitbox.width/2, m_position.second+m_hitbox.height/2});
+            try {
+                resources::map.at(m_bulletType)->create(
+                        {m_position.first + m_hitbox.width / 2, m_position.second + m_hitbox.height / 2});
+            }catch(std::exception){
+                throw ResourceException(m_bulletType);
+            }
         }
     }
 }
