@@ -126,9 +126,11 @@ void loadLevel(std::string fullPath) {
         if(resources::map.find(resource) == resources::map.end()){
             resources::map[resource] = loadResource(path+resourcePath, resource);
         }
-
-        if(resources::map[resource] != nullptr){
-            auto entity = resources::map[resource]->create(position);
+        try{
+         auto entity = resources::map.at(resource)->create(position);
+        }
+        catch(std::exception){
+            throw ResourceException(resource);
         }
     }
 }

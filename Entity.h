@@ -14,6 +14,7 @@
 #include "Animation.h"
 #include "Transformation.h"
 #include "ini_configuration.hh"
+#include "Exception.h"
 
 namespace views{
     class Entity;
