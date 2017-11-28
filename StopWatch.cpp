@@ -4,8 +4,6 @@
 
 #include "StopWatch.h"
 
-StopWatch* StopWatch::m_stopwatch = nullptr;
-
 StopWatch::StopWatch() {
     m_time = std::chrono::steady_clock::now();
 
@@ -19,8 +17,3 @@ void StopWatch::reset() {
     m_time = std::chrono::steady_clock::now();
 }
 
-StopWatch * StopWatch::getStopWatch(){
-    if(!StopWatch::m_stopwatch)
-        StopWatch::m_stopwatch = new StopWatch;
-    return StopWatch::m_stopwatch;
-}

@@ -5,14 +5,14 @@
 #ifndef GRADIUS_STOPWATCH_H
 #define GRADIUS_STOPWATCH_H
 #include <chrono>
+#include "Singleton.h"
 
-class StopWatch {
+class StopWatch : public Singleton<StopWatch>{
+    friend class Singleton<StopWatch>;
 private:
     std::chrono::steady_clock::time_point m_time;
 
     StopWatch();
-
-    static StopWatch* m_stopwatch;
 public:
     /**
      * \brief set the clock to the current time
@@ -23,11 +23,6 @@ public:
      * \brief get the difference between the current time and the time of initialization of the clock
      * */
     double getElapsedTime() const;
-
-    /**
-     * \brief creates the stopwatch if it wasn't created yet and returns it
-     * */
-    static StopWatch * getStopWatch();
 };
 
 

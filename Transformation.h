@@ -8,11 +8,14 @@
 
 #include <utility>
 #include "SFML/System/Vector2.hpp"
+#include "Singleton.h"
 
-class Transformation {
+class Transformation : public Singleton<Transformation>{
+    friend class Singleton<Transformation>;
 private:
     static unsigned int m_windowWidth;
     static unsigned int m_windowHeight;
+    Transformation(){};
     Transformation(unsigned int windowWidth, unsigned int windowHeight);
     static Transformation* m_transformation;
     //y-coordinate of the top
@@ -38,11 +41,6 @@ public:
      * \brief transform window coordinates to game coordinates
      * */
     static std::pair<float,float> transform(unsigned int pixelX, unsigned int pixelY);
-
-    /**
-     * \brief return the transformation
-     * */
-    static Transformation* getTransformation();
 
     /**
      * \brief transform game coordinates to window coordinates

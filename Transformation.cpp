@@ -31,10 +31,6 @@ std::pair<float, float> Transformation::transform(unsigned int pixelX, unsigned 
     return {x,y};
 }
 
-Transformation *Transformation::getTransformation() {
-    return m_transformation;
-}
-
 sf::Vector2f Transformation::invTransform(const std::pair<float, float> &position) {
     float x = (position.first-m_left)/m_width*m_windowWidth;
     float y = (position.second-m_top)/m_height*m_windowHeight;

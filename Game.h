@@ -24,7 +24,7 @@ class Game {
 private:
     sf::RenderWindow* m_window;
     bool m_paused = false;
-    StopWatch* m_stopwatch = StopWatch::getStopWatch();
+    StopWatch* m_stopwatch = StopWatch::getInstance();
 public:
     Game();
 
