@@ -66,7 +66,7 @@ void models::PlayerShip::update() {
                 resources::map.at(m_bulletType)->create(
                         {m_position.first + m_hitbox.width / 2, m_position.second + m_hitbox.height / 2});
             }catch(std::exception){
-                throw ResourceException(m_bulletType);
+                throw ResourceException(ResourceException::missingResource, m_bulletType);
             }
         }
     }

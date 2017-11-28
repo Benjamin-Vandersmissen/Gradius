@@ -104,12 +104,28 @@ void Game::handleEvents() {
 
 void loadLevel(std::string fullPath) {
     std::ifstream stream(fullPath);
+
+    if(!stream.good()){ //!stream.good() != stream.bad()
+        throw LevelException(LevelException::missingFile, fullPath);
+    }
     std::string path = fullPath.substr(0, fullPath.rfind('/')+1);
     json j;
     stream >> j;
-    std::string resourcePath = j["ResourcePath"];
-    std::vector<std::string> resources = j["Resources"];
 
+    std::string resourcePath;
+    try {
+        resourcePath = j["ResourcePath"];
+    } catch(json::exception& e){
+        throw LevelException(LevelException::missingEntry, fullPath, "ResourcePath");
+    }
+
+
+    std::vector<std::string> resources;
+    try {
+        resources = j["Resources"].get<std::vector<std::string> >();
+    } catch(json::exception& e){
+        throw LevelException(LevelException::missingEntry, fullPath, "Resources");
+    }
     views::list.clear();
     models::list.clear();
     controllers::list.clear();
@@ -119,7 +135,12 @@ void loadLevel(std::string fullPath) {
         resources::map[resource] = loadResource(path+resourcePath, resource);
     }
 
-    std::vector<json> entities = j["Entities"];
+    std::vector<json> entities;
+    try {
+        entities = j["Entities"].get<std::vector<json> >();
+    } catch(json::exception& e){
+        throw LevelException(LevelException::missingEntry, fullPath, "Entities");
+    }
     for(json j1 : entities){
         std::pair<float,float> position = j1["Position"];
         std::string resource = j1["Type"];
@@ -130,7 +151,7 @@ void loadLevel(std::string fullPath) {
          auto entity = resources::map.at(resource)->create(position);
         }
         catch(std::exception){
-            throw ResourceException(resource);
+            throw ResourceException(ResourceException::missingResource, resource);
         }
     }
 }
@@ -160,5 +181,5 @@ resources::Entity *loadResource(std::string path, std::string resourceName) {
         resource->loadFromIni(path, config);
         return resource;
     }
-    return nullptr;
+    throw ResourceException(ResourceException::unknownClass, resourceName, type);
 }
