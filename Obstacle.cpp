@@ -5,9 +5,9 @@
 #include "Obstacle.h"
 #include "PlayerShip.h"
 
-void models::Obstacle::handleCollision(models::Entity *entity) {
+void models::Obstacle::handleCollision(model_ptr entity) {
     if(entity){
-        auto player = dynamic_cast<models::PlayerShip*>(entity);
+        auto player = std::dynamic_pointer_cast<models::PlayerShip>(entity);
         if(player){
             player->dealDamage(1);
             markDeleted();
@@ -15,12 +15,12 @@ void models::Obstacle::handleCollision(models::Entity *entity) {
     }
 }
 
-models::Obstacle *resources::Obstacle::create(const std::pair<float, float> &position) {
-    auto model = new models::Obstacle;
+model_ptr resources::Obstacle::create(const std::pair<float, float> &position) {
+    auto model = std::make_shared<models::Obstacle>();
     model->hitbox(m_hitbox);
 
-    auto view = new views::Obstacle;
-    auto controller = new controllers::Obstacle;
+    auto view = std::make_shared<views::Obstacle>();
+    auto controller = std::make_shared<controllers::Obstacle>();
     finalizeCreation(view, model, controller, position);
     return model;
 }

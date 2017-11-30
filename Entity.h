@@ -28,6 +28,14 @@ namespace resources{
     class Entity;
 }
 
+namespace models{
+    class Entity;
+}
+
+using view_ptr = std::shared_ptr<views::Entity>;
+using model_ptr = std::shared_ptr<models::Entity>;
+using controller_ptr = std::shared_ptr<controllers::Entity>;
+
 namespace models {
     class Entity {
     protected:
@@ -53,9 +61,9 @@ namespace models {
 
         void position(const std::pair<float, float> &position);
 
-        models::Entity* collision();
+        model_ptr collision();
 
-        virtual void handleCollision(models::Entity* entity){};
+        virtual void handleCollision(model_ptr entity){};
 
         sf::FloatRect globalHitbox();
 
@@ -65,7 +73,7 @@ namespace models {
 
         bool deleted() const;
     };
-    extern std::list<Entity*> list;
+    extern std::list<model_ptr> list;
 
     void deleteMarkedEntities();
 }
@@ -97,7 +105,7 @@ namespace views{
         bool deleted() const;
     };
 
-    extern std::list<Entity*> list;
+    extern std::list<view_ptr > list;
 }
 
 namespace controllers{
@@ -120,7 +128,7 @@ namespace controllers{
 
         bool deleted() const;
     };
-    extern std::list<Entity*> list;
+    extern std::list<controller_ptr> list;
 }
 
 namespace resources{
@@ -129,14 +137,14 @@ namespace resources{
         Animation m_animation;
         sf::FloatRect m_hitbox;
     public:
-        virtual models::Entity *create(const std::pair<float, float> &position) =0;
+        virtual model_ptr create(const std::pair<float, float> &position) =0;
 
         virtual void loadFromIni(std::string path, ini::Configuration &configuration);
 
         void setAnimationOfView(views::Entity* view);
 
-        void finalizeCreation(views::Entity *view, models::Entity *model, controllers::Entity *controller,
-                                      std::pair<float, float> position);
+        void finalizeCreation(view_ptr view, model_ptr model, controller_ptr controller,
+                              std::pair<float, float> position);
     };
 
     extern std::map<std::string, resources::Entity*> map;

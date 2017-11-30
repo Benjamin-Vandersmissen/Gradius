@@ -23,7 +23,7 @@ namespace models {
     public:
         friend class resources::EnemyShip;
 
-        void handleCollision(models::Entity* entity) override;
+        void handleCollision(model_ptr entity) override;
     };
 }
 
@@ -38,7 +38,7 @@ namespace resources {
     public:
         void loadFromIni(std::string path, ini::Configuration& configuration);
 
-        models::EnemyShip *create(const std::pair<float, float> &position);
+        model_ptr create(const std::pair<float, float> &position);
     };
 }
 

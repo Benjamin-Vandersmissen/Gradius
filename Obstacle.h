@@ -22,7 +22,7 @@ namespace models {
     public:
         friend class resources::Obstacle;
 
-        virtual void handleCollision(models::Entity* entity) override;
+        virtual void handleCollision(model_ptr entity) override;
     };
 }
 
@@ -35,7 +35,7 @@ namespace controllers {
 namespace resources {
     class Obstacle : public Entity{
     public:
-        virtual models::Obstacle* create(const std::pair<float, float>& position) override;
+        virtual model_ptr create(const std::pair<float, float> &position) override;
     };
 }
 

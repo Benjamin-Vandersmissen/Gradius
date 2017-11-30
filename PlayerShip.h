@@ -90,7 +90,7 @@ namespace resources {
     public:
         void loadFromIni(std::string path, ini::Configuration &configuration) override;
 
-        models::PlayerShip *create(const std::pair<float, float> &position);
+        model_ptr create(const std::pair<float, float> &position);
     };
 }
 

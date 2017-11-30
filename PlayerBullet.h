@@ -29,7 +29,7 @@ namespace models {
 
         void update();
 
-        void handleCollision(models::Entity* entity) override;
+        void handleCollision(model_ptr entity) override;
     };
 }
 
@@ -52,7 +52,7 @@ namespace resources{
     private:
         double m_speed;
     public:
-        models::PlayerBullet *create(const std::pair<float, float> &position);
+        model_ptr create(const std::pair<float, float> &position);
 
         void loadFromIni(std::string path, ini::Configuration &configuration) override;
     };

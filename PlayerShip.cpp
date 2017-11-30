@@ -64,7 +64,7 @@ void models::PlayerShip::update() {
         if(myController->fired()){
             try {
                 resources::map.at(m_bulletType)->create(
-                        {m_position.first + m_hitbox.width / 2, m_position.second + m_hitbox.height / 2});
+                        std::pair<float,float>{m_position.first + m_hitbox.width / 2, m_position.second + m_hitbox.height / 2});
             }catch(std::exception){
                 throw ResourceException(ResourceException::missingResource, m_bulletType);
             }
@@ -116,20 +116,20 @@ void views::PlayerShip::initText() {
     m_text.setFont(*m_font);
     m_text.setColor(sf::Color::Cyan);
     m_text.setOrigin(0,0);
-    m_text.setPosition(Transformation::invTransform({-3.9,-2.9}));
+    m_text.setPosition(Transformation::invTransform(std::pair<float,float>{-3.9,-2.9}));
     m_text.setScale(0.25,0.25);
 }
 
-models::PlayerShip *resources::PlayerShip::create(const std::pair<float, float> &position) {
-    auto model = new models::PlayerShip;
+model_ptr resources::PlayerShip::create(const std::pair<float, float> &position) {
+    auto model = std::make_shared<models::PlayerShip>();
     model->m_speed = m_speed;
     model->m_bulletType = m_bulletType;
     model->hitbox(m_hitbox);
 
-    auto view = new views::PlayerShip;
+    auto view = std::make_shared<views::PlayerShip>();
     view->m_font = m_font;
     view->initText();
-    auto controller = new controllers::PlayerShip;
+    auto controller = std::make_shared<controllers::PlayerShip>();
     finalizeCreation(view, model, controller, position);
     return model;
 }

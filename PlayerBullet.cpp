@@ -24,9 +24,9 @@ void models::PlayerBullet::update() {
     handleCollision(collision());
 }
 
-void models::PlayerBullet::handleCollision(models::Entity *entity) {
+void models::PlayerBullet::handleCollision(model_ptr entity) {
     if(entity){
-        auto ship = dynamic_cast<models::EnemyShip*>(entity);
+        auto ship = std::dynamic_pointer_cast<models::EnemyShip>(entity);
         if(ship){
             ship->markDeleted();
             markDeleted();
@@ -34,13 +34,13 @@ void models::PlayerBullet::handleCollision(models::Entity *entity) {
     }
 }
 
-models::PlayerBullet *resources::PlayerBullet::create(const std::pair<float, float> &position) {
-    auto model = new models::PlayerBullet;
+model_ptr resources::PlayerBullet::create(const std::pair<float, float> &position) {
+    auto model = std::make_shared<models::PlayerBullet>();
     model->m_speed = m_speed;
     model->hitbox(m_hitbox);
 
-    auto view = new views::PlayerBullet;
-    auto controller = new controllers::PlayerBullet;
+    auto view = std::make_shared<views::PlayerBullet>();
+    auto controller = std::make_shared<controllers::PlayerBullet>();
     finalizeCreation(view, model, controller, position);
     return model;
 }

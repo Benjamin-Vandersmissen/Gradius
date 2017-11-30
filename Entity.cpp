@@ -4,7 +4,7 @@
 
 #include "Entity.h"
 
-std::list<models::Entity*> models::list = {};
+std::list<model_ptr> models::list = {};
 
 void ::models::deleteMarkedEntities() {
     bool deletedItems = false;
@@ -28,9 +28,9 @@ void ::models::deleteMarkedEntities() {
     }
 }
 
-std::list<views::Entity*> views::list = {};
+std::list<view_ptr> views::list = {};
 
-std::list<controllers::Entity*> controllers::list = {};
+std::list<controller_ptr> controllers::list = {};
 
 void models::Entity::addView(views::Entity *view) {
     m_view = view;
@@ -54,9 +54,9 @@ void models::Entity::position(const std::pair<float, float> &position) {
     m_position.second = position.second;
 }
 
-models::Entity *models::Entity::collision() {
-    for(models::Entity* entity: models::list){
-        if(entity->globalHitbox().intersects(this->globalHitbox()) && entity != this){
+model_ptr models::Entity::collision() {
+    for(model_ptr entity: models::list){
+        if(entity->globalHitbox().intersects(this->globalHitbox()) && entity.get() != this){
             return entity;
         }
     }
@@ -127,11 +127,11 @@ void resources::Entity::setAnimationOfView(views::Entity *view) {
     view->m_animation = m_animation;
 }
 
-void resources::Entity::finalizeCreation(views::Entity *view, models::Entity *model, controllers::Entity *controller,
+void resources::Entity::finalizeCreation(view_ptr view, model_ptr model, controller_ptr controller,
                                          std::pair<float, float> position) {
-    model->setController(controller);
-    view->setModel(model);
-    setAnimationOfView(view);
+    model->setController(controller.get());
+    view->setModel(model.get());
+    setAnimationOfView(view.get());
 
     model->position(position);
     model->notify();
