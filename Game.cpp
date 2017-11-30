@@ -5,36 +5,25 @@
 #include "Game.h"
 #include "Obstacle.h"
 #include "BorderObstacle.h"
+#include "MainMenu.h"
 
 
 Game::Game() {
     m_window = new sf::RenderWindow(sf::VideoMode(200,150), "Gradius ~ Test");
     Transformation::initTransformation(200,150);
-    models::PlayerShip* model = new models::PlayerShip;
 
-    loadLevel("../levels/level.json");
+//    loadLevel("../levels/level.json");
+    auto menuModel = std::make_shared<models::MainMenu>();
+    auto menuView = std::make_shared<views::MainMenu>();
+    auto menuController = std::make_shared<controllers::MainMenu>();
+    menuModel->setController(menuController.get());
+    menuView->setModel(menuModel.get());
+    menuModel->position(std::pair<float,float>{0,0});
+    menuModel->notify();
 
-//    auto view = new views::PlayerShip();
-//    auto controller = new controllers::PlayerShip();
-//    view->setModel(model);
-//    model->setController(controller);
-//    view->m_animation.createFromStrip("../resources/textures/PlayerShip_strip.png", 2);
-//    model->notify(); //synchronise the states
-//    models::list.push_back(model);
-//    controllers::list.push_back(controller);
-//    views::list.push_back(view);
-//
-//    auto view2 = new views::ScrollingEntity();
-//    auto controller2 = new controllers::ScrollingEntity();
-//    models::ScrollingEntity* model2 = new models::ScrollingEntity;
-//    view2->setModel(model2);
-//    model2->setController(controller2);
-//    view2->m_animation.createFromStrip("../resources/textures/EnemyShip_strip.png", 3);
-//    model2->position(std::pair<float,float>{4,0});
-//    models::list.push_back(model2);
-//    controllers::list.push_back(controller2);
-//    views::list.push_back(view2);
-
+    models::list.insert(models::list.begin(),menuModel);
+    views::list.insert(views::list.begin(), menuView);
+    controllers::list.insert(controllers::list.begin(),menuController);
 }
 
 void Game::loop() {

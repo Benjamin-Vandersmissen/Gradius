@@ -14,6 +14,8 @@ void Animation::addSprite(const sf::Sprite &sprite) {
 Animation::Animation(const std::vector<sf::Sprite> &m_sprites, int m_delay) : m_sprites(m_sprites), m_delay(m_delay), m_current_delay(m_delay) {}
 
 void Animation::update() {
+    if(m_sprites.size() == 0)
+        return;
     if(m_delay > 0) {
         m_current_delay = (m_current_delay + 1) % m_delay;
     }
