@@ -87,6 +87,8 @@ namespace resources {
         std::string m_bulletType;
 
         std::shared_ptr<sf::Font> m_font;
+
+        unsigned int m_maxLives;
     public:
         void loadFromIni(std::string path, ini::Configuration &configuration) override;
 

@@ -11,6 +11,12 @@ void controllers::PlayerShip::update() {
     float dy = sf::Keyboard::isKeyPressed(sf::Keyboard::S) - sf::Keyboard::isKeyPressed(sf::Keyboard::W);
     m_currentDirection = {dx,dy};
 
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+        if(m_fireCooldown == 0){
+            m_fired = true;
+            m_fireCooldown = m_maxFireCooldown;
+        }
+    }
     notify();
 
     m_fired = false;
@@ -25,24 +31,7 @@ const std::pair<float, float> &controllers::PlayerShip::currentDirection() const
 }
 
 void controllers::PlayerShip::handleEvent(const sf::Event &event) {
-    switch(event.type){
-        case sf::Event::KeyPressed:{
-            switch(event.key.code){
-                case sf::Keyboard::Space:{
-                    if(m_fireCooldown == 0){
-                        m_fireCooldown = m_maxFireCooldown;
-                        m_fired = true;
-                    }
-                    break;
-                }
-                default:
-                    break;
-            }
-            break;
-        }
-        default:
-            break;
-    }
+
 }
 
 bool controllers::PlayerShip::fired() {
@@ -124,6 +113,8 @@ model_ptr resources::PlayerShip::create(const std::pair<float, float> &position)
     auto model = std::make_shared<models::PlayerShip>();
     model->m_speed = m_speed;
     model->m_bulletType = m_bulletType;
+    model->m_maxLives= m_maxLives;
+    model->m_lives = m_maxLives;
     model->hitbox(m_hitbox);
 
     auto view = std::make_shared<views::PlayerShip>();
@@ -137,8 +128,11 @@ model_ptr resources::PlayerShip::create(const std::pair<float, float> &position)
 void resources::PlayerShip::loadFromIni(std::string path, ini::Configuration &configuration) {
     Entity::loadFromIni(path, configuration);
     m_speed = configuration["General"]["Speed"].as_double_or_die();
+
     m_bulletType = configuration["PlayerShip"]["BulletType"].as_string_or_default("PlayerBullet");
     std::string fontPath = path + configuration["PlayerShip"]["FontPath"].as_string_or_die();
+    m_maxLives = configuration["PlayerShip"]["Lives"].as_int_or_default(3);
+
     m_font = std::make_shared<sf::Font>();
     m_font->loadFromFile(fontPath);
 }
