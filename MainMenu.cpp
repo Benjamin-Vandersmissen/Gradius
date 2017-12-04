@@ -40,7 +40,7 @@ int controllers::MainMenu::direction() {
 }
 
 void models::MainMenu::update() {
-    auto controller = dynamic_cast<controllers::MainMenu*>(m_controller);
+    auto controller = std::dynamic_pointer_cast<controllers::MainMenu>(m_controller);
     m_selectedState = (m_selectedState + controller->direction() + states::END) % states::END;
     std::cout << m_selectedState << std::endl;
 }

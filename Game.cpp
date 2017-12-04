@@ -16,8 +16,8 @@ Game::Game() {
     auto menuModel = std::make_shared<models::MainMenu>();
     auto menuView = std::make_shared<views::MainMenu>();
     auto menuController = std::make_shared<controllers::MainMenu>();
-    menuModel->setController(menuController.get());
-    menuView->setModel(menuModel.get());
+    menuModel->setController(menuController);
+    menuView->setModel(menuModel);
     menuModel->position(std::pair<float,float>{0,0});
     menuModel->notify();
 

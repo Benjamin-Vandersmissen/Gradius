@@ -32,13 +32,13 @@ std::list<view_ptr> views::list = {};
 
 std::list<controller_ptr> controllers::list = {};
 
-void models::Entity::addView(views::Entity *view) {
+void models::Entity::addView(view_ptr view) {
     m_view = view;
 }
 
-void models::Entity::setController(controllers::Entity *controller) {
+void models::Entity::setController(controller_ptr controller) {
     m_controller = controller;
-    controller->addModel(this);
+    controller->addModel(shared_from_this());
 }
 
 void models::Entity::notify() {
@@ -82,7 +82,7 @@ void models::Entity::markDeleted() {
 }
 
 
-void controllers::Entity::addModel(models::Entity *model) {
+void controllers::Entity::addModel(model_ptr model) {
     m_model = model;
 }
 
@@ -94,9 +94,9 @@ bool controllers::Entity::deleted() const {
     return m_deleted;
 }
 
-void views::Entity::setModel(models::Entity *model) {
+void views::Entity::setModel(model_ptr model) {
     m_model = model;
-    model->addView(this);
+    model->addView(shared_from_this());
     model->notify();
 }
 
@@ -123,15 +123,15 @@ void views::Entity::updateAnimation() {
     m_animation.update();
 }
 
-void resources::Entity::setAnimationOfView(views::Entity *view) {
+void resources::Entity::setAnimationOfView(view_ptr view) {
     view->m_animation = m_animation;
 }
 
 void resources::Entity::finalizeCreation(view_ptr view, model_ptr model, controller_ptr controller,
                                          std::pair<float, float> position) {
-    model->setController(controller.get());
-    view->setModel(model.get());
-    setAnimationOfView(view.get());
+    model->setController(controller);
+    view->setModel(model);
+    setAnimationOfView(view);
 
     model->position(position);
     model->notify();

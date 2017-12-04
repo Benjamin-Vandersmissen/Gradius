@@ -14,7 +14,7 @@ views::PlayerBullet::PlayerBullet() {
 }
 
 void models::PlayerBullet::update() {
-    auto myController = dynamic_cast<controllers::PlayerBullet*>(m_controller);
+    auto myController = std::dynamic_pointer_cast<controllers::PlayerBullet>(m_controller);
     if(myController){
         m_position = {m_position.first + m_speed*myController->currentDirection().first, m_position.second + m_speed*myController->currentDirection().second};
         if(m_position.first > Transformation::left()+Transformation::width())
