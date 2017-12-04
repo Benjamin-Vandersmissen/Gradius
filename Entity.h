@@ -37,9 +37,9 @@ using model_ptr = std::shared_ptr<models::Entity>;
 using controller_ptr = std::shared_ptr<controllers::Entity>;
 
 namespace models {
-    class Entity : public std::enable_shared_from_this<Entity>{
+    class Entity : public std::enable_shared_from_this<models::Entity>{
     protected:
-        views::Entity* m_view;
+        view_ptr m_view;
 
         controller_ptr m_controller;
 
@@ -49,7 +49,7 @@ namespace models {
 
         bool m_deleted = false;
     public:
-        void addView(views::Entity *view);
+        void addView(view_ptr view);
 
         void setController(controller_ptr controller);
 
@@ -79,7 +79,7 @@ namespace models {
 }
 
 namespace views{
-    class Entity : public sf::Drawable, public std::enable_shared_from_this<Entity>{
+    class Entity : public sf::Drawable, public std::enable_shared_from_this<views::Entity>{
     protected:
         model_ptr m_model;
 
@@ -109,7 +109,7 @@ namespace views{
 }
 
 namespace controllers{
-    class Entity: public std::enable_shared_from_this<Entity>{
+    class Entity: public std::enable_shared_from_this<controllers::Entity>{
     protected:
         model_ptr m_model;
 
@@ -132,7 +132,7 @@ namespace controllers{
 }
 
 namespace resources{
-    class Entity{
+    class Entity: public std::enable_shared_from_this<resources::Entity>{
     protected:
         Animation m_animation;
         sf::FloatRect m_hitbox;

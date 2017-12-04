@@ -32,7 +32,7 @@ std::list<view_ptr> views::list = {};
 
 std::list<controller_ptr> controllers::list = {};
 
-void models::Entity::addView(views::Entity *view) {
+void models::Entity::addView(view_ptr view) {
     m_view = view;
 }
 
@@ -96,7 +96,7 @@ bool controllers::Entity::deleted() const {
 
 void views::Entity::setModel(model_ptr model) {
     m_model = model;
-    model->addView(this);
+    model->addView(shared_from_this());
     model->notify();
 }
 
