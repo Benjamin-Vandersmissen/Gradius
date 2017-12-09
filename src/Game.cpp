@@ -3,27 +3,19 @@
 //
 
 #include "Game.h"
-#include "Obstacle.h"
-#include "BorderObstacle.h"
-#include "MainMenu.h"
+#include "resources/EnemyShip.h"
+#include "resources/Obstacle.h"
+#include "resources/PlayerShip.h"
+#include "resources/PlayerBullet.h"
+#include "resources/BorderObstacle.h"
 
 
 Game::Game() {
     m_window = new sf::RenderWindow(sf::VideoMode(200,150), "Gradius ~ Test");
     Transformation::initTransformation(200,150);
 
-//    loadLevel("../levels/level.json");
-    auto menuModel = std::make_shared<models::MainMenu>();
-    auto menuView = std::make_shared<views::MainMenu>();
-    auto menuController = std::make_shared<controllers::MainMenu>();
-    menuModel->setController(menuController);
-    menuView->setModel(menuModel);
-    menuModel->position(std::pair<float,float>{0,0});
-    menuModel->notify();
+    loadLevel("../levels/level.json");
 
-    models::list.insert(models::list.begin(),menuModel);
-    views::list.insert(views::list.begin(), menuView);
-    controllers::list.insert(controllers::list.begin(),menuController);
 }
 
 void Game::loop() {

@@ -8,14 +8,11 @@
 
 #include <vector>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "Entity.h"
 #include "StopWatch.h"
-#include "PlayerShip.h"
-#include "PlayerBullet.h"
 #include "Transformation.h"
 #include "json.hpp"
 #include "ini_configuration.hh"
-#include "EnemyShip.h"
+#include "resources/Entity.h"
 
 
 using json = nlohmann::json;
