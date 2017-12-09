@@ -12,18 +12,7 @@ Game::Game() {
     m_window = new sf::RenderWindow(sf::VideoMode(200,150), "Gradius ~ Test");
     Transformation::initTransformation(200,150);
 
-//    loadLevel("../levels/level.json");
-    auto menuModel = std::make_shared<models::MainMenu>();
-    auto menuView = std::make_shared<views::MainMenu>();
-    auto menuController = std::make_shared<controllers::MainMenu>();
-    menuModel->setController(menuController.get());
-    menuView->setModel(menuModel.get());
-    menuModel->position(std::pair<float,float>{0,0});
-    menuModel->notify();
-
-    models::list.insert(models::list.begin(),menuModel);
-    views::list.insert(views::list.begin(), menuView);
-    controllers::list.insert(controllers::list.begin(),menuController);
+    loadLevel("../levels/level.json");
 }
 
 void Game::loop() {

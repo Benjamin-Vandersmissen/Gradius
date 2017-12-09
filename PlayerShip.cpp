@@ -39,7 +39,7 @@ bool controllers::PlayerShip::fired() {
 }
 
 void models::PlayerShip::update() {
-    auto myController = dynamic_cast<controllers::PlayerShip*>(m_controller);
+    auto myController = std::dynamic_pointer_cast<controllers::PlayerShip>(m_controller);
     if(isImmune())
         --m_immunity;
     if(myController) {
@@ -84,7 +84,7 @@ bool models::PlayerShip::isImmune() const {
 }
 
 void views::PlayerShip::update() {
-    auto model = dynamic_cast<models::PlayerShip*>(m_model);
+    auto model = std::dynamic_pointer_cast<models::PlayerShip>(m_model);
     if(model){
         m_text.setString("Lives "+ std::to_string(model->lives()));
         if(model->isImmune())

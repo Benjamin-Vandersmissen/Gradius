@@ -37,11 +37,11 @@ using model_ptr = std::shared_ptr<models::Entity>;
 using controller_ptr = std::shared_ptr<controllers::Entity>;
 
 namespace models {
-    class Entity {
+    class Entity : public std::enable_shared_from_this<Entity>{
     protected:
         views::Entity* m_view;
 
-        controllers::Entity* m_controller;
+        controller_ptr m_controller;
 
         std::pair<float, float> m_position;
 
@@ -51,7 +51,7 @@ namespace models {
     public:
         void addView(views::Entity *view);
 
-        void setController(controllers::Entity *controller);
+        void setController(controller_ptr controller);
 
         virtual void update() =0;
 
@@ -79,9 +79,9 @@ namespace models {
 }
 
 namespace views{
-    class Entity : public sf::Drawable{
+    class Entity : public sf::Drawable, public std::enable_shared_from_this<Entity>{
     protected:
-        models::Entity* m_model;
+        model_ptr m_model;
 
         bool m_deleted = false;
     public:
@@ -90,7 +90,7 @@ namespace views{
 
         Animation m_animation = Animation(0);
 
-        void setModel(models::Entity *model);
+        void setModel(model_ptr model);
 
         virtual void update();
 
@@ -109,14 +109,14 @@ namespace views{
 }
 
 namespace controllers{
-    class Entity{
+    class Entity: public std::enable_shared_from_this<Entity>{
     protected:
-        models::Entity* m_model;
+        model_ptr m_model;
 
         bool m_deleted = false;
 
     public:
-        void addModel(models::Entity* model);
+        void addModel(model_ptr model);
 
         virtual void update() =0;
 
@@ -141,7 +141,7 @@ namespace resources{
 
         virtual void loadFromIni(std::string path, ini::Configuration &configuration);
 
-        void setAnimationOfView(views::Entity* view);
+        void setAnimationOfView(view_ptr view);
 
         void finalizeCreation(view_ptr view, model_ptr model, controller_ptr controller,
                               std::pair<float, float> position);
