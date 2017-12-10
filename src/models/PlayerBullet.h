@@ -10,7 +10,8 @@
 
 #include "../controllers/PlayerBullet.h"
 #include "../resources/PlayerBullet.h"
-#include "../models/EnemyShip.h"
+#include "EnemyShip.h"
+#include "EnemyBullet.h"
 
 namespace resources{
     class PlayerBullet;

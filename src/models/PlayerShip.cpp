@@ -36,24 +36,3 @@ void models::PlayerShip::update() {
     }
 }
 
-
-void models::PlayerShip::dealDamage(unsigned int damage) {
-    if(isImmune())
-        return;
-    if(damage < m_lives){
-        m_lives -= damage;
-        m_immunity = m_maxImmunity;
-        notify();
-    }
-    else{
-        m_lives = 0;
-    }
-}
-
-unsigned int models::PlayerShip::lives() const {
-    return m_lives;
-}
-
-bool models::PlayerShip::isImmune() const {
-    return m_immunity != 0;
-}

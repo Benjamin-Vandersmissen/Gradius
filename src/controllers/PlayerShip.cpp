@@ -24,14 +24,6 @@ void controllers::PlayerShip::update() {
     }
 }
 
-const std::pair<float, float> &controllers::PlayerShip::currentDirection() const {
-    return m_currentDirection;
-}
-
 void controllers::PlayerShip::handleEvent(const sf::Event &event) {
 
-}
-
-bool controllers::PlayerShip::fired() {
-    return m_fired;
 }

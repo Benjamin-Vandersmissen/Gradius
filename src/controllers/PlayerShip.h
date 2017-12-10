@@ -5,27 +5,21 @@
 #ifndef GRADIUS_CONTROLLERS_PLAYERSHIP_H
 #define GRADIUS_CONTROLLERS_PLAYERSHIP_H
 
-#include "Entity.h"
+#include "Ship.h"
+#include "../resources/PlayerShip.h"
 
+namespace resources{
+    class PlayerShip;
+}
 
 namespace controllers{
-    class PlayerShip : public Entity{
-    private:
-        std::pair<float, float> m_currentDirection;
-
-        unsigned int m_fireCooldown = 0;
-
-        unsigned int m_maxFireCooldown = 20;
-
-        bool m_fired = false;
+    class PlayerShip : public Ship{
     public:
-        void update();
+        friend class resources::PlayerShip;
 
-        const std::pair<float, float> &currentDirection() const;
+        void update() override;
 
         void handleEvent(const sf::Event& event);
-
-        bool fired();
     };
 }
 

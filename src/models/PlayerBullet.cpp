@@ -20,7 +20,12 @@ void models::PlayerBullet::handleCollision(model_ptr entity) {
     if(entity){
         auto ship = std::dynamic_pointer_cast<models::EnemyShip>(entity);
         if(ship){
-            ship->markDeleted();
+            ship->dealDamage(1);
+            markDeleted();
+        }
+        auto bullet = std::dynamic_pointer_cast<models::EnemyBullet>(entity);
+        if(bullet){
+            bullet->markDeleted();
             markDeleted();
         }
     }

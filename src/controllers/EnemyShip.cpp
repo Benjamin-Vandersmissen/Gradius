@@ -9,7 +9,6 @@ bool controllers::EnemyShip::fired() const {
 }
 
 void controllers::EnemyShip::update() {
-    ScrollingEntity::update();
     if(m_fireCooldown == 0){
         m_fired = true;
         m_fireCooldown = m_maxFireCooldown;
@@ -18,10 +17,9 @@ void controllers::EnemyShip::update() {
         m_fireCooldown--;
     }
 
+    m_currentDirection = {-1,0};
+
     notify();
     m_fired = false;
 }
 
-const std::pair<float, float> &controllers::EnemyShip::currentDirection() const {
-    return m_currentDirection;
-}

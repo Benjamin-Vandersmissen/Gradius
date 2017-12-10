@@ -5,25 +5,19 @@
 #ifndef GRADIUS_ENEMYSHIP_H
 #define GRADIUS_ENEMYSHIP_H
 
-#include "ScrollingEntity.h"
-
+#include "Ship.h"
+#include "../resources/EnemyShip.h"
+namespace resources{
+    class EnemyShip;
+}
 namespace controllers {
-    class EnemyShip : public ScrollingEntity {
-    protected:
-        std::pair<float, float> m_currentDirection = {1,0};
-
-        unsigned int m_fireCooldown = 0;
-
-        unsigned int m_maxFireCooldown = 50;
-
-        bool m_fired = false;
-
+    class EnemyShip : public Ship {
     public:
+        friend class resources::EnemyShip;
+
         bool fired() const;
 
         void update();
-
-        const std::pair<float, float>& currentDirection() const;
     };
 }
 

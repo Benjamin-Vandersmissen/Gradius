@@ -5,14 +5,13 @@
 #ifndef GRADIUS_RESOURCES_ENEMYSHIP_H
 #define GRADIUS_RESOURCES_ENEMYSHIP_H
 
-#include "Entity.h"
+#include "Ship.h"
 #include "../models/EnemyShip.h"
 #include "../controllers/EnemyShip.h"
+#include "Ship.h"
 
 namespace resources {
-    class EnemyShip : public Entity{
-    private:
-        std::string m_bulletType;
+    class EnemyShip : public Ship{
     public:
         void loadFromIni(std::string path, ini::Configuration& configuration);
 

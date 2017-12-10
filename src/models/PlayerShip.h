@@ -8,6 +8,7 @@
 
 #include "Entity.h"
 
+#include "Ship.h"
 #include "../controllers/PlayerShip.h"
 #include "../resources/PlayerShip.h"
 
@@ -18,29 +19,11 @@ namespace resources{
 void clamp(float& value, float lo, float hi);
 
 namespace models{
-    class PlayerShip : public Entity{
-    private:
-        double m_speed = 0.08;
-
-        unsigned int m_maxLives = 3;
-
-        unsigned int m_lives = m_maxLives;
-
-        std::string m_bulletType = "";
-
-        unsigned int m_maxImmunity = 60;
-
-        unsigned int m_immunity = 0;
+    class PlayerShip : public Ship{
     public:
         friend class resources::PlayerShip;
 
         void update();
-
-        void dealDamage(unsigned int damage);
-
-        unsigned int lives() const;
-
-        bool isImmune() const;
 
     };
 }

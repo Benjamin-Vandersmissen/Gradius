@@ -9,9 +9,9 @@
 
 namespace controllers {
     class ScrollingEntity : public Entity{
-    private:
-        static std::pair<float, float> m_scrollDirection;
     public:
+        static std::pair<float, float> m_scrollDirection;
+
         virtual void update() override;
 
         const std::pair<float, float>& scrollDirection() const;

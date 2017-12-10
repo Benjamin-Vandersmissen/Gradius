@@ -6,6 +6,7 @@
 #define GRADIUS_MODELS_ENEMYSHIP_H
 
 #include "ScrollingEntity.h"
+#include "Ship.h"
 
 #include "../resources/EnemyShip.h"
 #include "../controllers/EnemyShip.h"
@@ -16,11 +17,7 @@ namespace resources{
 }
 
 namespace models {
-    class EnemyShip : public ScrollingEntity{
-    private:
-        float m_speed = 0.02;
-
-        std::string m_bulletType = "";
+    class EnemyShip : public Ship{
     public:
         friend class resources::EnemyShip;
 

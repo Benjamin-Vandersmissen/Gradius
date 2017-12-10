@@ -15,7 +15,6 @@ void models::EnemyShip::handleCollision(model_ptr entity) {
 }
 
 void models::EnemyShip::update() {
-    ScrollingEntity::update();
     auto myController = std::dynamic_pointer_cast<controllers::EnemyShip>(m_controller);
     if(myController){
         if(myController->currentDirection() != std::pair<float, float>{0,0}) {
