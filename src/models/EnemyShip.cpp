@@ -13,3 +13,24 @@ void models::EnemyShip::handleCollision(model_ptr entity) {
         }
     }
 }
+
+void models::EnemyShip::update() {
+    ScrollingEntity::update();
+    auto myController = std::dynamic_pointer_cast<controllers::EnemyShip>(m_controller);
+    if(myController){
+        if(myController->currentDirection() != std::pair<float, float>{0,0}) {
+            m_position.first += m_speed * myController->currentDirection().first;
+            m_position.second += m_speed * myController->currentDirection().second;
+            notify();
+        }
+
+        if(myController->fired()){
+            try {
+                resources::map.at(m_bulletType)->create(
+                        std::pair<float,float>{m_position.first + m_hitbox.width / 2, m_position.second + m_hitbox.height / 2});
+            }catch(std::exception){
+                throw ResourceException(ResourceException::missingResource, m_bulletType);
+            }
+        }
+    }
+}

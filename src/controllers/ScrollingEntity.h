@@ -14,7 +14,7 @@ namespace controllers {
     public:
         virtual void update() override;
 
-        const std::pair<float, float>& currentDirection() const;
+        const std::pair<float, float>& scrollDirection() const;
     };
 }
 

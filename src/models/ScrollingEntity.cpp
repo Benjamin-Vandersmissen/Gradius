@@ -10,8 +10,8 @@ void models::ScrollingEntity::update() {
     auto controller = std::dynamic_pointer_cast<controllers::ScrollingEntity >(m_controller);
 
     if(controller){
-        m_position.first += controller->currentDirection().first*scrollingSpeed;
-        m_position.second += controller->currentDirection().second*scrollingSpeed;
+        m_position.first += controller->scrollDirection().first*scrollingSpeed;
+        m_position.second += controller->scrollDirection().second*scrollingSpeed;
         if(m_position.first+m_hitbox.width < Transformation::left())
             markDeleted();
         notify();

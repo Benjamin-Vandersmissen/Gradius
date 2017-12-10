@@ -11,6 +11,6 @@ void controllers::ScrollingEntity::update() {
         notify();
 }
 
-const std::pair<float, float> &controllers::ScrollingEntity::currentDirection() const {
+const std::pair<float, float> &controllers::ScrollingEntity::scrollDirection() const {
     return m_scrollDirection;
 }

@@ -8,6 +8,7 @@
 #include "ScrollingEntity.h"
 
 #include "../resources/EnemyShip.h"
+#include "../controllers/EnemyShip.h"
 #include "../models/PlayerShip.h"
 
 namespace resources{
@@ -16,10 +17,16 @@ namespace resources{
 
 namespace models {
     class EnemyShip : public ScrollingEntity{
+    private:
+        float m_speed = 0.02;
+
+        std::string m_bulletType = "";
     public:
         friend class resources::EnemyShip;
 
         void handleCollision(model_ptr entity) override;
+
+        void update() override;
     };
 }
 

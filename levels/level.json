@@ -1,6 +1,6 @@
 {
     "ResourcePath": "../resources/",
-    "Resources": ["PlayerBullet"],
+    "Resources": ["PlayerBullet", "EnemyBullet"],
     "Entities": [{"Type": "PlayerShip", "Position":[-3,0]}, {"Type": "EnemyShip", "Position":[5,0]}, {"Type": "EnemyShip", "Position":[6,1]}, {"Type": "EnemyShip", "Position":[6,-1]},
                  {"Type": "BorderObstacle1_down", "Position": [4,-3]}, {"Type": "BorderObstacle1_up", "Position": [4,2.5]}, {"Type": "BorderObstacle1_down", "Position": [7,-3]}, {"Type": "BorderObstacle1_up", "Position": [7,2.5]}]
 }

@@ -7,10 +7,12 @@
 
 #include "Entity.h"
 #include "../models/EnemyShip.h"
-#include "../controllers/ScrollingEntity.h"
+#include "../controllers/EnemyShip.h"
 
 namespace resources {
     class EnemyShip : public Entity{
+    private:
+        std::string m_bulletType;
     public:
         void loadFromIni(std::string path, ini::Configuration& configuration);
 

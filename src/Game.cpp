@@ -8,6 +8,7 @@
 #include "resources/PlayerShip.h"
 #include "resources/PlayerBullet.h"
 #include "resources/BorderObstacle.h"
+#include "resources/EnemyBullet.h"
 
 
 Game::Game() {
@@ -157,6 +158,9 @@ resources::Entity *loadResource(std::string path, std::string resourceName) {
     }
     if(type == "Obstacle"){
         resource = new resources::Obstacle;
+    }
+    if(type == "EnemyBullet"){
+        resource = new resources::EnemyBullet;
     }
     if(resource){
         resource->loadFromIni(path, config);
