@@ -12,6 +12,8 @@
 
 namespace resources {
     class EnemyShip : public Ship{
+    private:
+        int m_AI;
     public:
         void loadFromIni(std::string path, ini::Configuration& configuration);
 

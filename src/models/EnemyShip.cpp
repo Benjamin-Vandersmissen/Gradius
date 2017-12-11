@@ -31,5 +31,6 @@ void models::EnemyShip::update() {
                 throw ResourceException(ResourceException::missingResource, m_bulletType);
             }
         }
+        handleCollision(collision());
     }
 }

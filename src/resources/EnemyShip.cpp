@@ -3,10 +3,11 @@
 //
 
 #include "EnemyShip.h"
+#include "../controllers/EnemyShipAI1.h"
 
 void resources::EnemyShip::loadFromIni(std::string path, ini::Configuration &configuration) {
     Ship::loadFromIni(path, configuration);
-
+    m_AI = configuration["EnemyShip"]["AI"].as_int_or_default(0);
 }
 
 model_ptr resources::EnemyShip::create(const std::pair<float, float> &position) {
@@ -19,7 +20,18 @@ model_ptr resources::EnemyShip::create(const std::pair<float, float> &position) 
     model->hitbox(m_hitbox);
 
     auto view = std::make_shared<views::Entity>();
-    auto controller = std::make_shared<controllers::EnemyShip>();
+    std::shared_ptr<controllers::EnemyShip> controller;
+    switch(m_AI){
+        case 0:
+            controller = std::make_shared<controllers::EnemyShip>();
+            break;
+        case 1:
+            controller = std::make_shared<controllers::EnemyShipAI1>();
+            break;
+        default:
+            controller = std::make_shared<controllers::EnemyShip>();
+            break;
+    }
     controller->m_maxFireCooldown = m_fireCooldown;
     finalizeCreation(view, model, controller, position);
     return model;

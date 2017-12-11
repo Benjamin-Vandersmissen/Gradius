@@ -31,6 +31,8 @@ namespace models {
         unsigned int lives() const;
 
         bool isImmune() const;
+
+        double speed() const;
     };
 }
 
