@@ -14,7 +14,7 @@
 Game::Game() {
     m_window = new sf::RenderWindow(sf::VideoMode(200,150), "Gradius ~ Test");
     Transformation::initTransformation(200,150);
-
+    m_window->setSize({800,600});
     loadLevel("../levels/level.json");
 
 }
@@ -32,12 +32,12 @@ void Game::loop() {
         handleEvents();
         if(m_paused)
             continue;
-        for(auto controller : controllers::list){
+        for(const auto& controller : controllers::list){
             controller->update();
         }
         models::deleteMarkedEntities();
         m_window->clear();
-        for(auto view : views::list){
+        for(const auto& view : views::list){
             view->updateAnimation();
             m_window->draw(*view);
         }
@@ -55,7 +55,7 @@ void Game::handleEvents() {
             }
             case sf::Event::Resized: {
                 m_window->clear();
-                for(auto view : views::list){
+                for(const auto& view : views::list){
                     m_window->draw(*view);
                 }
                 m_window->display();
@@ -66,7 +66,7 @@ void Game::handleEvents() {
                     m_paused = !m_paused;
                 }
                 if(!m_paused) {
-                    for (auto controller: controllers::list) {
+                    for (const auto& controller: controllers::list) {
                         controller->handleEvent(event);
                     }
                 }
@@ -75,7 +75,7 @@ void Game::handleEvents() {
             default: {
                 if(m_paused)
                     break;
-                for (auto controller: controllers::list) {
+                for (const auto& controller: controllers::list) {
                     controller->handleEvent(event);
                 }
                 break;
@@ -113,7 +113,7 @@ void loadLevel(std::string fullPath) {
     controllers::list.clear();
     resources::map.clear();
 
-    for(std::string resource : resources){
+    for(const std::string& resource : resources){
         resources::map[resource] = loadResource(path+resourcePath, resource);
     }
 
@@ -132,7 +132,7 @@ void loadLevel(std::string fullPath) {
         try{
          auto entity = resources::map.at(resource)->create(position);
         }
-        catch(std::exception){
+        catch(std::exception& e){
             throw ResourceException(ResourceException::missingResource, resource);
         }
     }

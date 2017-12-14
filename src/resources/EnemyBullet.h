@@ -15,7 +15,7 @@ namespace resources{
     private:
         double m_speed;
     public:
-        model_ptr create(const std::pair<float, float> &position);
+        model_ptr create(const std::pair<float, float> &position) override;
 
         void loadFromIni(std::string path, ini::Configuration &configuration) override;
     };

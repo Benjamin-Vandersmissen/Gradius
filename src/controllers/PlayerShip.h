@@ -19,7 +19,7 @@ namespace controllers{
 
         void update() override;
 
-        void handleEvent(const sf::Event& event);
+        void handleEvent(const sf::Event& event) override;
     };
 }
 

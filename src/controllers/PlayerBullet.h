@@ -15,7 +15,7 @@ namespace controllers {
     public:
         const std::pair<float, float>& currentDirection() const;
 
-        void update(){
+        void update() override {
             notify();
         };
     };

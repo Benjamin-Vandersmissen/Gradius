@@ -15,7 +15,7 @@ protected:
 public:
     Exception();
 
-    const char* what() const noexcept;
+    const char* what() const noexcept override;
 };
 
 class ResourceException : public Exception{

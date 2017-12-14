@@ -22,6 +22,7 @@ void models::Ship::dealDamage(unsigned int damage) {
         m_lives = 0;
         markDeleted();
     }
+    notify();
 }
 
 unsigned int models::Ship::lives() const {

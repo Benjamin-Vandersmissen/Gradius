@@ -13,9 +13,8 @@ protected:
     virtual ~Singleton(){
         delete m_instance;
     }
-    explicit Singleton(){
+    explicit Singleton() = default;
 
-    }
 public:
     static T* getInstance(){
         if(!m_instance){

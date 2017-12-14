@@ -13,7 +13,7 @@
 namespace resources {
     class Obstacle : public Entity{
     public:
-        virtual model_ptr create(const std::pair<float, float> &position) override;
+        model_ptr create(const std::pair<float, float> &position) override;
     };
 }
 

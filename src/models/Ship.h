@@ -24,7 +24,7 @@ namespace models {
         unsigned int m_immunity = 0;
 
     public:
-        void update();
+        void update() override;
 
         void dealDamage(unsigned int damage);
 

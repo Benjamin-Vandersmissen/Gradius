@@ -12,28 +12,23 @@ void controllers::EnemyShipAI1::update() {
     else{
         m_fireCooldown--;
     }
-    if(m_currPositionChangeCooldown == 0){
-        m_desiredY = static_cast<float >(Transformation::top() + Transformation::height()*drand48());
-        m_currPositionChangeCooldown = m_maxPositionChangeCooldown;
-    }
-    else{
-        m_currPositionChangeCooldown--;
-    }
+    auto ship = std::dynamic_pointer_cast<models::Ship>(m_model);
     if(std::abs(m_model->position().second - m_desiredY) < 0.000001){
-        m_currentDirection = {-0.5,0};
+        m_desiredY = static_cast<float >(Transformation::top() + Transformation::height()*drand48());
     }
-    else if(m_model->position().second < m_desiredY){
-        auto ship = std::dynamic_pointer_cast<models::Ship>(m_model);
+    if(m_model->position().second < m_desiredY){
         if(ship){
-            m_currentDirection = {-0.5,std::min(1.0, (m_desiredY-ship->position().second)/ship->speed())};
+            m_currentDirection = {-1,std::min(1.0, (m_desiredY-ship->position().second)/ship->speed())};
         }
     }
     else{
-        auto ship = std::dynamic_pointer_cast<models::Ship>(m_model);
         if(ship) {
-            m_currentDirection = {-0.5, std::max(-1.0, (m_desiredY - ship->position().second / ship->speed()))};
+            m_currentDirection = {-1, std::max(-1.0, ((m_desiredY - ship->position().second)/ ship->speed()))};
         }
     }
     notify();
+    if(m_model->collision() != nullptr){
+        m_desiredY = static_cast<float >(Transformation::top() + Transformation::height()*drand48());
+    }
     m_fired = false;
 }

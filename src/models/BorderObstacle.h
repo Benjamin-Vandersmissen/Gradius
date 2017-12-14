@@ -19,7 +19,7 @@ namespace models {
     public:
         friend class resources::BorderObstacle;
 
-        virtual void handleCollision(model_ptr entity) override;
+        void handleCollision(model_ptr entity) override;
     };
 }
 

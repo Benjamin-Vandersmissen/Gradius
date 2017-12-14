@@ -14,7 +14,7 @@ namespace models {
     public:
         static double scrollingSpeed;
 
-        virtual void update() override;
+        void update() override;
     };
 }
 

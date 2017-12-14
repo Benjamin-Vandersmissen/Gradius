@@ -15,7 +15,7 @@ class Transformation : public Singleton<Transformation>{
 private:
     static unsigned int m_windowWidth;
     static unsigned int m_windowHeight;
-    Transformation(){};
+    Transformation() = default;;
     Transformation(unsigned int windowWidth, unsigned int windowHeight);
     static Transformation* m_transformation;
     //y-coordinate of the top

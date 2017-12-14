@@ -12,7 +12,7 @@
 
 namespace resources {
     class BorderObstacle : public Entity {
-        model_ptr create(const std::pair<float, float> &position);
+        model_ptr create(const std::pair<float, float> &position) override;
     };
 }
 

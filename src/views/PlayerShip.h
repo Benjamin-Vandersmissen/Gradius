@@ -23,7 +23,7 @@ namespace views {
 
         friend class resources::PlayerShip;
 
-        void update();
+        void update() override;
 
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override ;
     };

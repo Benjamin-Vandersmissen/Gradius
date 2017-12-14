@@ -17,7 +17,7 @@ namespace controllers {
 
         bool fired() const;
 
-        void update();
+        void update() override;
     };
 }
 

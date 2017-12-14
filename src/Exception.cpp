@@ -22,7 +22,7 @@ ResourceException::ResourceException(int type, const std::string &resourceName, 
     }
 }
 
-Exception::Exception() {}
+Exception::Exception() = default;
 
 const char *Exception::what() const noexcept {
     return m_errorMsg.c_str();

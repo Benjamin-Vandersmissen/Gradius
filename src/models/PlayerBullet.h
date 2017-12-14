@@ -24,7 +24,7 @@ namespace models {
     public:
         friend class resources::PlayerBullet;
 
-        void update();
+        void update() override;
 
         void handleCollision(model_ptr entity) override;
     };

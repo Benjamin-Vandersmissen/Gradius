@@ -9,7 +9,7 @@ std::list<view_ptr> views::list = {};
 void views::Entity::setModel(model_ptr model) {
     m_model = model;
     model->addView(shared_from_this());
-    model->notify();
+    update();
 }
 
 void views::Entity::update() {

@@ -11,9 +11,9 @@ namespace controllers{
     private:
         unsigned int m_maxPositionChangeCooldown = 20;
         unsigned int m_currPositionChangeCooldown = 0;
-        float m_desiredY = 0;
+        float m_desiredY = static_cast<float >(Transformation::top() + Transformation::height()*drand48());;
     public:
-        void update();
+        void update() override;
     };
 }
 

@@ -21,7 +21,7 @@ namespace resources {
         unsigned int m_fireCooldown;
 
     public:
-        void loadFromIni(std::string path, ini::Configuration& configuration);
+        void loadFromIni(std::string path, ini::Configuration& configuration) override;
     };
 }
 

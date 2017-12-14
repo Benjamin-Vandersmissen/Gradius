@@ -59,7 +59,7 @@ namespace views{
         /**
          * @brief inherited from sf::Drawable, makes it possible to draw a view directly to a SFML window
          * */
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const{
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const override {
             target.draw(m_animation, states);
         };
 
