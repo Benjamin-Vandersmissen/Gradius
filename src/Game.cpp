@@ -12,6 +12,11 @@
 
 
 Game::Game() {
+    m_view = std::make_shared<views::View>(800,600,"Gradius");
+    m_model = std::make_shared<models::Model>();
+    m_controller = std::make_shared<controllers::Controller>();
+    m_model->setController(m_controller);
+    m_view->setModel(m_model);
     m_window = new sf::RenderWindow(sf::VideoMode(200,150), "Gradius ~ Test");
     Transformation::initTransformation(200,150);
     m_window->setSize({800,600});
@@ -20,67 +25,33 @@ Game::Game() {
 }
 
 void Game::loop() {
-    while(m_window->isOpen()){
+    while(m_view->window()->isOpen()){
         if(m_stopwatch->getElapsedTime() > 1000000/60){
             m_stopwatch->reset();
         }
         else{
             continue;
         }
-        if(!m_window->hasFocus())
-            continue;
         handleEvents();
-        if(m_paused)
+        if(m_model->paused())
             continue;
         for(const auto& controller : controllers::list){
             controller->update();
         }
         models::deleteMarkedEntities();
-        m_window->clear();
+        m_view->window()->clear();
         for(const auto& view : views::list){
             view->updateAnimation();
-            m_window->draw(*view);
+            m_view->window()->draw(*view);
         }
-        m_window->display();
+        m_view->window()->display();
     }
 }
 
 void Game::handleEvents() {
     sf::Event event;
-    while(m_window->pollEvent(event)){
-        switch(event.type){
-            case sf::Event::Closed: {
-                m_window->close();
-                break;
-            }
-            case sf::Event::Resized: {
-                m_window->clear();
-                for(const auto& view : views::list){
-                    m_window->draw(*view);
-                }
-                m_window->display();
-                break;
-            }
-            case sf::Event::KeyPressed: {
-                if(event.key.code == sf::Keyboard::Escape){
-                    m_paused = !m_paused;
-                }
-                if(!m_paused) {
-                    for (const auto& controller: controllers::list) {
-                        controller->handleEvent(event);
-                    }
-                }
-                break;
-            }
-            default: {
-                if(m_paused)
-                    break;
-                for (const auto& controller: controllers::list) {
-                    controller->handleEvent(event);
-                }
-                break;
-            }
-        }
+    while(m_view->window()->pollEvent(event)){
+        m_controller->handleEvent(event);
     }
 }
 

@@ -17,8 +17,18 @@ namespace controllers{
     class Controller : public std::enable_shared_from_this<controllers::Controller>{
     private:
         std::shared_ptr<models::Model> m_model;
+        bool m_tryPaused = false;
+        bool m_tryExit = false;
     public:
         void addModel(std::shared_ptr<models::Model> model);
+
+        void notify();
+
+        void handleEvent(const sf::Event &event);
+
+        bool tryPaused() const {return m_tryPaused;}
+
+        bool tryExit() const {return m_tryExit;}
     };
 }
 

@@ -11,5 +11,17 @@ void views::View::setModel(std::shared_ptr<models::Model> model) {
 }
 
 void views::View::update() {
+    if(m_model->exit()){
+        m_window->close();
+    }
+}
 
+views::View::View(unsigned int width, unsigned int height, std::string title) {
+    m_window = std::make_shared<sf::RenderWindow>(sf::VideoMode(200,150), title);
+    m_window->setSize({width, height});
+    Transformation::initTransformation(width, height);
+}
+
+const std::shared_ptr<sf::RenderWindow> &views::View::window() const {
+    return m_window;
 }

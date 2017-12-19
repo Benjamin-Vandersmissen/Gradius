@@ -14,5 +14,16 @@ void models::Model::setController(std::shared_ptr<controllers::Controller> contr
 }
 
 void models::Model::update() {
+    if(m_controller->tryPaused()){
+        m_paused = true;
+        notify();
+    }
+    if(m_controller->tryExit()){
+        m_exit = true;
+        notify();
+    }
+}
 
+void models::Model::notify() {
+    m_view->update();
 }

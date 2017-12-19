@@ -23,12 +23,20 @@ namespace models {
     private:
         std::shared_ptr<views::View> m_view;
         std::shared_ptr<controllers::Controller> m_controller;
+        bool m_paused = false;
+        bool m_exit = true;
     public:
         void addView(std::shared_ptr<views::View> view);
 
         void setController(std::shared_ptr<controllers::Controller> controller);
 
         void update();
+
+        void notify();
+
+        bool paused() const {return m_paused;}
+
+        bool exit() const {return m_exit;}
     };
 }
 
