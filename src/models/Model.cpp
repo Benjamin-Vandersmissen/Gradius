@@ -75,3 +75,9 @@ void models::Model::loadPauseMenu() {
               {0, 1.0f, "Quit", menuStates::ExitGame, -1, menuStates::BackToMainMenu}};
     m_menuState = menuStates::ContinueGame;
 }
+
+void models::Model::loadLevelMenu() {
+    m_menu = {{0, 1.0f, "Load Level", menuStates::TryLoadLevel, menuStates::BackToMainMenu, -1},
+              {0, 2.0f, "Main Menu", menuStates::BackToMainMenu, -1, menuStates::TryLoadLevel}};
+    m_menuState = menuStates::TryLoadLevel;
+}

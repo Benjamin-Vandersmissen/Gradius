@@ -31,6 +31,8 @@ namespace views {
         std::shared_ptr<sf::RenderWindow> window() const;
 
         void draw();
+
+        void drawMenu();
     };
 }
 

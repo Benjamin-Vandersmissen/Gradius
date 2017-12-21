@@ -52,7 +52,8 @@ namespace models {
             LoadLevel,
             ExitGame,
             ContinueGame,
-            BackToMainMenu
+            BackToMainMenu,
+            TryLoadLevel
         };
 
         void addView(std::shared_ptr<views::View> view);
@@ -82,6 +83,8 @@ namespace models {
         void loadMainMenu();
 
         void loadPauseMenu();
+
+        void loadLevelMenu();
 
         const std::string& tempLevel() const {return m_tempLevel;}
     };

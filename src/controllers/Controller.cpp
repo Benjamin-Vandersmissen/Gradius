@@ -74,6 +74,9 @@ void controllers::Controller::handleKeyboard(sf::Event::KeyEvent key) {
                 }
             }
         }
+        case models::Model::LoadLevelMenu:{
+            //Does the same things as Main Menu => no break
+        }
         case models::Model::MainMenu:{
             switch (key.code){
                 case sf::Keyboard::Return:{
@@ -116,6 +119,7 @@ void controllers::Controller::handleMenu() {
         }
         case models::Model::LoadLevel : {
             m_model->setGameState(models::Model::LoadLevelMenu);
+            m_model->loadLevelMenu();
             break;
         }
         case models::Model::ExitGame : {

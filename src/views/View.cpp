@@ -46,24 +46,14 @@ void views::View::draw() {
             break;
         }
         case models::Model::PauseMenu:{
-            //also draws the menu overlay from models::Model::MainMenu => no break
             for(const auto& view : views::list){
                 m_window->draw(*view);
             }
+            drawMenu();
+            break;
         }
         case models::Model::MainMenu :{
-            for(const models::menuObject& obj : m_model->getMenu()){
-                sf::Text text(obj.string, *m_defaultFont);
-                text.setScale({1.0f/3.0f,1.0f/3.0f});
-                text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height/2);
-                text.setPosition(Transformation::invTransform({obj.xPosition, obj.yPosition}));
-                if(obj.menuState == m_model->currentMenuObject().menuState){
-                    sf::Vector2f position = {text.getGlobalBounds().left-m_menuSelector.getRadius(), text.getGlobalBounds().top + text.getGlobalBounds().height/2};
-                    m_menuSelector.setPosition(position);
-                }
-                m_window->draw(text);
-            }
-            m_window->draw(m_menuSelector);
+            drawMenu();
             break;
         }
         case models::Model::LoadLevelMenu :{
@@ -86,7 +76,24 @@ void views::View::draw() {
             text2.setPosition(Transformation::invTransform({0,-2.0f}));
             m_window->draw(text);
             m_window->draw(text2);
+            drawMenu();
+            break;
         }
     }
     m_window->display();
+}
+
+void views::View::drawMenu() {
+    for(const models::menuObject& obj : m_model->getMenu()){
+        sf::Text text(obj.string, *m_defaultFont);
+        text.setScale({1.0f/3.0f,1.0f/3.0f});
+        text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height/2);
+        text.setPosition(Transformation::invTransform({obj.xPosition, obj.yPosition}));
+        if(obj.menuState == m_model->currentMenuObject().menuState){
+            sf::Vector2f position = {text.getGlobalBounds().left-m_menuSelector.getRadius(), text.getGlobalBounds().top + text.getGlobalBounds().height/2};
+            m_menuSelector.setPosition(position);
+        }
+        m_window->draw(text);
+    }
+    m_window->draw(m_menuSelector);
 }
