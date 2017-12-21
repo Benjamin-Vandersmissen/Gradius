@@ -20,8 +20,6 @@ using json = nlohmann::json;
 
 class Game {
 private:
-    sf::RenderWindow* m_window;
-    bool m_paused = false;
     StopWatch* m_stopwatch = StopWatch::getInstance();
     std::shared_ptr<models::Model> m_model;
     std::shared_ptr<views::View> m_view;

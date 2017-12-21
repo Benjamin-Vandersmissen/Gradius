@@ -12,16 +12,13 @@
 
 
 Game::Game() {
-    m_view = std::make_shared<views::View>(800,600,"Gradius");
+    m_view = std::make_shared<views::View>(800,600,std::string("Gradius"));
     m_model = std::make_shared<models::Model>();
     m_controller = std::make_shared<controllers::Controller>();
     m_model->setController(m_controller);
     m_view->setModel(m_model);
-    m_window = new sf::RenderWindow(sf::VideoMode(200,150), "Gradius ~ Test");
     Transformation::initTransformation(200,150);
-    m_window->setSize({800,600});
     loadLevel("../levels/level.json");
-
 }
 
 void Game::loop() {

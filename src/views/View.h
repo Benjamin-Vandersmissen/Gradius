@@ -18,13 +18,13 @@ namespace views {
 
         std::shared_ptr<sf::RenderWindow> m_window;
     public:
-        View(unsigned int width, unsigned int height, std::string title);
+        View(unsigned int width, unsigned int height, const std::string &title);
 
         void setModel(std::shared_ptr<models::Model> model);
 
         void update();
 
-        const std::shared_ptr<sf::RenderWindow>& window() const;
+        std::shared_ptr<sf::RenderWindow> window() const;
     };
 }
 

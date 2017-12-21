@@ -24,7 +24,7 @@ namespace models {
         std::shared_ptr<views::View> m_view;
         std::shared_ptr<controllers::Controller> m_controller;
         bool m_paused = false;
-        bool m_exit = true;
+        bool m_exit = false;
     public:
         void addView(std::shared_ptr<views::View> view);
 
