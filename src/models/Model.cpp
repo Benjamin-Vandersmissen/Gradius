@@ -2,6 +2,7 @@
 // Created by uauser on 12/14/17.
 //
 
+#include <iostream>
 #include "Model.h"
 
 void models::Model::addView(std::shared_ptr<views::View> view) {
@@ -20,6 +21,15 @@ void models::Model::update() {
     }
     if(m_controller->tryExit()){
         m_exit = true;
+        notify();
+    }
+    if(m_controller->typedChar() != 0){
+        if(m_controller->typedChar() == '\b' && m_tempLevel.size() > 0){
+            m_tempLevel.pop_back();
+        }
+        else if (m_controller->typedChar() != '\b'){
+            m_tempLevel += m_controller->typedChar();
+        }
         notify();
     }
 }
@@ -60,7 +70,8 @@ void models::Model::loadMainMenu() {
 }
 
 void models::Model::loadPauseMenu() {
-    m_menu = {{0, -0.5f, "Continue", menuStates::ContinueGame, menuStates::ExitGame, -1},
-              {0, 0.5f, "Quit", menuStates::ExitGame, -1, menuStates::ContinueGame}};
+    m_menu = {{0, -1.0f, "Continue", menuStates::ContinueGame, menuStates::BackToMainMenu, -1},
+              {0, 0, "Main Menu", menuStates::BackToMainMenu, menuStates::ExitGame, menuStates::ContinueGame},
+              {0, 1.0f, "Quit", menuStates::ExitGame, -1, menuStates::BackToMainMenu}};
     m_menuState = menuStates::ContinueGame;
 }

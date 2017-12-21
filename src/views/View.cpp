@@ -66,6 +66,27 @@ void views::View::draw() {
             m_window->draw(m_menuSelector);
             break;
         }
+        case models::Model::LoadLevelMenu :{
+            sf::Text text;
+            if(m_model->tempLevel().empty()){
+                text.setString("Type Something");
+                text.setColor(sf::Color::Red);
+            }
+            else{
+                text.setString(m_model->tempLevel());
+                text.setColor(sf::Color::Cyan);
+            }
+            text.setFont(*m_defaultFont);
+            text.setScale({1.0f/3.0f,1.0f/3.0f});
+            text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height/2);
+            text.setPosition(Transformation::invTransform({0,-1.5f}));
+            sf::Text text2("Level", *m_defaultFont);
+            text2.setScale({1.0f/3.0f,1.0f/3.0f});
+            text2.setOrigin(text2.getLocalBounds().width/2, text2.getLocalBounds().height/2);
+            text2.setPosition(Transformation::invTransform({0,-2.0f}));
+            m_window->draw(text);
+            m_window->draw(text2);
+        }
     }
     m_window->display();
 }

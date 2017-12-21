@@ -32,6 +32,16 @@ void controllers::Controller::handleEvent(const sf::Event &event) {
             handleKeyboard(event.key);
             break;
         }
+        case sf::Event::TextEntered:{
+            if(m_model->gameState() == models::Model::LoadLevelMenu) {
+                if (event.text.unicode < 128 && event.text.unicode != '\r') {
+                    m_typedChar = static_cast<char>(event.text.unicode);
+                    notify();
+                    m_typedChar = 0;
+                }
+            }
+            break;
+        }
         default:{
             if(!m_model->paused() && m_model->gameState() != models::Model::MainMenu) {
                 for (controller_ptr &controller : controllers::list) {
@@ -105,6 +115,7 @@ void controllers::Controller::handleMenu() {
             break;
         }
         case models::Model::LoadLevel : {
+            m_model->setGameState(models::Model::LoadLevelMenu);
             break;
         }
         case models::Model::ExitGame : {
@@ -114,6 +125,11 @@ void controllers::Controller::handleMenu() {
         }
         case models::Model::ContinueGame : {
             m_model->setGameState(models::Model::Running);
+            break;
+        }
+        case models::Model::BackToMainMenu : {
+            m_model->setGameState(models::Model::MainMenu);
+            m_model->loadMainMenu();
             break;
         }
     }

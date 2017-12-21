@@ -19,6 +19,7 @@ namespace controllers{
         std::shared_ptr<models::Model> m_model;
         bool m_tryPaused = false;
         bool m_tryExit = false;
+        char m_typedChar;
     public:
         void addModel(std::shared_ptr<models::Model> model);
 
@@ -29,6 +30,8 @@ namespace controllers{
         bool tryPaused() const {return m_tryPaused;}
 
         bool tryExit() const {return m_tryExit;}
+
+        char typedChar() const { return m_typedChar;}
 
         void update();
 

@@ -36,12 +36,14 @@ namespace models {
         int m_gameState = gameStates::MainMenu;
         int m_menuState = menuStates::NewGame;
         std::vector<menuObject> m_menu;
+        std::string m_tempLevel;
     public:
         Model();
 
         enum gameStates{
             MainMenu,
             PauseMenu,
+            LoadLevelMenu,
             Running
         };
 
@@ -49,7 +51,8 @@ namespace models {
             NewGame,
             LoadLevel,
             ExitGame,
-            ContinueGame
+            ContinueGame,
+            BackToMainMenu
         };
 
         void addView(std::shared_ptr<views::View> view);
@@ -79,6 +82,8 @@ namespace models {
         void loadMainMenu();
 
         void loadPauseMenu();
+
+        const std::string& tempLevel() const {return m_tempLevel;}
     };
 }
 
