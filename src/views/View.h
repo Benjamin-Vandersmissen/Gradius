@@ -17,6 +17,10 @@ namespace views {
         std::shared_ptr<models::Model> m_model;
 
         std::shared_ptr<sf::RenderWindow> m_window;
+
+        std::shared_ptr<sf::Font> m_defaultFont;
+
+        sf::CircleShape m_menuSelector;
     public:
         View(unsigned int width, unsigned int height, const std::string &title);
 
@@ -25,6 +29,8 @@ namespace views {
         void update();
 
         std::shared_ptr<sf::RenderWindow> window() const;
+
+        void draw();
     };
 }
 

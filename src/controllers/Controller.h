@@ -29,6 +29,13 @@ namespace controllers{
         bool tryPaused() const {return m_tryPaused;}
 
         bool tryExit() const {return m_tryExit;}
+
+        void update();
+
+        void handleKeyboard(sf::Event::KeyEvent key);
+
+        void handleMenu();
+
     };
 }
 

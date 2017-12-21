@@ -32,16 +32,9 @@ void Game::loop() {
         handleEvents();
         if(m_model->paused())
             continue;
-        for(const auto& controller : controllers::list){
-            controller->update();
-        }
+        m_controller->update();
         models::deleteMarkedEntities();
-        m_view->window()->clear();
-        for(const auto& view : views::list){
-            view->updateAnimation();
-            m_view->window()->draw(*view);
-        }
-        m_view->window()->display();
+        m_view->draw();
     }
 }
 

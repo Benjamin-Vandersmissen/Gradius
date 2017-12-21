@@ -29,21 +29,11 @@ void controllers::Controller::handleEvent(const sf::Event &event) {
             break;
         }
         case sf::Event::KeyPressed:{
-            if(event.key.code == sf::Keyboard::Escape){
-                m_tryPaused = true;
-                notify();
-                m_tryPaused = false;
-                break;
-            }
-            else if (!m_model->paused()){
-                for(controller_ptr& controller : controllers::list){
-                    controller->handleEvent(event);
-                }
-            }
+            handleKeyboard(event.key);
             break;
         }
         default:{
-            if(!m_model->paused()) {
+            if(!m_model->paused() && m_model->gameState() != models::Model::MainMenu) {
                 for (controller_ptr &controller : controllers::list) {
                     controller->handleEvent(event);
                 }
@@ -54,4 +44,77 @@ void controllers::Controller::handleEvent(const sf::Event &event) {
 
 void controllers::Controller::notify() {
     m_model->update();
+}
+
+void controllers::Controller::update() {
+    if (m_model->gameState() == models::Model::Running) {
+        for (const auto &controller : controllers::list) {
+            controller->update();
+        }
+    }
+}
+
+void controllers::Controller::handleKeyboard(sf::Event::KeyEvent key) {
+    switch(m_model->gameState()){
+        case models::Model::PauseMenu:{
+            //Does the same things as Main Menu except the Escape input => no break
+            switch(key.code) {
+                case sf::Keyboard::Escape : {
+                    m_model->setGameState(models::Model::Running);
+                }
+            }
+        }
+        case models::Model::MainMenu:{
+            switch (key.code){
+                case sf::Keyboard::Return:{
+                    handleMenu();
+                    break;
+                }
+                case sf::Keyboard::Up :{
+                    if(m_model->currentMenuObject().prevState != -1){
+                        m_model->setMenuState(m_model->currentMenuObject().prevState);
+                    }
+                    break;
+                }
+                case sf::Keyboard::Down :{
+                    if(m_model->currentMenuObject().nextState != -1){
+                        m_model->setMenuState(m_model->currentMenuObject().nextState);
+                    }
+                    break;
+                }
+            }
+            break;
+        }
+        case models::Model::Running:{
+            switch (key.code){
+                case sf::Keyboard::Escape :{
+                    m_model->setGameState(models::Model::PauseMenu);
+                    break;
+                }
+            }
+        }
+
+    }
+}
+
+void controllers::Controller::handleMenu() {
+    switch(m_model->menuState()){
+        case models::Model::NewGame : {
+            m_model->setGameState(models::Model::Running);
+            m_model->loadPauseMenu();
+            break;
+        }
+        case models::Model::LoadLevel : {
+            break;
+        }
+        case models::Model::ExitGame : {
+            m_tryExit = true;
+            notify();
+            break;
+        }
+        case models::Model::ContinueGame : {
+            m_model->setGameState(models::Model::Running);
+            break;
+        }
+    }
 }
