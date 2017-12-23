@@ -15,7 +15,7 @@ model_ptr resources::PlayerBullet::create(const std::pair<float, float> &positio
     return model;
 }
 
-void resources::PlayerBullet::loadFromIni(std::string path, ini::Configuration &configuration) {
+void resources::PlayerBullet::loadFromIni(const std::string &path, ini::Configuration &configuration) {
     Entity::loadFromIni(path, configuration);
     m_speed = configuration["General"]["Speed"].as_double_or_die();
 }

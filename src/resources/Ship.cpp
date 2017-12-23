@@ -4,7 +4,7 @@
 
 #include "Ship.h"
 
-void resources::Ship::loadFromIni(std::string path, ini::Configuration &configuration) {
+void resources::Ship::loadFromIni(const std::string &path, ini::Configuration &configuration) {
     Entity::loadFromIni(path, configuration);
 
     m_speed = configuration["General"]["Speed"].as_double_or_die();

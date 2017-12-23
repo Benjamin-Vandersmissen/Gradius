@@ -35,6 +35,12 @@ namespace controllers{
 using controller_ptr = std::shared_ptr<controllers::Entity>;
 
 namespace resources{
+    class Entity;
+}
+
+using resource_ptr = std::shared_ptr<resources::Entity>;
+
+namespace resources{
     class Entity: public std::enable_shared_from_this<resources::Entity>{
     protected:
         Animation m_animation; //the default animation for the view
@@ -54,7 +60,7 @@ namespace resources{
          *
          * @param configuration the configuration which contains all necessary data
          * */
-        virtual void loadFromIni(std::string path, ini::Configuration &configuration);
+        virtual void loadFromIni(const std::string &path, ini::Configuration &configuration);
 
         /**
          * @brief give a view the stored animation
@@ -70,7 +76,8 @@ namespace resources{
                               std::pair<float, float> position);
     };
 
-    extern std::map<std::string, resources::Entity*> map;
+
+    extern std::map<std::string, resource_ptr> map;
 }
 
 

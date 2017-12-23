@@ -15,7 +15,7 @@ model_ptr resources::EnemyBullet::create(const std::pair<float, float> &position
     return model;
 }
 
-void resources::EnemyBullet::loadFromIni(std::string path, ini::Configuration &configuration) {
+void resources::EnemyBullet::loadFromIni(const std::string &path, ini::Configuration &configuration) {
     Entity::loadFromIni(path, configuration);
     m_speed = configuration["General"]["Speed"].as_double_or_die();
 }

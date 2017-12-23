@@ -33,9 +33,6 @@ public:
     void handleEvents();
 };
 
-resources::Entity* loadResource(std::string path, std::string resourceName);
-
-void loadLevel(std::string fullPath);
 
 
 #endif //GRADIUS_GAME_H

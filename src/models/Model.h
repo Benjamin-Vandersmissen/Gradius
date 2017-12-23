@@ -9,6 +9,7 @@
 #include "Entity.h"
 #include "../views/View.h"
 #include "../controllers/Controller.h"
+#include "../Level.h"
 
 namespace views{
     class View;
@@ -37,6 +38,8 @@ namespace models {
         int m_menuState = menuStates::NewGame;
         std::vector<menuObject> m_menu;
         std::string m_tempLevel;
+        std::string m_levelName = "level";
+        Level m_level = Level();
     public:
         Model();
 
@@ -87,6 +90,10 @@ namespace models {
         void loadLevelMenu();
 
         const std::string& tempLevel() const {return m_tempLevel;}
+
+        void loadLevel();
+
+        void saveTempLevel();
     };
 }
 

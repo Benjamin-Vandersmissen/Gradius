@@ -4,12 +4,12 @@
 
 #include "Entity.h"
 
-std::map<std::string, resources::Entity*> resources::map = {};
+std::map<std::string, resource_ptr> resources::map = {};
 
-void resources::Entity::loadFromIni(std::string path, ini::Configuration &configuration) {
+void resources::Entity::loadFromIni(const std::string &path, ini::Configuration &configuration) {
     std::string texturePath = configuration["General"]["TexturePath"].as_string_or_die();
     int delay = configuration["General"]["Delay"].as_int_or_default(-1);
-    unsigned int nrFrames = configuration["General"]["NrFrames"].as_int_or_default(1);
+    unsigned int nrFrames = static_cast<unsigned int>(configuration["General"]["NrFrames"].as_int_or_default(1));
     m_animation = Animation(delay);
     m_animation.createFromStrip(path+texturePath, nrFrames);
     std::pair<float, float> size = Transformation::transform(m_animation.getSize().x, m_animation.getSize().y);

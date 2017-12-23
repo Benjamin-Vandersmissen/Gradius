@@ -114,6 +114,7 @@ void controllers::Controller::handleMenu() {
     switch(m_model->menuState()){
         case models::Model::NewGame : {
             m_model->setGameState(models::Model::Running);
+            m_model->loadLevel();
             m_model->loadPauseMenu();
             break;
         }
@@ -132,6 +133,12 @@ void controllers::Controller::handleMenu() {
             break;
         }
         case models::Model::BackToMainMenu : {
+            m_model->setGameState(models::Model::MainMenu);
+            m_model->loadMainMenu();
+            break;
+        }
+        case models::Model::TryLoadLevel : {
+            m_model->saveTempLevel();
             m_model->setGameState(models::Model::MainMenu);
             m_model->loadMainMenu();
             break;

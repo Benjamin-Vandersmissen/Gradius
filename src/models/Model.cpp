@@ -24,7 +24,7 @@ void models::Model::update() {
         notify();
     }
     if(m_controller->typedChar() != 0){
-        if(m_controller->typedChar() == '\b' && m_tempLevel.size() > 0){
+        if(m_controller->typedChar() == '\b' && !m_tempLevel.empty()){
             m_tempLevel.pop_back();
         }
         else if (m_controller->typedChar() != '\b'){
@@ -80,4 +80,13 @@ void models::Model::loadLevelMenu() {
     m_menu = {{0, 1.0f, "Load Level", menuStates::TryLoadLevel, menuStates::BackToMainMenu, -1},
               {0, 2.0f, "Main Menu", menuStates::BackToMainMenu, -1, menuStates::TryLoadLevel}};
     m_menuState = menuStates::TryLoadLevel;
+}
+
+void models::Model::loadLevel() {
+    m_level.loadLevel("../levels/"+m_levelName+".json");
+}
+
+void models::Model::saveTempLevel() {
+    m_levelName = m_tempLevel;
+    m_tempLevel = "";
 }
