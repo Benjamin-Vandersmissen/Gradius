@@ -1,5 +1,0 @@
-{
-    "Type": "PlayerBullet",
-    "TexturePath": "./textures/PlayerBullet.png",
-    "Speed": 0.15
-}

@@ -1,7 +1,0 @@
-{
-    "Type": "PlayerShip",
-    "TexturePath": "./textures/PlayerShip.png",
-    "FontPath": "./fonts/ARCADECLASSIC.TTF",
-    "BulletType": "PlayerBullet",
-    "Speed": 0.10
-}

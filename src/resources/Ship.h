@@ -20,8 +20,12 @@ namespace resources {
 
         unsigned int m_fireCooldown;
 
+        std::shared_ptr<sf::Texture> m_heartTexture;
+
+        bool m_drawLives;
+
     public:
-        void loadFromIni(const std::string &path, ini::Configuration &configuration) override;
+        void loadFromIni(const std::string &path, const ini::Configuration &configuration) override;
     };
 }
 

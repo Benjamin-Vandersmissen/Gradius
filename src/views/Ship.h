@@ -12,16 +12,17 @@
 namespace resources{
     class PlayerShip;
 }
+namespace resources{
+    class EnemyShip;
+}
 
 namespace views {
-    class PlayerShip : public Entity{
+    class Ship : public Entity{
     private:
-        std::shared_ptr<sf::Font> m_font;
-        sf::Text m_text;
+        std::shared_ptr<sf::Texture> m_heartTexture;
     public:
-        void initText();
-
         friend class resources::PlayerShip;
+        friend class resources::EnemyShip;
 
         void update() override;
 

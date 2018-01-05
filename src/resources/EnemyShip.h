@@ -15,7 +15,7 @@ namespace resources {
     private:
         int m_AI;
     public:
-        void loadFromIni(std::string path, ini::Configuration& configuration) override;
+        void loadFromIni(const std::string &path, const ini::Configuration &configuration) override;
 
         model_ptr create(const std::pair<float, float> &position) override;
     };

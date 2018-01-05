@@ -13,19 +13,22 @@ model_ptr resources::PlayerShip::create(const std::pair<float, float> &position)
     model->m_maxImmunity = m_maxImmunity;
     model->hitbox(m_hitbox);
 
-    auto view = std::make_shared<views::PlayerShip>();
-    view->m_font = m_font;
-    view->initText();
+    view_ptr view = (m_drawLives)?std::make_shared<views::Ship>(): std::make_shared<views::Entity>();
+    if(m_drawLives) {
+        std::dynamic_pointer_cast<views::Ship>(view)->m_heartTexture = m_heartTexture;
+    }
     auto controller = std::make_shared<controllers::PlayerShip>();
     controller->m_maxFireCooldown = m_fireCooldown;
     finalizeCreation(view, model, controller, position);
     return model;
 }
 
-void resources::PlayerShip::loadFromIni(std::string path, ini::Configuration &configuration) {
+void resources::PlayerShip::loadFromIni(const std::string &path, const ini::Configuration &configuration) {
     Ship::loadFromIni(path, configuration);
 
     std::string fontPath = path + configuration["PlayerShip"]["FontPath"].as_string_or_die();
     m_font = std::make_shared<sf::Font>();
     m_font->loadFromFile(fontPath);
+    m_heartTexture = std::make_shared<sf::Texture>();
+    m_heartTexture->loadFromFile("../resources/textures/heart.png");
 }

@@ -60,7 +60,7 @@ namespace resources{
          *
          * @param configuration the configuration which contains all necessary data
          * */
-        virtual void loadFromIni(const std::string &path, ini::Configuration &configuration);
+        virtual void loadFromIni(const std::string &path, const ini::Configuration &configuration);
 
         /**
          * @brief give a view the stored animation

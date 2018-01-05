@@ -61,3 +61,11 @@ unsigned int Transformation::windowHeight() {
     return m_windowHeight;
 }
 
+float Transformation::transformWidth(unsigned int pixelwidth) {
+    return pixelwidth * m_width/m_windowWidth;
+}
+
+float Transformation::transformHeight(unsigned int pixelheight) {
+    return pixelheight * m_height/m_windowHeight;
+}
+

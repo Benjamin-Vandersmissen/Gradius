@@ -66,6 +66,35 @@ void controllers::Controller::update() {
 
 void controllers::Controller::handleKeyboard(sf::Event::KeyEvent key) {
     switch(m_model->gameState()){
+        case models::Model::LoadLevelMenu:{
+            switch (key.code){
+                case sf::Keyboard::Return:{
+                    handleMenu();
+                    break;
+                }
+                case sf::Keyboard::Up :{
+                    if(m_model->currentMenuObject().prevState != -1){
+                        m_model->setMenuState(m_model->currentMenuObject().prevState);
+                    }
+                    break;
+                }
+                case sf::Keyboard::Down :{
+                    if(m_model->currentMenuObject().nextState != -1){
+                        m_model->setMenuState(m_model->currentMenuObject().nextState);
+                    }
+                    break;
+                }
+                case sf::Keyboard::Escape :{
+                    m_model->setGameState(models::Model::MainMenu);
+                    m_model->loadMainMenu();
+                    break;
+                }
+                default:{
+                    break;
+                }
+            }
+            break;
+        }
         case models::Model::PauseMenu:{
             //Does the same things as Main Menu except the Escape input => no break
             switch(key.code) {
@@ -74,9 +103,7 @@ void controllers::Controller::handleKeyboard(sf::Event::KeyEvent key) {
                 }
             }
         }
-        case models::Model::LoadLevelMenu:{
-            //Does the same things as Main Menu => no break
-        }
+
         case models::Model::MainMenu:{
             switch (key.code){
                 case sf::Keyboard::Return:{

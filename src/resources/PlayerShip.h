@@ -8,15 +8,16 @@
 #include "Ship.h"
 
 #include "../models/PlayerShip.h"
-#include "../views/PlayerShip.h"
+#include "../views/Ship.h"
 #include "../controllers/PlayerShip.h"
 
 namespace resources {
     class PlayerShip : public Ship{
     private:
         std::shared_ptr<sf::Font> m_font;
+        std::shared_ptr<sf::Texture> m_heartTexture;
     public:
-        void loadFromIni(std::string path, ini::Configuration &configuration) override;
+        void loadFromIni(const std::string &path, const ini::Configuration &configuration) override;
 
         model_ptr create(const std::pair<float, float> &position);
     };

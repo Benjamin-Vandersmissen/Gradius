@@ -77,6 +77,10 @@ public:
      * \brief return the height of the window
      * */
     static unsigned int windowHeight();
+
+    static float transformWidth(unsigned int pixelwidth);
+
+    static float transformHeight(unsigned int pixelheight);
 };
 
 

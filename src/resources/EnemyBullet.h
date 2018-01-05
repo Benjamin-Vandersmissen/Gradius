@@ -17,7 +17,7 @@ namespace resources{
     public:
         model_ptr create(const std::pair<float, float> &position) override;
 
-        void loadFromIni(const std::string &path, ini::Configuration &configuration) override;
+        void loadFromIni(const std::string &path, const ini::Configuration &configuration) override;
     };
 }
 
