@@ -12,8 +12,7 @@ void resources::Entity::loadFromIni(const std::string &path, const ini::Configur
     unsigned int nrFrames = static_cast<unsigned int>(configuration["General"]["NrFrames"].as_int_or_default(1));
     m_animation = Animation(delay);
     m_animation.createFromStrip(path+texturePath, nrFrames);
-    std::pair<float, float> size = Transformation::transform(m_animation.getSize().x, m_animation.getSize().y);
-    m_hitbox = sf::FloatRect{0,0,size.first-Transformation::left(), size.second-Transformation::top()};
+    m_hitbox = sf::FloatRect{0,0,Transformation::transformWidth(m_animation.getSize().x), Transformation::transformHeight(m_animation.getSize().y)};
 }
 
 void resources::Entity::setAnimationOfView(view_ptr view) {

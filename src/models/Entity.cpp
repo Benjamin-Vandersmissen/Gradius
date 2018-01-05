@@ -50,13 +50,14 @@ void models::Entity::position(const std::pair<float, float> &position) {
     m_position.second = position.second;
 }
 
-model_ptr models::Entity::collision() {
+std::vector<model_ptr> models::Entity::collision() {
+    std::vector<model_ptr > entities;
     for(model_ptr entity: models::list){
         if(entity->globalHitbox().intersects(this->globalHitbox()) && entity.get() != this){
-            return entity;
+            entities.push_back(entity);
         }
     }
-    return nullptr;
+    return entities;
 }
 
 sf::FloatRect models::Entity::globalHitbox() {

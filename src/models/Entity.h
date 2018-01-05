@@ -87,14 +87,14 @@ namespace models {
          *
          * @return the model colliding with this model or null_ptr if none is found
          * */
-        model_ptr collision();
+        std::vector<model_ptr> collision();
 
         /**
          * @brief handle collision with a specific entity
          *
          * @param entity the colliding entity
          * */
-        virtual void handleCollision(model_ptr entity){};
+        virtual void handleCollision(std::vector<model_ptr> entity){};
 
         /**
          * @brief returns the global hitbox (the hitbox + position)

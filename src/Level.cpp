@@ -63,6 +63,19 @@ void Level::loadLevel(std::string fullPath) {
             throw ResourceException(ResourceException::missingResource, resource);
         }
     }
+    std::string border = j["Border"];
+    resource_ptr borderResource = resources::map.at(border);
+    float f = Transformation::left();
+    while(true){
+        model_ptr top = borderResource->create({f,0});
+        sf::FloatRect hitbox = top->globalHitbox();
+        top->position({f, Transformation::top()});
+        model_ptr bottom = borderResource->create({f,0});
+        bottom->position({f, Transformation::top()+Transformation::height()-hitbox.height});
+        if(f >= Transformation::width()+ Transformation::left())
+            break;
+        f += hitbox.width;
+    }
 }
 
 resource_ptr Level::loadResource(std::string path, std::string resourceName) {

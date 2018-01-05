@@ -23,7 +23,7 @@ namespace models {
 
         void update() override ;
 
-        void handleCollision(model_ptr entity) override;
+        void handleCollision(std::vector<model_ptr> entities) override;
     };
 }
 

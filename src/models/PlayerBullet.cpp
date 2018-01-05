@@ -16,17 +16,21 @@ void models::PlayerBullet::update() {
     handleCollision(collision());
 }
 
-void models::PlayerBullet::handleCollision(model_ptr entity) {
-    if(entity){
-        auto ship = std::dynamic_pointer_cast<models::EnemyShip>(entity);
-        if(ship){
-            ship->dealDamage(1);
-            markDeleted();
-        }
-        auto bullet = std::dynamic_pointer_cast<models::EnemyBullet>(entity);
-        if(bullet){
-            bullet->markDeleted();
-            markDeleted();
+void models::PlayerBullet::handleCollision(std::vector<model_ptr> entities) {
+    for(model_ptr entity : entities){
+        if(entity){
+            auto ship = std::dynamic_pointer_cast<models::EnemyShip>(entity);
+            if(ship){
+                ship->dealDamage(1);
+                markDeleted();
+                return;
+            }
+            auto bullet = std::dynamic_pointer_cast<models::EnemyBullet>(entity);
+            if(bullet){
+                bullet->markDeleted();
+                markDeleted();
+                return;
+            }
         }
     }
 }

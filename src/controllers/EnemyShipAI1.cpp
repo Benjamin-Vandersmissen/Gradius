@@ -27,7 +27,7 @@ void controllers::EnemyShipAI1::update() {
         }
     }
     notify();
-    if(m_model->collision() != nullptr){
+    if(m_model->collision().empty()){
         m_desiredY = static_cast<float >(Transformation::top() + Transformation::height()*drand48());
     }
     m_fired = false;
