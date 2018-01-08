@@ -2,5 +2,6 @@
     "ResourcePath": "../resources/",
     "Resources": ["PlayerBullet", "EnemyBullet", "BorderObstacle"],
     "Entities": [{"Type": "PlayerShip", "Position":[-3,0]}, {"Type": "EnemyShip", "Position":[5,0]}, {"Type": "EnemyShip", "Position":[6,1]}, {"Type": "EnemyShip", "Position":[6,-1]}],
-    "Border": "BorderObstacle"
+    "Border": "BorderObstacle",
+    "Speed": 0.10
 }

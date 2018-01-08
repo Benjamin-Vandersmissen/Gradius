@@ -61,6 +61,7 @@ void controllers::Controller::update() {
         for (const auto &controller : controllers::list) {
             controller->update();
         }
+        m_model->update();
     }
 }
 

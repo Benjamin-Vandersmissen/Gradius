@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "Model.h"
+#include "ScrollingEntity.h"
 
 void models::Model::addView(std::shared_ptr<views::View> view) {
     m_view = view;
@@ -16,14 +17,18 @@ void models::Model::setController(std::shared_ptr<controllers::Controller> contr
 
 void models::Model::update() {
     if(m_controller->tryPaused()){
-        m_paused = true;
+        m_paused = !m_paused;
         notify();
     }
     if(m_controller->tryExit()){
         m_exit = true;
         notify();
     }
-    if(m_controller->typedChar() != 0){
+    if(gameState() == gameStates::Running){
+        m_xPosition += m_level.speed();
+        m_level.dynamicLoad(m_xPosition+Transformation::width());
+    }
+    if(m_controller->typedChar() != 0 && gameState() == gameStates::LoadLevelMenu){
         if(m_controller->typedChar() == '\b' && !m_tempLevel.empty()){
             m_tempLevel.pop_back();
         }
@@ -44,6 +49,7 @@ const std::vector<models::menuObject> &models::Model::getMenu() const {
 
 models::Model::Model() {
     loadMainMenu();
+    m_level.loadLevel("../levels/"+m_levelName+".json");
 }
 
 void models::Model::setGameState(int state) {
@@ -83,10 +89,14 @@ void models::Model::loadLevelMenu() {
 }
 
 void models::Model::loadLevel() {
-    m_level.loadLevel("../levels/"+m_levelName+".json");
+    m_level.initLevel();
+    m_xPosition = 0;
+    ScrollingEntity::scrollingSpeed = m_level.speed();
+    m_level.dynamicLoad(Transformation::width());
 }
 
 void models::Model::saveTempLevel() {
     m_levelName = m_tempLevel;
+    m_level.loadLevel("../levels/"+m_levelName+".json");
     m_tempLevel = "";
 }

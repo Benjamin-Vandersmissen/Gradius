@@ -35,9 +35,7 @@ void Level::loadLevel(std::string fullPath) {
     } catch(json::exception& e){
         throw LevelException(LevelException::missingEntry, fullPath, "Resources");
     }
-    views::list.clear();
-    models::list.clear();
-    controllers::list.clear();
+
     resources::map.clear();
 
     for(const std::string& resource : resources){
@@ -57,7 +55,7 @@ void Level::loadLevel(std::string fullPath) {
             resources::map[resource] = loadResource(path+resourcePath, resource);
         }
         try{
-            auto entity = resources::map.at(resource)->create(position);
+            m_objects.insert(levelObject{resource,position});
         }
         catch(std::exception& e){
             throw ResourceException(ResourceException::missingResource, resource);
@@ -66,16 +64,15 @@ void Level::loadLevel(std::string fullPath) {
     std::string border = j["Border"];
     resource_ptr borderResource = resources::map.at(border);
     float f = Transformation::left();
-    while(true){
-        model_ptr top = borderResource->create({f,0});
-        sf::FloatRect hitbox = top->globalHitbox();
-        top->position({f, Transformation::top()});
-        model_ptr bottom = borderResource->create({f,0});
-        bottom->position({f, Transformation::top()+Transformation::height()-hitbox.height});
-        if(f >= Transformation::width()+ Transformation::left())
+    while(true){ //create a border
+        sf::FloatRect hitbox =borderResource->hitbox();
+        m_objects.insert(levelObject{border, std::pair<float,float>{f, Transformation::top()}});
+        m_objects.insert(levelObject{border, std::pair<float,float>{f, Transformation::top()+Transformation::height()-hitbox.height}});
+        if(f >= Transformation::width()+ Transformation::left() + hitbox.width)
             break;
         f += hitbox.width;
     }
+    m_speed = j["Speed"];
 }
 
 resource_ptr Level::loadResource(std::string path, std::string resourceName) {
@@ -107,4 +104,18 @@ resource_ptr Level::loadResource(std::string path, std::string resourceName) {
         return resource;
     }
     throw ResourceException(ResourceException::unknownClass, resourceName, type);
+}
+
+void Level::initLevel() {
+    views::list.clear();
+    models::list.clear();
+    controllers::list.clear();
+    tempObjects = m_objects;
+}
+
+void Level::dynamicLoad(float x) {
+    for(auto obj = tempObjects.begin(); obj != tempObjects.end() && (*obj).position.first <= x;){
+        resources::map[(*obj).resource]->create((*obj).position);
+        obj = tempObjects.erase(obj);
+    }
 }

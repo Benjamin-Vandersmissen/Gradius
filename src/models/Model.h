@@ -40,6 +40,7 @@ namespace models {
         std::string m_tempLevel;
         std::string m_levelName = "level";
         Level m_level = Level();
+        float m_xPosition;
     public:
         Model();
 

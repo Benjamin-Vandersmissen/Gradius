@@ -21,7 +21,7 @@ void models::EnemyShip::update() {
     auto myController = std::dynamic_pointer_cast<controllers::EnemyShip>(m_controller);
     if(myController){
         if(myController->currentDirection() != std::pair<float, float>{0,0}) {
-            m_position.first += models::ScrollingEntity::scrollingSpeed * myController->currentDirection().first;
+            m_position.first += m_speed * myController->currentDirection().first;
             m_position.second += m_speed * myController->currentDirection().second;
             notify();
         }

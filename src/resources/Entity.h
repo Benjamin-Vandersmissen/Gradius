@@ -74,6 +74,8 @@ namespace resources{
          * */
         void finalizeCreation(view_ptr view, model_ptr model, controller_ptr controller,
                               std::pair<float, float> position);
+
+        sf::FloatRect hitbox() const {return m_hitbox;}
     };
 
 

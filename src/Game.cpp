@@ -8,11 +8,11 @@
 
 Game::Game() {
     m_view = std::make_shared<views::View>(800,600,std::string("Gradius"));
+    Transformation::initTransformation(200,150);
     m_model = std::make_shared<models::Model>();
     m_controller = std::make_shared<controllers::Controller>();
     m_model->setController(m_controller);
     m_view->setModel(m_model);
-    Transformation::initTransformation(200,150);
 }
 
 void Game::loop() {

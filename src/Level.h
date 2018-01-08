@@ -6,7 +6,7 @@
 #define GRADIUS_LEVEL_H
 
 #include <string>
-#include <vector>
+#include <set>
 #include <fstream>
 #include "Exception.h"
 #include "json.hpp"
@@ -15,17 +15,28 @@
 struct levelObject{
     std::string resource;
     std::pair<float, float> position;
+    bool operator()(levelObject obj1, levelObject obj2){return obj1.position.first < obj2.position.first;}
 };
 
-//TODO : make it possible to load mutliple levels and only play one by using levelObjects
 class Level {
 private:
-    std::vector<levelObject> m_objects;
+    std::multiset<levelObject, levelObject> m_objects;
     std::string m_resourcePath;
+    float m_speed;
 public:
+    std::multiset<levelObject, levelObject> tempObjects;
+
     void loadLevel(std::string fullPath);
 
+    void initLevel();
+
     resource_ptr loadResource(std::string path, std::string resourceName);
+
+    float speed() const{
+        return m_speed;
+    }
+
+    void dynamicLoad(float x);
 };
 
 
