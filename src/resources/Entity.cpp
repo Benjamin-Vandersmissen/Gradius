@@ -10,6 +10,7 @@ void resources::Entity::loadFromIni(const std::string &path, const ini::Configur
     std::string texturePath = configuration["General"]["TexturePath"].as_string_or_die();
     int delay = configuration["General"]["Delay"].as_int_or_default(-1);
     unsigned int nrFrames = static_cast<unsigned int>(configuration["General"]["NrFrames"].as_int_or_default(1));
+    m_depth = configuration["General"]["Depth"].as_int_or_default(0);
     m_animation = Animation(delay);
     m_animation.createFromStrip(path+texturePath, nrFrames);
     m_hitbox = sf::FloatRect{0,0,Transformation::transformWidth(m_animation.getSize().x), Transformation::transformHeight(m_animation.getSize().y)};
@@ -26,6 +27,7 @@ void resources::Entity::finalizeCreation(view_ptr view, model_ptr model, control
     setAnimationOfView(view);
 
     model->position(position);
+    model->depth(m_depth);
     model->notify();
 
     models::list.insert(models::list.begin(),model);

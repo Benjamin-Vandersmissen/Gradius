@@ -41,6 +41,8 @@ namespace models {
         sf::FloatRect m_hitbox; //hitbox (coordinates)
 
         bool m_deleted = false; //if the model is deleted or not
+
+        int m_depth = 0; //the depth at which the object gets drawn
     public:
 
         /**
@@ -121,6 +123,10 @@ namespace models {
          * @return m_deleted
          * */
         bool deleted() const;
+
+        int depth() const;
+
+        void depth(int depth);
     };
     extern std::list<model_ptr> list;
 

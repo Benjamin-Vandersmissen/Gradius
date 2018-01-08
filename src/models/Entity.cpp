@@ -6,7 +6,7 @@
 
 std::list<model_ptr> models::list = {};
 
-void ::models::deleteMarkedEntities() {
+void models::deleteMarkedEntities() {
     bool deletedItems = false;
     for(auto it = list.begin(); it != list.end(); ++it){
         if((*it)->deleted()){
@@ -76,4 +76,12 @@ void models::Entity::markDeleted() {
     m_deleted = true;
     m_view->markDeleted();
     m_controller->markDeleted();
+}
+
+int models::Entity::depth() const {
+    return m_depth;
+}
+
+void models::Entity::depth(int depth) {
+    m_depth = depth;
 }

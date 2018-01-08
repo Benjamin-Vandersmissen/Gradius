@@ -45,6 +45,7 @@ namespace resources{
     protected:
         Animation m_animation; //the default animation for the view
         sf::FloatRect m_hitbox; //the local hitbox
+        int m_depth;
     public:
         /**
          * @brief create a new entity (model, view and controller) with the current parameters at the given position

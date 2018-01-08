@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <list>
+#include <set>
 
 #include "SFML/Graphics.hpp"
 #include "SFML/System.hpp"
@@ -32,6 +33,7 @@ namespace resources{
 using view_ptr = std::shared_ptr<views::Entity>;
 
 namespace views{
+
     class Entity : public sf::Drawable, public std::enable_shared_from_this<views::Entity>{
     protected:
         model_ptr m_model; // the associated model
@@ -77,9 +79,15 @@ namespace views{
          * @brief returns wether the view is deleted or not
          * */
         bool deleted() const;
+
+        friend struct viewCmpt;
     };
 
-    extern std::list<view_ptr > list;
+    struct viewCmpt{
+        bool operator()(const view_ptr &lhs, const view_ptr &rhs);
+    };
+
+    extern std::multiset<view_ptr, viewCmpt> list;
 }
 
 
