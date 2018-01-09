@@ -79,6 +79,28 @@ void views::View::draw() {
             drawMenu();
             break;
         }
+        case models::Model::GameWon :{
+            sf::Text text;
+            text.setString("You    Won");
+            text.setFont(*m_defaultFont);
+            text.setScale({2.0f/3.0f, 2.0f/3.0f});
+            text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height/2);
+            text.setPosition(Transformation::invTransform({0,-1.5f}));
+            m_window->draw(text);
+            drawMenu();
+            break;
+        }
+        case models::Model::GameLost :{
+            sf::Text text;
+            text.setString("You    Lost");
+            text.setFont(*m_defaultFont);
+            text.setScale({2.0f/3.0f, 2.0f/3.0f});
+            text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height/2);
+            text.setPosition(Transformation::invTransform({0,-1.5f}));
+            m_window->draw(text);
+            drawMenu();
+            break;
+        }
     }
     m_window->display();
 }

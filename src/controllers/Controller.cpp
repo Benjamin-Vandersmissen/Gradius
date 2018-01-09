@@ -63,6 +63,7 @@ void controllers::Controller::update() {
         }
         m_model->update();
     }
+    m_model->deleteMarkedEntities();
 }
 
 void controllers::Controller::handleKeyboard(sf::Event::KeyEvent key) {
@@ -104,7 +105,12 @@ void controllers::Controller::handleKeyboard(sf::Event::KeyEvent key) {
                 }
             }
         }
-
+        case models::Model::GameLost:{
+            //does the same as models::Model::MainMenu
+        }
+        case models::Model::GameWon:{
+            //does the same as models::Model::MainMenu
+        }
         case models::Model::MainMenu:{
             switch (key.code){
                 case sf::Keyboard::Return:{

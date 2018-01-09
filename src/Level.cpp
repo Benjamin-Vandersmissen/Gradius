@@ -73,6 +73,7 @@ void Level::loadLevel(std::string fullPath) {
         f += hitbox.width;
     }
     m_speed = j["Speed"];
+    m_length = j["Length"];
 }
 
 resource_ptr Level::loadResource(std::string path, std::string resourceName) {

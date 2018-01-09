@@ -23,6 +23,7 @@ private:
     std::multiset<levelObject, levelObject> m_objects;
     std::string m_resourcePath;
     float m_speed;
+    float m_length;
 public:
     std::multiset<levelObject, levelObject> tempObjects;
 
@@ -34,6 +35,10 @@ public:
 
     float speed() const{
         return m_speed;
+    }
+
+    float length() const{
+        return m_length;
     }
 
     void dynamicLoad(float x);

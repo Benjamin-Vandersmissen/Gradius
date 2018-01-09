@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Model.h"
 #include "ScrollingEntity.h"
+#include "PlayerShip.h"
 
 void models::Model::addView(std::shared_ptr<views::View> view) {
     m_view = view;
@@ -25,6 +26,14 @@ void models::Model::update() {
         notify();
     }
     if(gameState() == gameStates::Running){
+        if(m_players.empty()){
+            loadGameDoneMenu();
+            m_gameState = gameStates::GameLost;
+        }
+        if(m_xPosition > m_level.length()){
+            loadGameDoneMenu();
+            m_gameState = gameStates::GameWon;
+        }
         m_xPosition += m_level.speed();
         m_level.dynamicLoad(m_xPosition+Transformation::width());
     }
@@ -88,15 +97,54 @@ void models::Model::loadLevelMenu() {
     m_menuState = menuStates::TryLoadLevel;
 }
 
+void models::Model::loadGameDoneMenu() {
+    m_menu = {{0, 0.0f, "Restart", menuStates::NewGame, menuStates::BackToMainMenu, -1},
+              {0, 1.0f, "Main Menu", menuStates::BackToMainMenu, menuStates::ExitGame, menuStates::NewGame},
+              {0, 2.0f, "Exit Game", menuStates::ExitGame, -1, menuStates::BackToMainMenu}};
+    m_menuState = menuStates::NewGame;
+}
+
 void models::Model::loadLevel() {
     m_level.initLevel();
     m_xPosition = 0;
     ScrollingEntity::scrollingSpeed = m_level.speed();
     m_level.dynamicLoad(Transformation::width());
+    m_players.clear();
+    for(model_ptr obj : models::list){
+        if(std::dynamic_pointer_cast<models::PlayerShip>(obj)){
+            m_players.push_back(obj);
+        }
+    }
 }
 
 void models::Model::saveTempLevel() {
     m_levelName = m_tempLevel;
     m_level.loadLevel("../levels/"+m_levelName+".json");
     m_tempLevel = "";
+}
+
+void models::Model::deleteMarkedEntities() {
+    bool deletedItems = false;
+    for(auto it = list.begin(); it != list.end(); ++it){
+        if((*it)->deleted()){
+            deletedItems = true;
+            auto player = std::find(m_players.begin(), m_players.end(), *it);
+            if(player != m_players.end()){
+                m_players.erase(player);
+            }
+            it = list.erase(it);
+        }
+    }
+    if(!deletedItems)
+        return;
+    for(auto it = views::list.begin(); it != views::list.end(); ++it){
+        if((*it)->deleted()){
+            it = views::list.erase(it);
+        }
+    }
+    for(auto it = controllers::list.begin(); it != controllers::list.end(); ++it){
+        if((*it)->deleted()){
+            it = controllers::list.erase(it);
+        }
+    }
 }

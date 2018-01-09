@@ -6,28 +6,6 @@
 
 std::list<model_ptr> models::list = {};
 
-void models::deleteMarkedEntities() {
-    bool deletedItems = false;
-    for(auto it = list.begin(); it != list.end(); ++it){
-        if((*it)->deleted()){
-            deletedItems = true;
-            it = list.erase(it);
-        }
-    }
-    if(!deletedItems)
-        return;
-    for(auto it = views::list.begin(); it != views::list.end(); ++it){
-        if((*it)->deleted()){
-            it = views::list.erase(it);
-        }
-    }
-    for(auto it = controllers::list.begin(); it != controllers::list.end(); ++it){
-        if((*it)->deleted()){
-            it = controllers::list.erase(it);
-        }
-    }
-}
-
 void models::Entity::addView(view_ptr view) {
     m_view = view;
 }

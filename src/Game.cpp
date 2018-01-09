@@ -27,7 +27,6 @@ void Game::loop() {
         if(m_model->paused())
             continue;
         m_controller->update();
-        models::deleteMarkedEntities();
         m_view->draw();
     }
 }

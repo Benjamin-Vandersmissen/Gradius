@@ -130,10 +130,6 @@ namespace models {
     };
     extern std::list<model_ptr> list;
 
-    /**
-     * @brief delete all models for which Entity::deleted() returns true
-     * */
-    void deleteMarkedEntities();
 }
 
 

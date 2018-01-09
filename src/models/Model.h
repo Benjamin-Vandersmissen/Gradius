@@ -41,6 +41,7 @@ namespace models {
         std::string m_levelName = "level";
         Level m_level = Level();
         float m_xPosition;
+        std::vector<model_ptr> m_players;
     public:
         Model();
 
@@ -48,7 +49,9 @@ namespace models {
             MainMenu,
             PauseMenu,
             LoadLevelMenu,
-            Running
+            Running,
+            GameLost,
+            GameWon
         };
 
         enum menuStates{
@@ -90,11 +93,15 @@ namespace models {
 
         void loadLevelMenu();
 
+        void loadGameDoneMenu();
+
         const std::string& tempLevel() const {return m_tempLevel;}
 
         void loadLevel();
 
         void saveTempLevel();
+
+        void deleteMarkedEntities();
     };
 }
 
