@@ -12,7 +12,6 @@ void controllers::EnemyShipAI1::update() {
     else{
         m_fireCooldown--;
     }
-    auto ship = std::dynamic_pointer_cast<models::Ship>(m_model);
     if(!m_positionSet) {
         m_startPosition = m_model->position();
         m_positionSet = true;
@@ -20,7 +19,7 @@ void controllers::EnemyShipAI1::update() {
     if(m_direction*(m_model->position().second - m_startPosition.second - m_direction) > 0){ //reached desired position
         m_direction *= -1; //move other direction
     }
-    m_currentDirection = {-1, 0.75*m_direction};
+    m_currentDirection = {-1, 0.75*m_direction}; //vertical speed is 75% of horizontal speed => easier
     notify();
     m_fired = false;
 }

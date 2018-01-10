@@ -14,6 +14,9 @@ using json = nlohmann::json;
 void Level::loadLevel(std::string fullPath) {
     std::ifstream stream(fullPath);
 
+    resources::map.clear();
+    m_objects.clear();
+
     if(!stream.good()){ //!stream.good() != stream.bad()
         throw LevelException(LevelException::missingFile, fullPath);
     }
@@ -35,8 +38,6 @@ void Level::loadLevel(std::string fullPath) {
     } catch(json::exception& e){
         throw LevelException(LevelException::missingEntry, fullPath, "Resources");
     }
-
-    resources::map.clear();
 
     for(const std::string& resource : resources){
         resources::map[resource] = loadResource(path+resourcePath, resource);

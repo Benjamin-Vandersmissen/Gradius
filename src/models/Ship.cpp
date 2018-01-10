@@ -33,6 +33,3 @@ bool models::Ship::isImmune() const {
     return m_immunity > 0;
 }
 
-double models::Ship::speed() const {
-    return m_speed;
-}

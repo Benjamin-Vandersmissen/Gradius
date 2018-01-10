@@ -19,8 +19,14 @@ namespace models {
 
         std::string m_bulletType = "";
 
+        /**
+         * @brief the maximum duration of immunity
+         * */
         unsigned int m_maxImmunity = 60;
 
+        /**
+         * @brief the current duration of immunity
+         * */
         unsigned int m_immunity = 0;
 
     public:
@@ -32,7 +38,6 @@ namespace models {
 
         bool isImmune() const;
 
-        double speed() const;
     };
 }
 

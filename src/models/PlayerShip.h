@@ -16,6 +16,9 @@ namespace resources{
     class PlayerShip;
 }
 
+/**
+ * @brief clamps a value between lo and hi
+ * */
 void clamp(float& value, float lo, float hi);
 
 namespace models{

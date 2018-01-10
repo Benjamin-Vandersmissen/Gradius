@@ -12,9 +12,9 @@ namespace controllers {
     protected:
         std::pair<float, float> m_currentDirection;
 
-        unsigned int m_fireCooldown = 0;
+        unsigned int m_fireCooldown = 0; //the current cooldown before the ship can fire again
 
-        unsigned int m_maxFireCooldown = 20;
+        unsigned int m_maxFireCooldown = 20; //the maximum cooldown before the ship can fire again
 
         bool m_fired = false;
     public:

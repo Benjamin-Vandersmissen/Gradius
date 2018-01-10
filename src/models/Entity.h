@@ -118,17 +118,23 @@ namespace models {
         void markDeleted();
 
         /**
-         * @brief returns wether the model is deleted or not
+         * @brief returns whether the model is deleted or not
          *
          * @return m_deleted
          * */
         bool deleted() const;
 
+        /**
+         * @brief returns the depth at which the instance is drawn
+         * */
         int depth() const;
 
+        /**
+         * @brief sets the depth of the instance
+         * */
         void depth(int depth);
     };
-    extern std::list<model_ptr> list;
+    extern std::list<model_ptr> list; //a list that holds all currently active Entity Models
 
 }
 

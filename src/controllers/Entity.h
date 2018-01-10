@@ -31,8 +31,14 @@ namespace controllers{
         bool m_deleted = false; //a boolean that will determine if the controller should be deleted
 
     public:
+        /**
+         * @brief add the model for the MVC structure
+         * */
         void addModel(model_ptr model);
 
+        /**
+         * @brief update the internal state
+         * */
         virtual void update() =0;
 
         /**
@@ -52,12 +58,10 @@ namespace controllers{
 
         /**
          * @brief return if the controller is deleted
-         *
-         * @return m_deleted
          * */
         bool deleted() const;
     };
-    extern std::list<controller_ptr> list;
+    extern std::list<controller_ptr> list; //a list that contains all active Entity Controllers
 }
 
 

@@ -12,7 +12,7 @@
 namespace models {
     class ScrollingEntity : public Entity{
     public:
-        static double scrollingSpeed;
+        static double scrollingSpeed; //the speed at which the window scrolls
 
         void update() override;
     };
