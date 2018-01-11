@@ -34,8 +34,8 @@ void models::Model::update() {
             loadGameDoneMenu();
             m_gameState = gameStates::GameWon;
         }
+        m_level.dynamicLoad(m_xPosition + Transformation::width() + 2 * m_level.speed(), m_xPosition);
         m_xPosition += m_level.speed();
-        m_level.dynamicLoad(m_xPosition+Transformation::width());
     }
     if(m_controller->typedChar() != 0 && gameState() == gameStates::LoadLevelMenu){
         if(m_controller->typedChar() == '\b' && !m_tempLevel.empty()){
@@ -108,7 +108,7 @@ void models::Model::loadLevel() {
     m_level.initLevel();
     m_xPosition = 0;
     ScrollingEntity::scrollingSpeed = m_level.speed();
-    m_level.dynamicLoad(Transformation::width());
+    m_level.dynamicLoad(Transformation::width(), m_xPosition);
     m_players.clear();
     for(model_ptr obj : models::list){
         if(std::dynamic_pointer_cast<models::PlayerShip>(obj)){

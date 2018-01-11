@@ -62,7 +62,13 @@ void Level::loadLevel(std::string fullPath) {
             throw ResourceException(ResourceException::missingResource, resource);
         }
     }
-    std::string border = j["Border"];
+    std::string border;
+    try {
+        border = j["Border"];
+    } catch(json::exception& e){
+        throw LevelException(LevelException::missingEntry, fullPath, "Border");
+
+    }
     resource_ptr borderResource = resources::map.at(border);
     float f = Transformation::left();
     while(true){ //create a border
@@ -73,8 +79,18 @@ void Level::loadLevel(std::string fullPath) {
             break;
         f += hitbox.width;
     }
-    m_speed = j["Speed"];
-    m_length = j["Length"];
+    try {
+        m_speed = j["Speed"];
+    } catch(json::exception& e){
+        throw LevelException(LevelException::missingEntry, fullPath, "Speed");
+
+    }
+    try {
+        m_length = j["Length"];
+    } catch(json::exception& e){
+        throw LevelException(LevelException::missingEntry, fullPath, "Length");
+
+    }
 }
 
 resource_ptr Level::loadResource(std::string path, std::string resourceName) {
@@ -115,9 +131,9 @@ void Level::initLevel() {
     tempObjects = m_objects;
 }
 
-void Level::dynamicLoad(float x) {
-    for(auto obj = tempObjects.begin(); obj != tempObjects.end() && (*obj).position.first <= x;){
-        resources::map[(*obj).resource]->create((*obj).position);
+void Level::dynamicLoad(float bound, float currentX) {
+    for(auto obj = tempObjects.begin(); obj != tempObjects.end() && (*obj).position.first <= bound;){
+        resources::map[(*obj).resource]->create({(*obj).position.first-currentX, (*obj).position.second});
         obj = tempObjects.erase(obj);
     }
 }

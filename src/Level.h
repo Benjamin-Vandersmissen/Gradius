@@ -41,7 +41,7 @@ public:
         return m_length;
     }
 
-    void dynamicLoad(float x);
+    void dynamicLoad(float bound, float currentX);
 };
 
 
