@@ -14,7 +14,6 @@
 namespace resources {
     class PlayerShip : public Ship{
     private:
-        std::shared_ptr<sf::Font> m_font;
         std::shared_ptr<sf::Texture> m_heartTexture;
     public:
         void loadFromIni(const std::string &path, const ini::Configuration &configuration) override;

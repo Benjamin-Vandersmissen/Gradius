@@ -26,9 +26,6 @@ model_ptr resources::PlayerShip::create(const std::pair<float, float> &position)
 void resources::PlayerShip::loadFromIni(const std::string &path, const ini::Configuration &configuration) {
     Ship::loadFromIni(path, configuration);
 
-    std::string fontPath = path + configuration["PlayerShip"]["FontPath"].as_string_or_die();
-    m_font = std::make_shared<sf::Font>();
-    m_font->loadFromFile(fontPath);
     m_heartTexture = std::make_shared<sf::Texture>();
     m_heartTexture->loadFromFile("../resources/textures/heart.png");
 }

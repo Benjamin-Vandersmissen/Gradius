@@ -4,6 +4,7 @@
 
 #include "EnemyShip.h"
 #include "../controllers/EnemyShipAI1.h"
+#include "../controllers/EnemyShipAI2.h"
 
 void resources::EnemyShip::loadFromIni(const std::string &path, const ini::Configuration &configuration) {
     Ship::loadFromIni(path, configuration);
@@ -30,6 +31,9 @@ model_ptr resources::EnemyShip::create(const std::pair<float, float> &position) 
             break;
         case 1:
             controller = std::make_shared<controllers::EnemyShipAI1>();
+            break;
+        case 2:
+            controller = std::make_shared<controllers::EnemyShipAI2>();
             break;
         default:
             controller = std::make_shared<controllers::EnemyShip>();
