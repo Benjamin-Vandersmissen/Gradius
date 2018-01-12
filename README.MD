@@ -84,7 +84,7 @@ Name                   | Notes
 -----------------------|------
 ResourcePath           | where to search for resources
 Resources              | a list of resources that should be loaded in
-Entities               | a list of entities, an entity is of the following form : '{"Type": _resourceName_, "Position": [_x_, _y_]'
+Entities               | a list of entities, an entity is of the following form : {"Type": _resourceName_, "Position": [_x_, _y_]
 Border                 | the entities from which the border is created
 Speed                  | the speed at which the level scrolls
 Length                 | the length of the level
