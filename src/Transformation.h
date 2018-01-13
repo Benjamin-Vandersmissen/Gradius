@@ -78,8 +78,14 @@ public:
      * */
     static unsigned int windowHeight();
 
+    /**
+     * @brief scale a width from pixels to coordinates
+     * */
     static float transformWidth(unsigned int pixelwidth);
 
+    /**
+     * @brief scale a height from pixels to coordinates
+     * */
     static float transformHeight(unsigned int pixelheight);
 };
 

@@ -37,7 +37,7 @@ namespace models {
         int m_gameState = gameStates::MainMenu;
         int m_menuState = menuStates::NewGame;
         std::vector<menuObject> m_menu;
-        std::string m_tempLevel; //temporary level during level selection
+        std::string m_tempLevel; //temporary levelname during level selection
         std::string m_levelName = "level";
         Level m_level = Level();
         float m_xPosition;
@@ -161,6 +161,11 @@ namespace models {
          * @brief delete entities that are marked for deletion
          * */
         void deleteMarkedEntities();
+
+        /**
+         * @brief if the loaded level is invalid, this value will be true
+         * */
+        bool invalidLevel = false;
     };
 }
 

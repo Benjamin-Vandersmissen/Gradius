@@ -76,10 +76,13 @@ namespace resources{
         void finalizeCreation(view_ptr view, model_ptr model, controller_ptr controller,
                               std::pair<float, float> position);
 
+        /**
+         * @ brief return the hitbox
+         * */
         sf::FloatRect hitbox() const {return m_hitbox;}
     };
 
-
+    // here are all resources saved under their resource name
     extern std::map<std::string, resource_ptr> map;
 }
 

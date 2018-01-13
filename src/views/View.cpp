@@ -59,8 +59,11 @@ void views::View::draw() {
         case models::Model::LoadLevelMenu :{
             sf::Text text;
             if(m_model->tempLevel().empty()){
-                text.setString("Type Something");
                 text.setColor(sf::Color::Red);
+                if(m_model->invalidLevel)
+                    text.setString("Invalid Level");
+                else
+                    text.setString("Type Something");
             }
             else{
                 text.setString(m_model->tempLevel());
@@ -68,11 +71,11 @@ void views::View::draw() {
             }
             text.setFont(*m_defaultFont);
             text.setScale({1.0f/3.0f,1.0f/3.0f});
-            text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height/2);
+            text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height/2); //center alignment
             text.setPosition(Transformation::invTransform({0,-1.5f}));
             sf::Text text2("Level", *m_defaultFont);
             text2.setScale({1.0f/3.0f,1.0f/3.0f});
-            text2.setOrigin(text2.getLocalBounds().width/2, text2.getLocalBounds().height/2);
+            text2.setOrigin(text2.getLocalBounds().width/2, text2.getLocalBounds().height/2); //center alignment
             text2.setPosition(Transformation::invTransform({0,-2.0f}));
             m_window->draw(text);
             m_window->draw(text2);
@@ -84,7 +87,7 @@ void views::View::draw() {
             text.setString("You    Won");
             text.setFont(*m_defaultFont);
             text.setScale({2.0f/3.0f, 2.0f/3.0f});
-            text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height/2);
+            text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height/2); //center alignment
             text.setPosition(Transformation::invTransform({0,-1.5f}));
             m_window->draw(text);
             drawMenu();
@@ -95,7 +98,7 @@ void views::View::draw() {
             text.setString("You    Lost");
             text.setFont(*m_defaultFont);
             text.setScale({2.0f/3.0f, 2.0f/3.0f});
-            text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height/2);
+            text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height/2); //center alignment
             text.setPosition(Transformation::invTransform({0,-1.5f}));
             m_window->draw(text);
             drawMenu();
@@ -109,11 +112,11 @@ void views::View::drawMenu() {
     for(const models::menuObject& obj : m_model->getMenu()){
         sf::Text text(obj.string, *m_defaultFont);
         text.setScale({1.0f/3.0f,1.0f/3.0f});
-        text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height/2);
+        text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height/2); //center alignment
         text.setPosition(Transformation::invTransform({obj.xPosition, obj.yPosition}));
         if(obj.menuState == m_model->currentMenuObject().menuState){
             sf::Vector2f position = {text.getGlobalBounds().left-m_menuSelector.getRadius(), text.getGlobalBounds().top + text.getGlobalBounds().height/2};
-            m_menuSelector.setPosition(position);
+            m_menuSelector.setPosition(position); //menu selector is always perfectly left of the text
         }
         m_window->draw(text);
     }

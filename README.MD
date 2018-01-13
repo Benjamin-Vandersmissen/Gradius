@@ -89,6 +89,11 @@ Border                 | the entities from which the border is created
 Speed                  | the speed at which the level scrolls
 Length                 | the length of the level
 
+
+## Available Levels ##
+- level
+- test
+
 ## To Do List / Feature Wishlist ##
 
 ### Easy Peasy ###

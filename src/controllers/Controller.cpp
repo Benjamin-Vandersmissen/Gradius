@@ -172,9 +172,16 @@ void controllers::Controller::handleMenu() {
             break;
         }
         case models::Model::TryLoadLevel : {
-            m_model->saveTempLevel();
-            m_model->setGameState(models::Model::MainMenu);
-            m_model->loadMainMenu();
+            try {
+                m_model->saveTempLevel();
+            }
+            catch(LevelException& e){
+                m_model->invalidLevel = true;
+            }
+            if(!m_model->invalidLevel) {
+                m_model->setGameState(models::Model::MainMenu);
+                m_model->loadMainMenu();
+            }
             break;
         }
     }

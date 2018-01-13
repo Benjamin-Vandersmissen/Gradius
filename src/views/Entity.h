@@ -84,6 +84,9 @@ namespace views{
     };
 
     struct viewCmpt{
+        /**
+         * comparator for two views, will return whether the left view has a lower depth or not
+         * */
         bool operator()(const view_ptr &lhs, const view_ptr &rhs);
     };
 

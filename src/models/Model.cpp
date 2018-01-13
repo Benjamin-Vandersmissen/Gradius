@@ -38,6 +38,8 @@ void models::Model::update() {
         m_xPosition += m_level.speed();
     }
     if(m_controller->typedChar() != 0 && gameState() == gameStates::LoadLevelMenu){
+        if(invalidLevel)
+            invalidLevel = false;
         if(m_controller->typedChar() == '\b' && !m_tempLevel.empty()){
             m_tempLevel.pop_back();
         }
@@ -119,8 +121,8 @@ void models::Model::loadLevel() {
 
 void models::Model::saveTempLevel() {
     m_levelName = m_tempLevel;
-    m_level.loadLevel("../levels/"+m_levelName+".json");
     m_tempLevel = "";
+    m_level.loadLevel("../levels/"+m_levelName+".json");
 }
 
 void models::Model::deleteMarkedEntities() {
