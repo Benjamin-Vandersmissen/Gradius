@@ -37,9 +37,11 @@ General Attributes | Notes
  **Type**          | type of the instance 
  **TexturePath**   | where to find the texture (relative to root of the game)
  **Speed**         | the speed at which the instance moves
- Depth             | depth at which the instance gets drawn (lower depth first)
- nrFrames          | if the image is an animation, how many frames (caution, make sure each frame has the same size and there are no gaps between the frames)
- Delay             | if the image is an animation, the delay between two frames
+ TextureWidth      | the width of the texture (in pixels), _default is the width of the image file_
+ TextureHeight     | the height of the texture (in pixels), _default is the height of the image file_
+ Depth             | depth at which the instance gets drawn (lower depth first), _default is 0_
+ nrFrames          | if the image is an animation, how many frames (caution, make sure each frame has the same size and there are no gaps between the frames) _default is 1_
+ Delay             | if the image is an animation, the delay between two frames _default is 0_
  
  **Bolded** items are necessary attributes, otherwise an error will occur.
  
@@ -53,10 +55,10 @@ General Attributes | Notes
  Ship Attributes      | Notes
  ---------------------|------
  BulletType           | :heavy_exclamation_mark: if not set, make sure the standard bullet type is present (PlayerBullet). If not set for instances of type EnemyShip, they will die when they try to fire
- DrawLives            | draw the lives above the ship or not, default = false
- FireCooldown         | the cooldown (in frames) between 2 shots (60fps), default = 20
- Lives                | default = 3
- ImmunityDuration     | duration of immunity after damage (in frames), default = 60
+ DrawLives            | draw the lives above the ship or not, _default is false_
+ FireCooldown         | the cooldown (in frames) between 2 shots (60fps), _default is 20_
+ Lives                | _default is 3_
+ ImmunityDuration     | duration of immunity after damage (in frames) _default is 0_
  
  _The following attributes are only used in instances of type EnemyShip_
  
@@ -84,7 +86,7 @@ Name                   | Notes
 -----------------------|------
 ResourcePath           | where to search for resources
 Resources              | a list of resources that should be loaded in
-Entities               | a list of entities, an entity is of the following form : {"Type": _resourceName_, "Position": [_x_, _y_]
+Entities               | a list of entities, an entity is of the following form : {"Type": _resourceName_, "Position": [_x_, _y_]}
 Border                 | the entities from which the border is created
 Speed                  | the speed at which the level scrolls
 Length                 | the length of the level
@@ -102,6 +104,8 @@ Length                 | the length of the level
 - make it possible to load the heart icon from disk instead of hardcoding it
 - fancier menus
 - scrolling background
+- more customization of levels and the game
+- better placement of newly created bullets
 
 ### Medium ###
 
@@ -111,6 +115,7 @@ Length                 | the length of the level
 - more / smarter AI
 - some kind of boss(es)
   - extra option in level files to end a level if there are no more enemies in the level instead of ending it at a fixed distance
+- sound effects
 
 ### (Impossibly) Hard ###
 

@@ -55,4 +55,10 @@ void Animation::setDelay(unsigned int delay) {
     m_current_delay = 0;
 }
 
+void Animation::setSize(const sf::Vector2u &size) {
+    for(sf::Sprite& sprite: m_sprites){
+        sprite.setScale(static_cast<float>(size.x)/sprite.getGlobalBounds().width, static_cast<float>(size.y)/sprite.getGlobalBounds().height);
+    }
+}
+
 Animation::Animation() = default;
