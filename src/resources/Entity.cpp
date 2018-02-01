@@ -8,14 +8,14 @@ std::map<std::string, resource_ptr> resources::map = {};
 
 void resources::Entity::loadFromIni(const std::string &path, const ini::Configuration &configuration) {
     std::string texturePath = configuration["General"]["TexturePath"].as_string_or_die();
-    int delay = configuration["General"]["Delay"].as_int_or_default(-1);
-    unsigned int nrFrames = static_cast<unsigned int>(configuration["General"]["NrFrames"].as_int_or_default(1));
+    unsigned int delay = configuration["General"]["Delay"].as_unsigned_or_default(0);
+    unsigned int nrFrames = configuration["General"]["NrFrames"].as_unsigned_or_default(1);
     m_depth = configuration["General"]["Depth"].as_int_or_default(0);
     m_animation = Animation(delay);
     m_animation.createFromStrip(path+texturePath, nrFrames);
-    int textureWidth;
-    int textureHeight;
-    if(configuration["General"]["TextureWidth"].as_int_if_exists(textureWidth) && configuration["General"]["TextureHeight"].as_int_if_exists(textureHeight)){
+    unsigned int textureWidth;
+    unsigned int textureHeight;
+    if(configuration["General"]["TextureWidth"].as_unsigned_if_exists(textureWidth) && configuration["General"]["TextureHeight"].as_unsigned_if_exists(textureHeight)){
         m_animation.setSize(sf::Vector2u{textureWidth, textureHeight});
     }
     m_hitbox = sf::FloatRect{0,0,Transformation::transformWidth(m_animation.getSize().x), Transformation::transformHeight(m_animation.getSize().y)};

@@ -497,6 +497,20 @@ namespace ini
                         bool as_int_if_exists(int &ret_val) const;
 
                         /**
+                         * \brief Returns the value as an unsigned int.
+                         *
+                         * If the entry exists and can be represented as an unsigned int, the value is passed to
+                         * the caller through the parameter and \c true is returned.  If the entry exists
+                         * but is not representable as an unsigned int, an IncompatibleConversion exception is
+                         * thrown.  If the entry does not exist, \c false is returned and the value of
+                         * the parameter is not changed.
+                         *
+                         * \param ret_val The parameter through which the value is returned.
+                         *
+                         * \return \c true if the value exists, \c false otherwise.
+                         */
+                        bool as_unsigned_if_exists(unsigned& ret_val) const;
+                        /**
                          * \brief Returns the value as a double.
                          *
                          * If the entry exists and can be represented as a double, the value is passed to
@@ -583,6 +597,17 @@ namespace ini
                         int as_int_or_die() const;
 
                         /**
+                         * \brief Returns the value as an unsigned.
+                         *
+                         * If the entry exists and can be represented as an unsigned, it is returned.  If the
+                         * value is not representable as an unsigned, an IncompatibleConversion exception is
+                         * thrown.  If the entry does not exist, a NonexistentEntry exception is thrown.
+                         *
+                         * \return The value as an unsigned.
+                         */
+                        unsigned as_unsigned_or_die() const;
+
+                        /**
                          * \brief Returns the value as a double.
                          *
                          * If the entry exists and can be represented as a double, it is returned.  If
@@ -653,6 +678,19 @@ namespace ini
                          * \return The value as an int or the default value if the value does not exist.
                          */
                         int as_int_or_default(const int def_val) const;
+
+                        /**
+                         * \brief Returns the value as an unsigned.
+                         *
+                         * If the entry exists and can be represented as an unsigned, it is returned.  If the
+                         * value is not representable as an unsigned, an IncompatibleConversion exception is
+                         * thrown.  If the entry does not exist, a default value is returned.
+                         *
+                         * \param def_val The default value that is returned if the value does not exist.
+                         *
+                         * \return The value as an unsigned or the default value if the value does not exist.
+                         */
+                        unsigned as_unsigned_or_default(const unsigned def_val) const;
 
                         /**
                          * \brief Returns the value as a double.
@@ -734,6 +772,16 @@ namespace ini
                         operator int() const;
 
                         /**
+                         * \brief An alias for as_unsigned_or_die.
+                         *
+                         * This conversion operator allows a Value to be converted to an unsigned when it is
+                         * assigned to an unsigned variable.
+                         *
+                         * \return The unsigned value of the Value.
+                         */
+                        operator unsigned() const;
+
+                        /**
                          * \brief An alias for as_double_or_die.
                          *
                          * This conversion operator allows a Value to be converted to a double when it is
@@ -791,6 +839,15 @@ namespace ini
                          * \return The requested value as an int or def_val if the value does not exist.
                          */
                         int operator||(const int def_val) const;
+
+                        /**
+                         * \brief An alias for as_unsigned_or_default.
+                         *
+                         * \param def_val The value that is returned if the requested value does not exist.
+                         *
+                         * \return The requested value as an int or def_val if the value does not exist.
+                         */
+                        unsigned operator||(const unsigned def_val) const;
 
                         /**
                          * \brief An alias for as_double_or_default.

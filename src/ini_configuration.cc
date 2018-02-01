@@ -317,6 +317,9 @@ namespace ini
                         virtual bool as_int_if_exists(const std::string &section_name,
                                                       const std::string &entry_name,
                                                       int               &ret_val) const = 0;
+                        virtual bool as_unsigned_if_exists(const std::string &section_name,
+                                                           const std::string &entry_name,
+                                                           unsigned          &ret_val) const = 0;
                         virtual bool as_double_if_exists(const std::string &section_name,
                                                          const std::string &entry_name,
                                                          double            &ret_val) const = 0;
@@ -365,6 +368,9 @@ namespace ini
                                 virtual bool as_int_if_exists(const std::string &section_name,
                                                               const std::string &entry_name,
                                                               int               &ret_val) const;
+                                virtual bool as_unsigned_if_exists(const std::string &section_name,
+                                                  const std::string &entry_name,
+                                                  unsigned          &ret_val) const;
                                 virtual bool as_double_if_exists(const std::string &section_name,
                                                                  const std::string &entry_name,
                                                                  double            &ret_val) const;
@@ -404,6 +410,13 @@ namespace ini
                         throw IncompatibleConversion(section_name, entry_name, "int");
                 }
 
+                bool ValueBase::as_unsigned_if_exists(const std::string &section_name,
+                                                      const std::string &entry_name,
+                                                      unsigned          &/*ret_val*/) const
+                {
+                        throw IncompatibleConversion(section_name, entry_name, "unsigned");
+                }
+
                 bool ValueBase::as_double_if_exists(const std::string &section_name,
                                                     const std::string &entry_name,
                                                     double            &/*ret_val*/) const
@@ -441,7 +454,7 @@ namespace ini
 
 
 
-                class IntValue: public ValueBase
+            class IntValue: public ValueBase
                 {
                         private:
 
@@ -455,6 +468,10 @@ namespace ini
                                 virtual bool as_int_if_exists(const std::string &section_name,
                                                               const std::string &entry_name,
                                                               int               &ret_val) const;
+
+                                virtual bool as_unsigned_if_exists(const std::string &section_name,
+                                                                   const std::string &entry_name,
+                                                                   unsigned          &ret_val) const;
                                 virtual bool as_double_if_exists(const std::string &section_name,
                                                                  const std::string &entry_name,
                                                                  double            &ret_val) const;
@@ -482,6 +499,15 @@ namespace ini
                         return true;
                 }
 
+                bool IntValue::as_unsigned_if_exists(const std::string& section_name, const std::string &entry_name,
+                                                      unsigned &ret_val) const
+                {
+                        if(value < 0)
+                                throw IncompatibleConversion(section_name, entry_name, "unsigned");
+                        ret_val = static_cast<unsigned>(value);
+                        return true;
+                }
+
                 bool IntValue::as_double_if_exists(const std::string &/*section_name*/,
                                                    const std::string &/*entry_name*/,
                                                    double            &ret_val) const
@@ -497,7 +523,7 @@ namespace ini
 
 
 
-                class DoubleValue: public ValueBase
+            class DoubleValue: public ValueBase
                 {
                         private:
 
@@ -753,6 +779,9 @@ namespace ini
                                 virtual bool as_int_if_exists(const std::string &section_name,
                                                               const std::string &entry_name,
                                                               int               &ret_val) const;
+                                virtual bool as_unsigned_if_exists(const std::string &section_name,
+                                                              const std::string &entry_name,
+                                                              unsigned          &ret_val) const;
                                 virtual bool as_double_if_exists(const std::string &section_name,
                                                                  const std::string &entry_name,
                                                                  double            &ret_val) const;
@@ -792,6 +821,13 @@ namespace ini
                                                   int               &/*ret_val*/) const
                 {
                         return false;
+                }
+
+                bool ini::EmptyValue::as_unsigned_if_exists(const std::string &/*section_name*/,
+                                                            const std::string &/*entry_name*/,
+                                                            unsigned          &/*ret_val*/) const
+                {
+                    return false;
                 }
 
                 bool EmptyValue::as_double_if_exists(const std::string &/*section_name*/,
@@ -834,7 +870,9 @@ namespace ini
                         assert(false);
                 }
 
-                // The value that is returned when a value that does not exist is requested.
+
+
+            // The value that is returned when a value that does not exist is requested.
                 const EmptyValue nonexistent_value;
 
 
@@ -1150,7 +1188,7 @@ namespace ini
                                         skip_hspace(input_stream);
                                         assert_chars(input_stream, "=");
                                         skip_hspace(input_stream);
-                                        std::auto_ptr<Value> value(read_value(input_stream));
+                                        std::unique_ptr<Value> value(read_value(input_stream));
 
                                         if(!values.insert(std::make_pair(key, value.get())).second)
                                         {
@@ -1225,6 +1263,10 @@ namespace ini
                 return value_ptr->as_int_if_exists(section_name, entry_name, ret_val);
         }
 
+        bool Entry::as_unsigned_if_exists(unsigned &ret_val) const {
+            return value_ptr->as_unsigned_if_exists(section_name, entry_name, ret_val);
+        }
+
         bool Entry::as_double_if_exists(double &ret_val) const
         {
                 return value_ptr->as_double_if_exists(section_name, entry_name, ret_val);
@@ -1255,6 +1297,18 @@ namespace ini
                 int value;
 
                 if(as_int_if_exists(value))
+                {
+                        return value;
+                }
+
+                throw NonexistentEntry(section_name, entry_name);
+        }
+
+        unsigned Entry::as_unsigned_or_die() const
+        {
+                unsigned value;
+
+                if(as_unsigned_if_exists(value))
                 {
                         return value;
                 }
@@ -1334,6 +1388,18 @@ namespace ini
                 return def_val;
         }
 
+        unsigned Entry::as_unsigned_or_default(const unsigned def_val) const
+        {
+                unsigned value;
+
+                if(as_unsigned_if_exists(value))
+                {
+                        return value;
+                }
+
+                return def_val;
+        }
+
         double Entry::as_double_or_default(const double def_val) const
         {
                 double value;
@@ -1399,6 +1465,11 @@ namespace ini
                 return as_int_or_die();
         }
 
+        Entry::operator unsigned() const
+        {
+                return as_unsigned_or_die();
+        }
+
         Entry::operator double() const
         {
                 return as_double_or_die();
@@ -1429,6 +1500,10 @@ namespace ini
                 return as_int_or_default(def_val);
         }
 
+        unsigned Entry::operator||(const unsigned def_val) const {
+            return as_unsigned_or_default(def_val);
+        }
+
         double Entry::operator||(const double def_val) const
         {
                 return as_double_or_default(def_val);
@@ -1456,7 +1531,7 @@ namespace ini
 
 
 
-        Section::Section(const std::string    &section_name_init,
+    Section::Section(const std::string    &section_name_init,
                          const ValueMap *const values_init)
         : section_name(section_name_init)
         , values(values_init)
