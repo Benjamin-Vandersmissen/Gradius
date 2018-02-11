@@ -29,9 +29,9 @@ void models::PlayerShip::update() {
         }
         if(myController->fired()){
             try {
-                resources::map.at(m_bulletType)->create(
-                        std::pair<float,float>{m_position.first + m_hitbox.bounds().width / 2, m_position.second + m_hitbox.bounds().height / 2});
-            }catch(std::exception){
+                auto bullet = resources::map.at(m_bulletType)->create(std::pair<float,float>{m_position.first + m_hitbox.bounds().width / 2, m_position.second + m_hitbox.bounds().height / 2});
+                bullet->position(std::pair<float,float>{m_position.first + m_hitbox.bounds().width - bullet->globalHitbox().bounds().width, m_position.second + m_hitbox.bounds().height / 2});
+            }catch(std::exception&){
                 throw ResourceException(ResourceException::missingResource, m_bulletType);
             }
         }

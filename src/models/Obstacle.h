@@ -20,6 +20,8 @@ namespace models {
         friend class resources::Obstacle;
 
         void handleCollision(std::vector<model_ptr> entity) override;
+
+        void update() override;
     };
 }
 

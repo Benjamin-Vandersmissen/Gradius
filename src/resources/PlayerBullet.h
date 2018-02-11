@@ -9,11 +9,17 @@
 
 #include "../models/PlayerBullet.h"
 #include "../controllers/PlayerBullet.h"
+#include "SFML/Audio.hpp"
+
 
 namespace resources{
     class PlayerBullet : public Entity{
     private:
         double m_speed;
+
+        std::shared_ptr<sf::SoundBuffer> m_firedSoundBuffer;
+
+        sf::Sound m_firedSound = sf::Sound();
     public:
         model_ptr create(const std::pair<float, float> &position) override;
 

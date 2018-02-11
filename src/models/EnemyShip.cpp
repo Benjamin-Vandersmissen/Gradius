@@ -28,12 +28,15 @@ void models::EnemyShip::update() {
 
         if(myController->fired()){
             try {
-                resources::map.at(m_bulletType)->create(
-                        std::pair<float,float>{m_position.first + m_hitbox.bounds().width / 2, m_position.second + m_hitbox.bounds().height / 2});
+                auto bullet = resources::map.at(m_bulletType)->create(std::pair<float,float>{m_position.first + m_hitbox.bounds().width / 2, m_position.second + m_hitbox.bounds().height / 2});
+                bullet->position(std::pair<float,float>{m_position.first, m_position.second + m_hitbox.bounds().height / 2});
             }catch(std::exception& e){
                 throw ResourceException(ResourceException::missingResource, m_bulletType);
             }
         }
         handleCollision(collision());
+    }
+    if(m_position.first+m_hitbox.bounds().width < Transformation::left()) {
+        markDeleted();
     }
 }

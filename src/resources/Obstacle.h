@@ -9,6 +9,7 @@
 
 #include "../controllers/ScrollingEntity.h"
 #include "../models/Obstacle.h"
+#include "../models/ScrollingEntity.h"
 
 namespace resources {
     class Obstacle : public Entity{

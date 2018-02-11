@@ -8,7 +8,7 @@ void models::EnemyBullet::update() {
     auto myController = std::dynamic_pointer_cast<controllers::EnemyBullet>(m_controller);
     if(myController){
         m_position = {m_position.first + m_speed*myController->currentDirection().first, m_position.second + m_speed*myController->currentDirection().second};
-        if(m_position.first > Transformation::left()+Transformation::width())
+        if(m_position.first + m_hitbox.bounds().width < Transformation::left())
             markDeleted();
         notify();
     }
