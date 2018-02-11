@@ -21,10 +21,10 @@ void models::BorderObstacle::update() {
     if(controller){
         m_position.first += controller->scrollDirection().first*scrollingSpeed;
         m_position.second += controller->scrollDirection().second*scrollingSpeed;
-        if(m_position.first+m_hitbox.width < Transformation::left()){ //jump back to the other end of the screen
-            float offset =  Transformation::width()/m_hitbox.width - static_cast<int>(Transformation::width()/m_hitbox.width);
-            m_position.first = m_position.first+Transformation::width()+(offset+1)*m_hitbox.width ;
+        if(m_position.first+m_hitbox.bounds().width < Transformation::left()){ //jump back to the other end of the screen
+            float offset =  Transformation::width()/m_hitbox.bounds().width - static_cast<int>(Transformation::width()/m_hitbox.bounds().width);
+            m_position.first = m_position.first+Transformation::width()+(offset+1)*m_hitbox.bounds().width ;
         }
         notify();
     }
-    handleCollision(collision());}
+}

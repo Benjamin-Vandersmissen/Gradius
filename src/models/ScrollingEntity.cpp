@@ -12,7 +12,7 @@ void models::ScrollingEntity::update() {
     if(controller){
         m_position.first += controller->scrollDirection().first*scrollingSpeed;
         m_position.second += controller->scrollDirection().second*scrollingSpeed;
-        if(m_position.first+m_hitbox.width < Transformation::left())
+        if(m_position.first+m_hitbox.bounds().width < Transformation::left())
             markDeleted();
         notify();
     }

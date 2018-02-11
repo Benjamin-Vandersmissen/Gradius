@@ -16,6 +16,10 @@ ResourceException::ResourceException(int type, const std::string &resourceName, 
             m_errorMsg = "Unknown type in Resource \"" + m_resourceName + "\": \"" + extra + "\"";
             break;
         }
+        case types::malformedInput: {
+            m_errorMsg = "Entry: " + extra + " in Resource " + m_resourceName + " is missing or of the wrong type";
+            break;
+        }
         default: {
             m_errorMsg = "Something went wrong";
         }

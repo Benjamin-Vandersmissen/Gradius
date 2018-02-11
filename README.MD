@@ -101,17 +101,18 @@ Length                 | the length of the level
 ### Easy Peasy ###
 
 - make PlayerBullet and EnemyBullet a subclass of a new class Bullet
-- make it possible to load the heart icon from disk instead of hardcoding it
+- make it possible to load the heart icon from disk instead of hard-coding it
 - fancier menus
 - scrolling background
 - more customization of levels and the game
 - better placement of newly created bullets
+- ~~move hitbox initialisation to base Entity resource instead of derived resources~~
 
 ### Medium ###
 
-- make object size and hitbox more customisable and less reliant on the texture
-  - size can be customised with resources
-  - hitbox is a polygon instead of a rectangle and customisable in resources
+- ~~make object size and hitbox more customisable and less reliant on the texture~~
+  - ~~size can be customised with resources~~
+  - ~~hitbox is a polygon instead of a rectangle and customisable in resources~~
 - more / smarter AI
 - some kind of boss(es)
   - extra option in level files to end a level if there are no more enemies in the level instead of ending it at a fixed distance
@@ -120,4 +121,4 @@ Length                 | the length of the level
 ### (Impossibly) Hard ###
 
 - ingame level editor 
-  - with a preview / test enviroment
+  - with a preview / test environment

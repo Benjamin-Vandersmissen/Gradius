@@ -28,7 +28,8 @@ public:
 
     enum types{
         missingResource,
-        unknownClass
+        unknownClass,
+        malformedInput
     };
 };
 

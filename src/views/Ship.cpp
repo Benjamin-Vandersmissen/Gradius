@@ -21,8 +21,8 @@ void views::Ship::draw(sf::RenderTarget &target, sf::RenderStates states) const{
     if(model){
         for(unsigned int i = 0; i < model->lives(); i++){
             sf::Sprite heart{*m_heartTexture};
-            sf::FloatRect hitbox = model->globalHitbox();
-            heart.setPosition(Transformation::invTransform({hitbox.left+Transformation::transformWidth(heart.getGlobalBounds().width)*i, hitbox.top-Transformation::transformHeight(heart.getGlobalBounds().height)}));
+            sf::FloatRect bounds = model->globalHitbox().bounds();
+            heart.setPosition(Transformation::invTransform({bounds.left+Transformation::transformWidth(heart.getGlobalBounds().width)*i, bounds.top-Transformation::transformHeight(heart.getGlobalBounds().height)}));
             target.draw(heart);
         }
     }

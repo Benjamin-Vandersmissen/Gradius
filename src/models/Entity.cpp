@@ -31,18 +31,15 @@ void models::Entity::position(const std::pair<float, float> &position) {
 std::vector<model_ptr> models::Entity::collision() {
     std::vector<model_ptr > entities;
     for(model_ptr entity: models::list){
-        if(entity->globalHitbox().intersects(this->globalHitbox()) && entity.get() != this){
+        if(entity.get() != this && globalHitbox().intersects(entity->globalHitbox())){
             entities.push_back(entity);
         }
     }
     return entities;
 }
 
-sf::FloatRect models::Entity::globalHitbox() {
-    return {m_hitbox.left+m_position.first, m_hitbox.top+m_position.second, m_hitbox.width, m_hitbox.height};
-}
 
-void models::Entity::hitbox(const sf::FloatRect hitbox) {
+void models::Entity::hitbox(const Hitbox &hitbox) {
     m_hitbox = hitbox;
 }
 
@@ -62,4 +59,8 @@ int models::Entity::depth() const {
 
 void models::Entity::depth(int depth) {
     m_depth = depth;
+}
+
+Hitbox models::Entity::globalHitbox() {
+    return m_hitbox + sf::Vector2f{m_position.first, m_position.second};
 }

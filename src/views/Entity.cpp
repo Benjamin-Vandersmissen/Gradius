@@ -25,6 +25,19 @@ void views::Entity::updateAnimation() {
     m_animation.update();
 }
 
+void views::Entity::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+    target.draw(m_animation, states);
+//
+//    The following code draws the bounding box and the hitbox for the entity
+//
+//    auto box = m_model->globalHitbox();
+//    sf::RectangleShape a({box.getGraphicRepresentation().getGlobalBounds().width, box.getGraphicRepresentation().getGlobalBounds().height});
+//    a.setPosition({box.getGraphicRepresentation().getGlobalBounds().left, box.getGraphicRepresentation().getGlobalBounds().top});
+//    a.setFillColor(sf::Color::Red);
+//    target.draw(a);
+//    target.draw(box.getGraphicRepresentation());
+}
+
 bool views::viewCmpt::operator()(const view_ptr &lhs, const view_ptr &rhs) {
     return lhs->m_model->depth() < rhs->m_model->depth();
 }

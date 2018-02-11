@@ -18,8 +18,6 @@ model_ptr resources::EnemyShip::create(const std::pair<float, float> &position) 
     model->m_maxLives= m_maxLives;
     model->m_lives = m_maxLives;
     model->m_maxImmunity = m_maxImmunity;
-    model->hitbox(m_hitbox);
-
     view_ptr view = (m_drawLives)?std::make_shared<views::Ship>(): std::make_shared<views::Entity>();
     if(m_drawLives) {
         std::dynamic_pointer_cast<views::Ship>(view)->m_heartTexture = m_heartTexture;

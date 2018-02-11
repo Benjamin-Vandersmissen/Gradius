@@ -44,7 +44,7 @@ namespace resources{
     class Entity: public std::enable_shared_from_this<resources::Entity>{
     protected:
         Animation m_animation; //the default animation for the view
-        sf::FloatRect m_hitbox; //the local hitbox
+        Hitbox m_hitbox = Hitbox(); //the local hitbox
         int m_depth;
     public:
         /**
@@ -77,9 +77,15 @@ namespace resources{
                               std::pair<float, float> position);
 
         /**
-         * @ brief return the hitbox
+         * @brief return the hitbox
          * */
-        sf::FloatRect hitbox() const {return m_hitbox;}
+        Hitbox hitbox() const {return m_hitbox;}
+
+        /**
+         * @brief read a list of coordinates from ini and construct a Hitbox based on it
+         * */
+        void createHitbox(const ini::Configuration& config);
+
     };
 
     // here are all resources saved under their resource name

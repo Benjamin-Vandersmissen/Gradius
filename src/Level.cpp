@@ -72,12 +72,12 @@ void Level::loadLevel(std::string fullPath) {
     resource_ptr borderResource = resources::map.at(border);
     float f = Transformation::left();
     while(true){ //create a border
-        sf::FloatRect hitbox =borderResource->hitbox();
+        Hitbox hitbox = borderResource->hitbox();
         m_objects.insert(levelObject{border, std::pair<float,float>{f, Transformation::top()}});
-        m_objects.insert(levelObject{border, std::pair<float,float>{f, Transformation::top()+Transformation::height()-hitbox.height}});
-        if(f >= Transformation::width()+ Transformation::left() + hitbox.width)
+        m_objects.insert(levelObject{border, std::pair<float,float>{f, Transformation::top()+Transformation::height()-hitbox.bounds().height}});
+        if(f >= Transformation::width()+ Transformation::left() + hitbox.bounds().width)
             break;
-        f += hitbox.width;
+        f += hitbox.bounds().width;
     }
     try {
         m_speed = j["Speed"];

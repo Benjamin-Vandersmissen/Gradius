@@ -10,6 +10,7 @@
 
 #include "../controllers/Entity.h"
 #include "../views/Entity.h"
+#include "../Hitbox.h"
 
 namespace models{
     class Entity;
@@ -38,7 +39,7 @@ namespace models {
 
         std::pair<float, float> m_position; //current position (coordinates)
 
-        sf::FloatRect m_hitbox; //hitbox (coordinates)
+        Hitbox m_hitbox = Hitbox(); //hitbox (coordinates)
 
         bool m_deleted = false; //if the model is deleted or not
 
@@ -103,14 +104,14 @@ namespace models {
          *
          * @return the global hitbox
          * */
-        sf::FloatRect globalHitbox();
+        Hitbox globalHitbox();
 
         /**
          * @brief set the local hitbox
          *
          * @param hitbox the new hitbox
          * */
-        void hitbox(const sf::FloatRect hitbox);
+        void hitbox(const Hitbox &hitbox);
 
         /**
          * @brief mark this model as deleted
