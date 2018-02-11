@@ -42,6 +42,7 @@ General Attributes | Notes
  Depth             | depth at which the instance gets drawn (lower depth first), _default is 0_
  nrFrames          | if the image is an animation, how many frames (caution, make sure each frame has the same size and there are no gaps between the frames) _default is 1_
  Delay             | if the image is an animation, the delay between two frames _default is 0_
+ Hitbox            | a sequence of consequent points, _default_ is the bounding box of the image
  
  **Bolded** items are necessary attributes, otherwise an error will occur.
  
