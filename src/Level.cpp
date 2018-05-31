@@ -8,6 +8,7 @@
 #include "resources/EnemyBullet.h"
 #include "resources/BorderObstacle.h"
 #include "resources/Obstacle.h"
+#include "resources/TextEntity.h"
 
 using json = nlohmann::json;
 
@@ -116,6 +117,9 @@ resource_ptr Level::loadResource(std::string path, std::string resourceName) {
     }
     if(type == "EnemyBullet"){
         resource = std::make_shared<resources::EnemyBullet>();
+    }
+    if(type == "TextEntity"){
+        resource = std::make_shared<resources::TextEntity>();
     }
     if(resource){
         resource->loadFromIni(path, config);

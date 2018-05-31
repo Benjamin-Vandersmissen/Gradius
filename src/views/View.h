@@ -57,6 +57,11 @@ namespace views {
          * draws the currently open menu
          * */
         void drawMenu();
+
+        /**
+         * draws a progress bar
+         * */
+        void drawProgress();
     };
 }
 

@@ -32,7 +32,7 @@ namespace models {
     private:
         std::shared_ptr<views::View> m_view;
         std::shared_ptr<controllers::Controller> m_controller;
-        bool m_paused = false;
+        bool m_paused = true;
         bool m_exit = false;
         int m_gameState = gameStates::MainMenu;
         int m_menuState = menuStates::NewGame;
@@ -166,6 +166,11 @@ namespace models {
          * @brief if the loaded level is invalid, this value will be true
          * */
         bool invalidLevel = false;
+
+        /**
+         * @brief returns a value between 0 and 1, that is the amount of the level already completed
+         * */
+        float getProgress();
     };
 }
 

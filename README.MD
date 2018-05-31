@@ -108,6 +108,7 @@ Length                 | the length of the level
 - more customization of levels and the game
 - better placement of newly created bullets
 - ~~move hitbox initialisation to base Entity resource instead of derived resources~~
+- ~~progress bar for level~~
 
 ### Medium ###
 

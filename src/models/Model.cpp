@@ -150,3 +150,7 @@ void models::Model::deleteMarkedEntities() {
         }
     }
 }
+
+float models::Model::getProgress() {
+    return m_xPosition/m_level.length();
+}

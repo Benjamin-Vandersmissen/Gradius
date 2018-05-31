@@ -26,7 +26,7 @@ namespace models{
     public:
         friend class resources::PlayerShip;
 
-        void update();
+        void update() override ;
 
         void handleCollision(std::vector<model_ptr> entity) override ;
     };

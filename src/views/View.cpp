@@ -43,6 +43,7 @@ void views::View::draw() {
                 view->updateAnimation();
                 m_window->draw(*view);
             }
+            drawProgress();
             break;
         }
         case models::Model::PauseMenu:{
@@ -59,7 +60,7 @@ void views::View::draw() {
         case models::Model::LoadLevelMenu :{
             sf::Text text;
             if(m_model->tempLevel().empty()){
-                text.setColor(sf::Color::Red);
+                text.setFillColor(sf::Color::Red);
                 if(m_model->invalidLevel)
                     text.setString("Invalid Level");
                 else
@@ -67,7 +68,7 @@ void views::View::draw() {
             }
             else{
                 text.setString(m_model->tempLevel());
-                text.setColor(sf::Color::Cyan);
+                text.setFillColor(sf::Color::Cyan);
             }
             text.setFont(*m_defaultFont);
             text.setScale({1.0f/3.0f,1.0f/3.0f});
@@ -121,4 +122,28 @@ void views::View::drawMenu() {
         m_window->draw(text);
     }
     m_window->draw(m_menuSelector);
+}
+
+void views::View::drawProgress() {
+    float progress = m_model->getProgress();
+
+    sf::RectangleShape totalBar = sf::RectangleShape(sf::Vector2f{50, 10});
+    totalBar.setPosition(2, 2);
+    totalBar.setOutlineThickness(1);
+    totalBar.setOutlineColor(sf::Color::Black);
+    totalBar.setFillColor(sf::Color::Transparent);
+
+    sf::RectangleShape progressBar = sf::RectangleShape(sf::Vector2f{50*progress, 10});
+    progressBar.setPosition(2, 2);
+    progressBar.setFillColor(sf::Color::Green);
+    progressBar.setOutlineColor(sf::Color::Green);
+
+    Animation progressIndicator = Animation(0);
+    progressIndicator.createFromStrip("../resources/game/progress_indicator.png", 1);
+    progressIndicator.setPosition(50*progress-1,5);
+    progressIndicator.setScale(0.25,0.25);
+
+    m_window->draw(totalBar);
+    m_window->draw(progressBar);
+    m_window->draw(progressIndicator);
 }
