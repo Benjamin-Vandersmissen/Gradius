@@ -16,8 +16,7 @@ void clamp(float &value, float lo, float hi) {
 
 void models::PlayerShip::update() {
     auto myController = std::dynamic_pointer_cast<controllers::PlayerShip>(m_controller);
-    if(isImmune())
-        --m_immunity;
+    Ship::update();
     if(myController) {
         if(myController->currentDirection() != std::pair<float, float>{0,0}) {
             m_position.first += m_speed * myController->currentDirection().first;
@@ -26,14 +25,6 @@ void models::PlayerShip::update() {
             clamp(m_position.second,Transformation::top(), Transformation::top()+Transformation::height() - m_hitbox.bounds().height);
             handleCollision(collision());
             notify();
-        }
-        if(myController->fired()){
-            try {
-                auto bullet = resources::map.at(m_bulletType)->create(std::pair<float,float>{m_position.first + m_hitbox.bounds().width / 2, m_position.second + m_hitbox.bounds().height / 2});
-                bullet->position(std::pair<float,float>{m_position.first + m_hitbox.bounds().width - bullet->globalHitbox().bounds().width, m_position.second + m_hitbox.bounds().height / 2});
-            }catch(std::exception&){
-                throw ResourceException(ResourceException::missingResource, m_bulletType);
-            }
         }
     }
 }

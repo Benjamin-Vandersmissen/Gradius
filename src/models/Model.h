@@ -42,6 +42,7 @@ namespace models {
         Level m_level = Level();
         float m_xPosition;
         std::vector<model_ptr> m_players;
+        model_ptr m_boss;
     public:
         Model();
 
@@ -50,6 +51,7 @@ namespace models {
             PauseMenu,
             LoadLevelMenu,
             Running,
+            Bossfight,
             GameLost,
             GameWon
         };
@@ -171,6 +173,21 @@ namespace models {
          * @brief returns a value between 0 and 1, that is the amount of the level already completed
          * */
         float getProgress();
+
+        /**
+         * @brief dynamically loads new objects into the level and initializes them
+         * */
+        void dynamicLoadLevel();
+
+        /**
+         * @brief pauses the game
+         * */
+        void pause();
+
+        /**
+         * @brief unpauses the game
+         * */
+         void unpause();
     };
 }
 

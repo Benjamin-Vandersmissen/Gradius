@@ -38,6 +38,9 @@ std::shared_ptr<sf::RenderWindow> views::View::window() const {
 void views::View::draw() {
     m_window->clear();
     switch(m_model->gameState()) {
+        case models::Model::Bossfight :{
+
+        }
         case models::Model::Running :{
             for (const auto &view : views::list) {
                 view->updateAnimation();
@@ -46,7 +49,7 @@ void views::View::draw() {
             drawProgress();
             break;
         }
-        case models::Model::PauseMenu:{
+        case models::Model::PauseMenu :{
             for(const auto& view : views::list){
                 m_window->draw(*view);
             }

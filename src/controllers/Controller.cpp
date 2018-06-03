@@ -57,7 +57,7 @@ void controllers::Controller::notify() {
 }
 
 void controllers::Controller::update() {
-    if (m_model->gameState() == models::Model::Running) {
+    if (m_model->gameState() == models::Model::Running || m_model->gameState() == models::Model::Bossfight) {
         for (const auto &controller : controllers::list) {
             controller->update();
         }
@@ -101,7 +101,7 @@ void controllers::Controller::handleKeyboard(sf::Event::KeyEvent key) {
             //Does the same things as Main Menu except the Escape input => no break
             switch(key.code) {
                 case sf::Keyboard::Escape : {
-                    m_model->setGameState(models::Model::Running);
+                    m_model->unpause();
                 }
             }
         }
@@ -132,10 +132,13 @@ void controllers::Controller::handleKeyboard(sf::Event::KeyEvent key) {
             }
             break;
         }
+        case models::Model::Bossfight:{
+
+        }
         case models::Model::Running:{
             switch (key.code){
                 case sf::Keyboard::Escape :{
-                    m_model->setGameState(models::Model::PauseMenu);
+                    m_model->pause();
                     break;
                 }
             }

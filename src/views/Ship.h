@@ -16,13 +16,18 @@ namespace resources{
     class EnemyShip;
 }
 
+namespace resources{
+    class Boss;
+}
+
 namespace views {
     class Ship : public Entity{
-    private:
+    protected:
         std::shared_ptr<sf::Texture> m_heartTexture;
     public:
         friend class resources::PlayerShip;
         friend class resources::EnemyShip;
+        friend class resources::Boss;
 
         void update() override;
 

@@ -10,7 +10,7 @@ void models::EnemyShip::handleCollision(std::vector<model_ptr> entities) {
             auto player = std::dynamic_pointer_cast<models::PlayerShip>(entity);
             if (player) {
                 player->dealDamage(1);
-                markDeleted();
+                dealDamage(1);
                 return;
             }
         }
@@ -19,21 +19,11 @@ void models::EnemyShip::handleCollision(std::vector<model_ptr> entities) {
 
 void models::EnemyShip::update() {
     auto myController = std::dynamic_pointer_cast<controllers::EnemyShip>(m_controller);
+    Ship::update();
     if(myController){
-        if(myController->currentDirection() != std::pair<float, float>{0,0}) {
-            m_position.first += m_speed * myController->currentDirection().first;
-            m_position.second += m_speed * myController->currentDirection().second;
-            notify();
-        }
-
-        if(myController->fired()){
-            try {
-                auto bullet = resources::map.at(m_bulletType)->create(std::pair<float,float>{m_position.first + m_hitbox.bounds().width / 2, m_position.second + m_hitbox.bounds().height / 2});
-                bullet->position(std::pair<float,float>{m_position.first, m_position.second + m_hitbox.bounds().height / 2});
-            }catch(std::exception& e){
-                throw ResourceException(ResourceException::missingResource, m_bulletType);
-            }
-        }
+        m_position.first += m_speed * myController->currentDirection().first;
+        m_position.second += m_speed * myController->currentDirection().second;
+        notify();
         handleCollision(collision());
     }
     if(m_position.first+m_hitbox.bounds().width < Transformation::left()) {

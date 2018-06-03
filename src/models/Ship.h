@@ -6,7 +6,11 @@
 #define GRADIUS_MODELS_SHIP_H
 
 #include "Entity.h"
+#include "../resources/Ship.h"
 
+namespace resources{
+    class Ship;
+}
 
 namespace models {
     class Ship : public Entity{

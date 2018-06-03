@@ -55,7 +55,7 @@ public:
     /**
      * @brief create all entities where the x-value is lower than the bound. The position on screen is the position - currentX
      * */
-    void dynamicLoad(float bound, float currentX);
+    std::vector<model_ptr> dynamicLoad(float bound, float currentX);
 };
 
 

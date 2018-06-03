@@ -9,6 +9,7 @@
 #include "resources/BorderObstacle.h"
 #include "resources/Obstacle.h"
 #include "resources/TextEntity.h"
+#include "resources/Boss.h"
 
 using json = nlohmann::json;
 
@@ -121,6 +122,9 @@ resource_ptr Level::loadResource(std::string path, std::string resourceName) {
     if(type == "TextEntity"){
         resource = std::make_shared<resources::TextEntity>();
     }
+    if(type == "Boss"){
+        resource = std::make_shared<resources::Boss>();
+    }
     if(resource){
         resource->loadFromIni(path, config);
         return resource;
@@ -135,9 +139,11 @@ void Level::initLevel() {
     tempObjects = m_objects;
 }
 
-void Level::dynamicLoad(float bound, float currentX) {
+std::vector<model_ptr> Level::dynamicLoad(float bound, float currentX) {
+    std::vector<model_ptr > models{};
     for(auto obj = tempObjects.begin(); obj != tempObjects.end() && (*obj).position.first <= bound;){
-        resources::map[(*obj).resource]->create({(*obj).position.first-currentX, (*obj).position.second});
+        models.push_back(resources::map[(*obj).resource]->create({(*obj).position.first-currentX, (*obj).position.second}));
         obj = tempObjects.erase(obj);
     }
+    return models;
 }

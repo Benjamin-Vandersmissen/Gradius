@@ -6,6 +6,7 @@
 #include "Model.h"
 #include "ScrollingEntity.h"
 #include "PlayerShip.h"
+#include "Boss.h"
 
 void models::Model::addView(std::shared_ptr<views::View> view) {
     m_view = view;
@@ -25,7 +26,7 @@ void models::Model::update() {
         m_exit = true;
         notify();
     }
-    if(gameState() == gameStates::Running){
+    if(gameState() == gameStates::Running || gameState() == gameStates::Bossfight){
         if(m_players.empty()){
             loadGameDoneMenu();
             m_gameState = gameStates::GameLost;
@@ -34,9 +35,12 @@ void models::Model::update() {
             loadGameDoneMenu();
             m_gameState = gameStates::GameWon;
         }
-        m_level.dynamicLoad(m_xPosition + Transformation::width() + 2 * m_level.speed(), m_xPosition);
+    }
+    if(gameState() == gameStates::Running){
+        dynamicLoadLevel();
         m_xPosition += m_level.speed();
     }
+
     if(m_controller->typedChar() != 0 && gameState() == gameStates::LoadLevelMenu){
         if(invalidLevel)
             invalidLevel = false;
@@ -110,7 +114,7 @@ void models::Model::loadLevel() {
     m_level.initLevel();
     m_xPosition = 0;
     ScrollingEntity::scrollingSpeed = m_level.speed();
-    m_level.dynamicLoad(Transformation::width(), m_xPosition);
+    dynamicLoadLevel();
     m_players.clear();
     for(model_ptr obj : models::list){
         if(std::dynamic_pointer_cast<models::PlayerShip>(obj)){
@@ -134,6 +138,10 @@ void models::Model::deleteMarkedEntities() {
             if(player != m_players.end()){
                 m_players.erase(player);
             }
+            if(m_boss == *it){
+                m_boss = nullptr;
+                m_gameState = gameStates::Running;
+            }
             it = list.erase(it);
         }
     }
@@ -153,4 +161,28 @@ void models::Model::deleteMarkedEntities() {
 
 float models::Model::getProgress() {
     return m_xPosition/m_level.length();
+}
+
+void models::Model::dynamicLoadLevel() {
+    auto newModels = m_level.dynamicLoad(m_xPosition + Transformation::width() + 2 * m_level.speed(), m_xPosition);
+    
+    for(auto model : newModels){
+        if(auto boss = std::dynamic_pointer_cast<models::Boss>(model)){
+            m_boss = boss;
+            m_gameState = gameStates::Bossfight;
+        }
+    }
+}
+
+void models::Model::pause() {
+    m_gameState = gameStates::PauseMenu;
+}
+
+void models::Model::unpause() {
+    if (m_boss){
+        m_gameState = gameStates::Bossfight;
+    }
+    else{
+        m_gameState = gameStates::Running;
+    }
 }
