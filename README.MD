@@ -101,7 +101,7 @@ Length                 | the length of the level
 
 ### Easy Peasy ###
 
-- make PlayerBullet and EnemyBullet a subclass of a new class Bullet
+- ~~make PlayerBullet and EnemyBullet a subclass of a new class Bullet~~
 - make it possible to load the heart icon from disk instead of hard-coding it
 - fancier menus
 - scrolling background

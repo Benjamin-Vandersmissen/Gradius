@@ -6,19 +6,17 @@
 #define GRADIUS_MODELS_PLAYERBULLET_H
 
 
-#include "Entity.h"
+#include "Bullet.h"
 
 #include "../controllers/PlayerBullet.h"
 #include "../resources/PlayerBullet.h"
-#include "EnemyShip.h"
-#include "EnemyBullet.h"
 
 namespace resources{
     class PlayerBullet;
 }
 
 namespace models {
-    class PlayerBullet : public Entity {
+    class PlayerBullet : public Bullet {
     private:
         double m_speed = 0.12;
     public:

@@ -5,19 +5,16 @@
 #ifndef GRADIUS_MODELS_ENEMYBULLET_H
 #define GRADIUS_MODELS_ENEMYBULLET_H
 
-#include "Entity.h"
 
 #include "../controllers/EnemyBullet.h"
-#include "PlayerShip.h"
+#include "Bullet.h"
 
 namespace resources{
     class EnemyBullet;
 }
 
 namespace models {
-    class EnemyBullet : public Entity{
-    private:
-        double m_speed = 0.12;
+    class EnemyBullet : public Bullet{
     public:
         friend class resources::EnemyBullet;
 

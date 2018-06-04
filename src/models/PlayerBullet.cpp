@@ -3,6 +3,7 @@
 //
 
 #include "PlayerBullet.h"
+#include "EnemyShip.h"
 
 
 void models::PlayerBullet::update() {
@@ -17,17 +18,12 @@ void models::PlayerBullet::update() {
 }
 
 void models::PlayerBullet::handleCollision(std::vector<model_ptr> entities) {
+    Bullet::handleCollision(entities);
     for(model_ptr entity : entities){
         if(entity){
             auto ship = std::dynamic_pointer_cast<models::EnemyShip>(entity);
             if(ship){
                 ship->dealDamage(1);
-                markDeleted();
-                return;
-            }
-            auto bullet = std::dynamic_pointer_cast<models::EnemyBullet>(entity);
-            if(bullet){
-                bullet->markDeleted();
                 markDeleted();
                 return;
             }

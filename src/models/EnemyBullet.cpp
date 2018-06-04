@@ -3,6 +3,8 @@
 //
 
 #include "EnemyBullet.h"
+#include "PlayerShip.h"
+
 
 void models::EnemyBullet::update() {
     auto myController = std::dynamic_pointer_cast<controllers::EnemyBullet>(m_controller);
@@ -16,6 +18,7 @@ void models::EnemyBullet::update() {
 }
 
 void models::EnemyBullet::handleCollision(std::vector<model_ptr> entities) {
+    Bullet::handleCollision(entities);
     for(model_ptr entity : entities) {
         if (entity) {
             auto ship = std::dynamic_pointer_cast<models::PlayerShip>(entity);
