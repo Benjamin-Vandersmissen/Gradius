@@ -30,6 +30,7 @@ namespace controllers{
 
         bool m_deleted = false; //a boolean that will determine if the controller should be deleted
 
+        std::pair<float, float> m_currentDirection = {0, 0};
     public:
         /**
          * @brief add the model for the MVC structure
@@ -60,6 +61,11 @@ namespace controllers{
          * @brief return if the controller is deleted
          * */
         bool deleted() const;
+
+        /**
+         * @brief returns the current direction
+         * */
+        const std::pair<float, float>& currentDirection();
     };
     extern std::list<controller_ptr> list; //a list that contains all active Entity Controllers
 }

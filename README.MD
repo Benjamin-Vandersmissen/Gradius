@@ -66,6 +66,13 @@ General Attributes | Notes
  EnemyShip attributes | Notes
  ---------------------|------
  AI                   | type of AI, default = 0 (no AI)
+
+ _The following attributes are only used in instances of type PlayerBullet or type EnemyBullet_
+
+ Bullet attributes | Notes
+ ------------------|------
+ Type              | wether the bullet behaves normally ("normal") or is homing ("homing"), _default is "normal"_
+ FiredSound        | path to a sound that will be played when the bullet is created
  
 ## Instances ##
 
@@ -77,6 +84,7 @@ PlayerBullet  | A bullet fired by the player
 EnemyBullet   | A bullet fired by an enemy
 BorderObstacle| The scrolling border is composed of these (deals 2 damage)
 Obstacle      | A generic obstacle (deals 1 damage)
+Boss          | A boss
 
 
 ## How To Use Levels ## 
@@ -119,6 +127,7 @@ Length                 | the length of the level
 - some kind of boss(es)
   - extra option in level files to end a level if there are no more enemies in the level instead of ending it at a fixed distance
 - sound effects
+- homing weapons
 
 ### (Impossibly) Hard ###
 

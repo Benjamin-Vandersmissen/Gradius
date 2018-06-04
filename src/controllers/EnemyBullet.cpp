@@ -3,7 +3,3 @@
 //
 
 #include "EnemyBullet.h"
-
-const std::pair<float, float>& controllers::EnemyBullet::currentDirection() const {
-    return m_currentDirection;
-}

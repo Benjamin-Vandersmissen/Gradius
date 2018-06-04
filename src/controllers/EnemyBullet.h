@@ -9,13 +9,9 @@
 
 namespace controllers {
     class EnemyBullet : public Entity{
-    protected:
-        std::pair<float, float> m_currentDirection = {-1,0};
-
     public:
-        const std::pair<float, float>& currentDirection() const;
-
         void update() override {
+            m_currentDirection = {-1,0};
             notify();
         };
     };

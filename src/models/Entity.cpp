@@ -64,3 +64,7 @@ void models::Entity::depth(int depth) {
 Hitbox models::Entity::globalHitbox() {
     return m_hitbox + sf::Vector2f{m_position.first, m_position.second};
 }
+
+controller_ptr models::Entity::controller() {
+    return m_controller;
+}

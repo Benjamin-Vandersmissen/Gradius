@@ -3,6 +3,7 @@
 //
 
 #include "Controller.h"
+#include "HomingEntity.h"
 
 void controllers::Controller::addModel(std::shared_ptr<models::Model> model) {
     m_model = model;
@@ -59,6 +60,12 @@ void controllers::Controller::notify() {
 void controllers::Controller::update() {
     if (m_model->gameState() == models::Model::Running || m_model->gameState() == models::Model::Bossfight) {
         for (const auto &controller : controllers::list) {
+            if(auto homing = std::dynamic_pointer_cast<HomingEntity>(controller)){
+                if(!homing->isHoming() && m_model->players().size() > 0){
+                    homing->setTarget(m_model->players()[0]);
+                }
+            }
+
             controller->update();
         }
         m_model->update();

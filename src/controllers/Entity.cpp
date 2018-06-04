@@ -16,3 +16,7 @@ void controllers::Entity::notify() {
 bool controllers::Entity::deleted() const {
     return m_deleted;
 }
+
+const std::pair<float, float> &controllers::Entity::currentDirection() {
+    return m_currentDirection;
+}

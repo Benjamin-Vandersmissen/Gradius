@@ -134,6 +134,11 @@ namespace models {
          * @brief sets the depth of the instance
          * */
         void depth(int depth);
+
+        /**
+         * @brief gets the controller
+         * */
+         controller_ptr controller();
     };
     extern std::list<model_ptr> list; //a list that holds all currently active Entity Models
 

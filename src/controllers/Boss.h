@@ -18,6 +18,8 @@ namespace controllers {
         friend class resources::Boss;
 
         void update() override;
+
+        void enterBattlefield();
     };
 }
 

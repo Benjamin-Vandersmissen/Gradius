@@ -3,7 +3,3 @@
 //
 
 #include "PlayerBullet.h"
-
-const std::pair<float, float> &controllers::PlayerBullet::currentDirection() const {
-    return m_currentDirection;
-}

@@ -186,3 +186,7 @@ void models::Model::unpause() {
         m_gameState = gameStates::Running;
     }
 }
+
+std::vector<model_ptr> models::Model::players() const {
+    return m_players;
+}

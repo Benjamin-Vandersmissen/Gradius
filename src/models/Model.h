@@ -187,7 +187,12 @@ namespace models {
         /**
          * @brief unpauses the game
          * */
-         void unpause();
+        void unpause();
+
+         /**
+          * @brief returns the players list
+          * */
+        std::vector<model_ptr > players() const;
     };
 }
 

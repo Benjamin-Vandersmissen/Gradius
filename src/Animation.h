@@ -67,7 +67,7 @@ public:
     void setSize(const sf::Vector2u &size);
 
     /**
-     * set the delay between two frames
+     * @brief set the delay between two frames
      * */
     void setDelay(unsigned int delay);
 };

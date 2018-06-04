@@ -4,10 +4,6 @@
 
 #include "Ship.h"
 
-const std::pair<float, float> &controllers::Ship::currentDirection() const {
-    return m_currentDirection;
-}
-
 bool controllers::Ship::fired() {
     return m_fired;
 }

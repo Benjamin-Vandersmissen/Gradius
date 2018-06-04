@@ -17,6 +17,8 @@ namespace resources {
 
         sf::Sound m_firedSound = sf::Sound();
 
+        std::string m_type = "normal";
+
     public:
         void loadFromIni(const std::string &path, const ini::Configuration &configuration) override;
     };

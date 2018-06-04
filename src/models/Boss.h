@@ -14,8 +14,20 @@ namespace resources{
 
 namespace models {
     class Boss : public EnemyShip {
+    protected:
+        bool m_bossImmune = false;
     public:
         friend class resources::Boss;
+
+        void makeImmmune();
+
+        void makeVulnerable();
+
+        bool hasBossImmunity();
+
+        void update() override;
+
+        void handleCollision(std::vector<model_ptr> entities) override ;
     };
 }
 
