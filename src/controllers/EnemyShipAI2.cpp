@@ -7,12 +7,7 @@
 void controllers::EnemyShipAI2::update() {
     m_currentDirection = {-1,0};
     if(m_fireCooldown <= 0){
-        m_fired = true;
-        m_fireCooldown = m_maxFireCooldown;
+        fire();
     }
-    else{
-        m_fireCooldown--;
-    }
-    notify();
-    m_fired = false;
+    Ship::update();
 }

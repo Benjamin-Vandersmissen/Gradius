@@ -10,18 +10,9 @@ void controllers::PlayerShip::update() {
     m_currentDirection = {dx,dy};
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
-        if(m_fireCooldown == 0){
-            m_fired = true;
-            m_fireCooldown = m_maxFireCooldown;
-        }
+        fire();
     }
-    notify();
-
-    m_fired = false;
-
-    if(m_fireCooldown > 0){
-        m_fireCooldown--;
-    }
+    Ship::update();
 }
 
 void controllers::PlayerShip::handleEvent(const sf::Event &event) {

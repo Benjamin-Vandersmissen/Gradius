@@ -5,12 +5,8 @@
 #include "EnemyShipAI1.h"
 
 void controllers::EnemyShipAI1::update() {
-    if(m_fireCooldown == 0){
-        m_fired = true;
-        m_fireCooldown = m_maxFireCooldown;
-    }
-    else{
-        m_fireCooldown--;
+    if(m_fireCooldown == 0) {
+        fire();
     }
     if(!m_positionSet) {
         m_startPosition = m_model->position();
@@ -20,6 +16,5 @@ void controllers::EnemyShipAI1::update() {
         m_direction *= -1; //move other direction
     }
     m_currentDirection = {-1, 0.75*m_direction}; //vertical speed is 75% of horizontal speed => easier
-    notify();
-    m_fired = false;
+    Ship::update();
 }

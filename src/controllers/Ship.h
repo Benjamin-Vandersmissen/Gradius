@@ -18,6 +18,10 @@ namespace controllers {
         bool m_fired = false;
     public:
         bool fired();
+
+        void fire();
+
+        void update();
     };
 }
 

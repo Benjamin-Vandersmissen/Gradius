@@ -10,7 +10,6 @@ bool controllers::EnemyShip::fired() const {
 
 void controllers::EnemyShip::update() {
     m_currentDirection = {-1,0};
-    notify();
-    m_fired = false;
+    Ship::update();
 }
 
