@@ -1,12 +1,13 @@
 {
     "ResourcePath": "../resources/",
-    "Resources": ["PlayerBullet", "EnemyBullet", "BorderObstacle"],
-    "Entities": [{"Type": "PlayerShip", "Position":[-3,0]}, {"Type": "Boss", "Position":[3,0]}, {"Type": "EnemyShip", "Position":[5,-0.2]}, {"Type": "EnemyShip", "Position":[6,0.8]}, {"Type": "EnemyShip", "Position":[6,-1.2]},
+    "Resources": ["PlayerBullet", "EnemyBullet", "BorderObstacle", "HomingEnemyBullet"],
+    "Entities": [{"Type": "PlayerShip", "Position":[-3,0]}, {"Type": "EnemyShip", "Position":[5,-0.2]}, {"Type": "EnemyShip", "Position":[6,0.8]}, {"Type": "EnemyShip", "Position":[6,-1.2]},
                  {"Type": "EnemyShip", "Position": [7,1.8]}, {"Type": "EnemyShip", "Position":[7,-2.2]}, {"Type": "BigObstacle", "Position": [10,-1]}, {"Type": "BigObstacle", "Position": [15,-2]},
                  {"Type": "EnemyShip1", "Position": [20,1]}, {"Type": "EnemyShip1", "Position": [20,-1]}, {"Type": "EnemyShip1", "Position": [24,1]}, {"Type": "EnemyShip1", "Position": [24,-1]},
                  {"Type": "Comet", "Position": [29,-1.9]}, {"Type": "Comet", "Position": [29,1.5]}, {"Type": "Comet", "Position": [33,1.5]}, {"Type": "Comet", "Position": [33,0]},
-                 {"Type": "Comet", "Position": [37,-1.9]}, {"Type": "Comet", "Position":[37,0]}, {"Type": "Comet", "Position": [41,1.5]}, {"Type": "Comet", "Position": [41,0]}],
+                 {"Type": "Comet", "Position": [37,-1.9]}, {"Type": "Comet", "Position":[37,0]}, {"Type": "Comet", "Position": [41,1.5]}, {"Type": "Comet", "Position": [41,0]},
+                 {"Type": "Boss", "Position": [50,-0.5]}],
   "Border": "BorderObstacle",
   "Speed": 0.07,
-  "Length": 48
+  "Length": 60
 }

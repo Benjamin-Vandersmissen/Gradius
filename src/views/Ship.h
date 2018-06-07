@@ -16,10 +16,6 @@ namespace resources{
     class EnemyShip;
 }
 
-namespace resources{
-    class Boss;
-}
-
 namespace views {
     class Ship : public Entity{
     protected:
@@ -27,7 +23,6 @@ namespace views {
     public:
         friend class resources::PlayerShip;
         friend class resources::EnemyShip;
-        friend class resources::Boss;
 
         void update() override;
 

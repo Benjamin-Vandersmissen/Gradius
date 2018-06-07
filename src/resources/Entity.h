@@ -68,7 +68,7 @@ namespace resources{
          *
          * @param view the view
          * */
-        void setAnimationOfView(view_ptr view);
+        virtual void setAnimationOfView(view_ptr view);
 
         /**
          * @brief link the model, view and controller in the MVC structure, move them to the correct position and add them to the game

@@ -15,7 +15,7 @@ namespace resources{
 namespace models {
     class Boss : public EnemyShip {
     protected:
-        bool m_bossImmune = false;
+        bool m_bossImmune = true;
     public:
         friend class resources::Boss;
 

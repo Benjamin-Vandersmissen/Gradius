@@ -30,7 +30,7 @@ namespace controllers{
 
         bool m_deleted = false; //a boolean that will determine if the controller should be deleted
 
-        std::pair<float, float> m_currentDirection = {0, 0};
+        std::pair<float, float> m_currentDirection = {-1, 0};
     public:
         /**
          * @brief add the model for the MVC structure

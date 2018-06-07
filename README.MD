@@ -124,10 +124,12 @@ Length                 | the length of the level
   - ~~size can be customised with resources~~
   - ~~hitbox is a polygon instead of a rectangle and customisable in resources~~
 - more / smarter AI
-- some kind of boss(es)
+- ~~some kind of boss(es)~~
   - extra option in level files to end a level if there are no more enemies in the level instead of ending it at a fixed distance
-- sound effects
-- homing weapons
+- ~~sound effects~~
+- ~~homing weapons~~
+- Sprites instead of Animations, with more options. Will be loaded from a file, to reduce clutter in resource files
+- A general config
 
 ### (Impossibly) Hard ###
 
