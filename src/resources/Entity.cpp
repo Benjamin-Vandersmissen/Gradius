@@ -3,6 +3,7 @@
 //
 
 #include "Entity.h"
+#include "../BaseSprite.h"
 
 std::map<std::string, resource_ptr> resources::map = {};
 
@@ -10,28 +11,20 @@ void resources::Entity::loadFromIni(const std::string &path, const ini::Configur
     unsigned int delay = configuration["General"]["Delay"].as_unsigned_or_default(0);
     unsigned int nrFrames = configuration["General"]["NrFrames"].as_unsigned_or_default(1);
     m_depth = configuration["General"]["Depth"].as_int_or_default(0);
-    m_animation = Animation(delay);
-    std::string texturePath;
-    if (configuration["General"]["TexturePath"].as_string_if_exists(texturePath)){
-        m_animation.createFromStrip(path+texturePath, nrFrames);
-    }
-    unsigned int textureWidth;
-    unsigned int textureHeight;
-    if(configuration["General"]["TextureWidth"].as_unsigned_if_exists(textureWidth) && configuration["General"]["TextureHeight"].as_unsigned_if_exists(textureHeight)){
-        m_animation.setSize(sf::Vector2u{textureWidth, textureHeight});
+    std::string sprite;
+    if(configuration["General"]["Sprite"].as_string_if_exists(sprite)){
+        sprites[sprite] = BaseSprite();
+        sprites[sprite].readFromIni(path+"sprites/"+sprite+".ini");
+        m_sprite = sprites[sprite].create();
     }
     createHitbox(configuration);
-}
-
-void resources::Entity::setAnimationOfView(view_ptr view) {
-    view->m_animation = m_animation;
 }
 
 void resources::Entity::finalizeCreation(view_ptr view, model_ptr model, controller_ptr controller,
                                          std::pair<float, float> position) {
     model->setController(controller);
     view->setModel(model);
-    setAnimationOfView(view);
+    view->m_sprite = m_sprite;
 
     model->position(position);
     model->depth(m_depth);
@@ -47,7 +40,7 @@ void resources::Entity::finalizeCreation(view_ptr view, model_ptr model, control
 void resources::Entity::createHitbox(const ini::Configuration &config) {
     std::string representation;
     if(!config["General"]["Hitbox"].as_string_if_exists(representation)){ //no custom hitbox found, make from default texture
-        auto size = m_animation.getSize();
+        auto size = m_sprite.getSize();
         m_hitbox.addPoint({0,0});
         m_hitbox.addPoint({Transformation::transformWidth(size.x),0});
         m_hitbox.addPoint({Transformation::transformWidth(size.x),Transformation::transformHeight(size.y)});

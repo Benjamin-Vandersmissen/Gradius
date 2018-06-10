@@ -9,9 +9,9 @@ void views::Boss::update(){
     auto model = std::dynamic_pointer_cast<models::Ship>(m_model);
     if(model){
         if(model->isImmune())
-            m_animation = m_invincible;
+            m_sprite = m_invincible;
         else
-            m_animation = m_normal;
+            m_sprite = m_normal;
     }
     Entity::update();
 }

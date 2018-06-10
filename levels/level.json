@@ -9,5 +9,5 @@
                  {"Type": "Boss", "Position": [50,-0.5]}],
   "Border": "BorderObstacle",
   "Speed": 0.07,
-  "Length": 60
+  "Length": 51
 }

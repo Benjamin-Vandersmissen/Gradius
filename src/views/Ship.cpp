@@ -8,9 +8,9 @@ void views::Ship::update() {
     auto model = std::dynamic_pointer_cast<models::Ship>(m_model);
     if(model){
         if(model->isImmune())
-            m_animation.setColor(sf::Color{127,127,127});
+            m_sprite.setColor(sf::Color{127,127,127});
         else
-            m_animation.setColor(sf::Color{255,255,255});
+            m_sprite.setColor(sf::Color{255,255,255});
     }
     Entity::update();
 }

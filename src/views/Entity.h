@@ -11,8 +11,8 @@
 
 #include "SFML/Graphics.hpp"
 #include "SFML/System.hpp"
-#include "../Animation.h"
 #include "../Transformation.h"
+#include "../Sprite.h"
 
 #include "../models/Entity.h"
 
@@ -40,7 +40,7 @@ namespace views{
 
         bool m_deleted = false; //if the view is deleted or not
 
-        Animation m_animation = Animation(0); //the default animation
+        Sprite m_sprite = Sprite();
 
     public:
 
@@ -64,9 +64,9 @@ namespace views{
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
         /**
-         * @brief updates the internal counter of the animation and switches frame if necessary
+         * @brief updates the internal counter of the sprite and switches frame if necessary
          * */
-        void updateAnimation();
+        void updateSprite();
 
         /**
          * @brief mark the view as deleted

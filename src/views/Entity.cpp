@@ -13,20 +13,20 @@ void views::Entity::setModel(model_ptr model) {
 }
 
 void views::Entity::update() {
-    m_animation.setPosition(Transformation::invTransform(m_model->position()));
-
+    m_sprite.setPosition(Transformation::invTransform(m_model->position()));
 }
 
 bool views::Entity::deleted() const {
     return m_deleted;
 }
 
-void views::Entity::updateAnimation() {
-    m_animation.update();
+void views::Entity::updateSprite() {
+    m_sprite.update();
 }
 
 void views::Entity::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-    target.draw(m_animation, states);
+    target.draw(m_sprite, states);
+
 //
 //    The following code draws the bounding box and the hitbox for the entity
 //

@@ -13,7 +13,7 @@
 namespace resources {
     class Boss : public EnemyShip{
     protected:
-        Animation m_invincibleAnimation;
+        Sprite m_invincibleSprite;
 
         unsigned int m_bossType;
 

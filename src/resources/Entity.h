@@ -43,8 +43,8 @@ using resource_ptr = std::shared_ptr<resources::Entity>;
 namespace resources{
     class Entity: public std::enable_shared_from_this<resources::Entity>{
     protected:
-        Animation m_animation; //the default animation for the view
         Hitbox m_hitbox = Hitbox(); //the local hitbox
+        Sprite m_sprite = Sprite(); //the sprite
         int m_depth;
     public:
         /**
@@ -62,13 +62,6 @@ namespace resources{
          * @param configuration the configuration which contains all necessary data
          * */
         virtual void loadFromIni(const std::string &path, const ini::Configuration &configuration);
-
-        /**
-         * @brief give a view the stored animation
-         *
-         * @param view the view
-         * */
-        virtual void setAnimationOfView(view_ptr view);
 
         /**
          * @brief link the model, view and controller in the MVC structure, move them to the correct position and add them to the game

@@ -43,7 +43,7 @@ void views::View::draw() {
         }
         case models::Model::Running :{
             for (const auto &view : views::list) {
-                view->updateAnimation();
+                view->updateSprite();
                 m_window->draw(*view);
             }
             drawProgress();
@@ -141,8 +141,9 @@ void views::View::drawProgress() {
     progressBar.setFillColor(sf::Color::Green);
     progressBar.setOutlineColor(sf::Color::Green);
 
-    Animation progressIndicator = Animation(0);
-    progressIndicator.createFromStrip("../resources/game/progress_indicator.png", 1);
+    BaseSprite progressIndicatorBase;
+    progressIndicatorBase.readFromIni("../resources/sprites/progressIndicator.ini");
+    Sprite progressIndicator = progressIndicatorBase.create();
     progressIndicator.setPosition(50*progress-1,5);
     progressIndicator.setScale(0.25,0.25);
 

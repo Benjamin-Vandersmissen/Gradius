@@ -27,15 +27,17 @@ model_ptr resources::Boss::create(const std::pair<float, float> &position) {
 
     controller->m_maxFireCooldown = m_fireCooldown;
     finalizeCreation(view, model, controller, position);
-    view->m_normal = m_animation;
-    view->m_invincible = m_invincibleAnimation;
+    view->m_normal = m_sprite;
+    view->m_invincible = m_invincibleSprite;
     return model;
 }
 
 void resources::Boss::loadFromIni(const std::string &path, const ini::Configuration &configuration) {
     EnemyShip::loadFromIni(path, configuration);
-    m_invincibleAnimation = Animation(0);
-    m_invincibleAnimation.createFromStrip(configuration["Boss"]["InvincibleAnimation"].as_string_or_default(path+"../resources/textures/boss_1_shielded.png"),1);
+    std::string invincibleSprite = configuration["Boss"]["InvincibleSprite"].as_string_or_default("Boss_1_shielded");
+    sprites[invincibleSprite] = BaseSprite();
+    sprites[invincibleSprite].readFromIni(path+"sprites/"+invincibleSprite+".ini");
+    m_invincibleSprite = sprites[invincibleSprite].create();
 
     m_bossType = configuration["Boss"]["Type"].as_int_or_default(1);
     m_minionType = configuration["Boss"]["MinionType"].as_string_or_default("EnemyShip");

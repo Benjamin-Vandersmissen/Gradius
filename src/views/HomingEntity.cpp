@@ -7,5 +7,5 @@
 void views::HomingEntity::update() {
     Entity::update();
     auto controller = std::dynamic_pointer_cast<controllers::HomingEntity>(m_model->controller());
-    m_animation.setRotation(-controller->getHomingAngle()-90);
+    m_sprite.setRotation(-controller->getHomingAngle()-90);
 }

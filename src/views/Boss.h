@@ -14,8 +14,8 @@ namespace resources{
 namespace views {
     class Boss : public Ship{
     protected:
-        Animation m_normal = m_animation;
-        Animation m_invincible = m_animation;
+        Sprite m_normal = m_sprite;
+        Sprite m_invincible = m_sprite;
     public:
         friend class resources::Boss;
 
